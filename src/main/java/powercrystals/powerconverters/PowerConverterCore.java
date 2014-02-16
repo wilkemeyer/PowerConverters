@@ -1,7 +1,10 @@
 package powercrystals.powerconverters;
 
 import java.io.File;
+import java.io.InputStream;
+import java.util.Properties;
 
+import com.google.common.base.Throwables;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.Configuration;
@@ -34,13 +37,28 @@ import cpw.mods.fml.common.registry.GameRegistry;
 //import powercrystals.powerconverters.power.steam.TileEntitySteamConsumer;
 //import powercrystals.powerconverters.power.steam.TileEntitySteamProducer;
 
-@Mod(modid = PowerConverterCore.modId, name = PowerConverterCore.modName, version = PowerConverterCore.version, dependencies = "after:BuildCraft|Energy;after:factorization;after:IC2;after:Railcraft;after:ThermalExpansion")
+@Mod(modid = PowerConverterCore.modId, name = PowerConverterCore.modName, dependencies = "after:BuildCraft|Energy;after:factorization;after:IC2;after:Railcraft;after:ThermalExpansion")
 @NetworkMod(clientSideRequired = true, serverSideRequired = false)
 public final class PowerConverterCore
 {
     public static final String modId = "PowerConverters";
     public static final String modName = "Power Converters";
-    public static final String version = "1.6.4R2.4.0pre3";
+    public static final String version;
+
+    static {
+        Properties prop = new Properties();
+
+        try {
+            InputStream stream = PowerConverterCore.class.getClassLoader().getResourceAsStream("version.properties");
+            prop.load(stream);
+            stream.close();
+        }
+        catch (Exception e) {
+            Throwables.propagate(e);
+        }
+
+        version = String.format("%s_build-%s", prop.getProperty("version"), prop.getProperty("build_number"));
+    }
 
     public static final String texturesFolder = modId + ":";
     public static final String guiFolder = modId + ":" + "textures/gui/";
@@ -69,6 +87,8 @@ public final class PowerConverterCore
     @EventHandler
     public void preInit(FMLPreInitializationEvent evt)
     {
+        evt.getModMetadata().version = PowerConverterCore.version;
+
 	powerSystemSteam = new PowerSystem("Steam", "STEAM", 500, 500,/*875, 875,*/null, null, "mB/t");
 	PowerSystem.registerPowerSystem(powerSystemSteam);
 	for (LoaderBase base : bases)
