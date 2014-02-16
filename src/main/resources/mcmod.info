@@ -1,0 +1,22 @@
+[
+{
+  "modid": "PowerConverters",
+  "name": "Power Converters",
+  "description": "Take control of your power",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "http://www.minecraftforum.net/topic/1695968-",
+  "updateUrl": "",
+  "authors": [
+    "PowerCrystals",
+    "samrg472"
+  ],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [
+  ],
+  "parent":"",
+  "dependencies": [
+  ]
+}
+]
