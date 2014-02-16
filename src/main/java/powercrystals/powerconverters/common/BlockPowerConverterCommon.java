@@ -35,9 +35,10 @@ public class BlockPowerConverterCommon extends BlockContainer
     @SideOnly(Side.CLIENT)
     public void registerIcons(IconRegister ir)
     {
-	_iconBridge = ir.registerIcon(PowerConverterCore.texturesFolder + getUnlocalizedName() + ".bridge");
-	_iconChargerOn = ir.registerIcon(PowerConverterCore.texturesFolder + getUnlocalizedName() + ".charger.on");
-	_iconChargerOff = ir.registerIcon(PowerConverterCore.texturesFolder + getUnlocalizedName() + ".charger.off");
+        String folderName = getUnlocalizedName().substring("tile.powerconverters.".length());
+        _iconBridge = ir.registerIcon(String.format("%s:%s/bridge", PowerConverterCore.modId, folderName));
+        _iconChargerOff = ir.registerIcon(String.format("%s:%s/charger_on", PowerConverterCore.modId, folderName));
+        _iconChargerOn = ir.registerIcon(String.format("%s:%s/charger_off", PowerConverterCore.modId, folderName));
     }
 
     @Override

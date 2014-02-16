@@ -60,7 +60,6 @@ public final class PowerConverterCore
         version = String.format("%s_build-%s", prop.getProperty("version"), prop.getProperty("build_number"));
     }
 
-    public static final String texturesFolder = modId + ":";
     public static final String guiFolder = modId + ":" + "textures/gui/";
 
     public static Block converterBlockCommon;
@@ -96,7 +95,6 @@ public final class PowerConverterCore
 
 	File dir = evt.getModConfigurationDirectory();
 	loadConfig(dir);
-	new LangHandler(modId, new File(new File(dir, modId.toLowerCase()), "lang")).init();
     }
 
     @EventHandler

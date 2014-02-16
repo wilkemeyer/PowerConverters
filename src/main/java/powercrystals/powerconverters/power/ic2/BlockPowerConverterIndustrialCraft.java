@@ -49,25 +49,22 @@ public class BlockPowerConverterIndustrialCraft extends BlockPowerConverter
     @SideOnly(Side.CLIENT)
     public void registerIcons(IconRegister ir)
     {
-	_icons[0] = ir.registerIcon(PowerConverterCore.texturesFolder + getUnlocalizedName() + ".lv.consumer.off");
-	_icons[1] = ir.registerIcon(PowerConverterCore.texturesFolder + getUnlocalizedName() + ".lv.consumer.on");
-	_icons[2] = ir.registerIcon(PowerConverterCore.texturesFolder + getUnlocalizedName() + ".lv.producer.off");
-	_icons[3] = ir.registerIcon(PowerConverterCore.texturesFolder + getUnlocalizedName() + ".lv.producer.on");
-	_icons[4] = ir.registerIcon(PowerConverterCore.texturesFolder + getUnlocalizedName() + ".mv.consumer.off");
-	_icons[5] = ir.registerIcon(PowerConverterCore.texturesFolder + getUnlocalizedName() + ".mv.consumer.on");
-	_icons[6] = ir.registerIcon(PowerConverterCore.texturesFolder + getUnlocalizedName() + ".mv.producer.off");
-	_icons[7] = ir.registerIcon(PowerConverterCore.texturesFolder + getUnlocalizedName() + ".mv.producer.on");
-	_icons[8] = ir.registerIcon(PowerConverterCore.texturesFolder + getUnlocalizedName() + ".hv.consumer.off");
-	_icons[9] = ir.registerIcon(PowerConverterCore.texturesFolder + getUnlocalizedName() + ".hv.consumer.on");
-	_icons[10] = ir.registerIcon(PowerConverterCore.texturesFolder + getUnlocalizedName() + ".hv.producer.off");
-	_icons[11] = ir.registerIcon(PowerConverterCore.texturesFolder + getUnlocalizedName() + ".hv.producer.on");
-	_icons[12] = ir.registerIcon(PowerConverterCore.texturesFolder + getUnlocalizedName() + ".ev.consumer.off");
-	_icons[13] = ir.registerIcon(PowerConverterCore.texturesFolder + getUnlocalizedName() + ".ev.consumer.on");
-	_icons[14] = ir.registerIcon(PowerConverterCore.texturesFolder + getUnlocalizedName() + ".ev.producer.off");
-	_icons[15] = ir.registerIcon(PowerConverterCore.texturesFolder + getUnlocalizedName() + ".ev.producer.on");
-	_icons[16] = ir.registerIcon(PowerConverterCore.texturesFolder + getUnlocalizedName() + ".uv.consumer.off");
-	_icons[17] = ir.registerIcon(PowerConverterCore.texturesFolder + getUnlocalizedName() + ".uv.consumer.on");
-	_icons[18] = ir.registerIcon(PowerConverterCore.texturesFolder + getUnlocalizedName() + ".uv.producer.off");
-	_icons[19] = ir.registerIcon(PowerConverterCore.texturesFolder + getUnlocalizedName() + ".uv.producer.on");
+        String[] voltages = { "lv", "mv", "hv" };
+        String[] types = { "consumer", "producer" };
+        String[] states = { "on", "off" };
+        String folderName = getUnlocalizedName().substring("tile.powerconverters.".length());
+
+        int i = 0;
+        for(String voltage : voltages)
+        {
+            for(String type : types)
+            {
+                for(String state : states)
+                {
+                    _icons[i] = ir.registerIcon(String.format("%s:%s/%s/%s_%s", PowerConverterCore.modId, folderName, voltage, type, state));
+                    i++;
+                }
+            }
+        }
     }
 }

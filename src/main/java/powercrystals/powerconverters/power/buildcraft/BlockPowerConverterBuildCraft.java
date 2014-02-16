@@ -27,9 +27,18 @@ public class BlockPowerConverterBuildCraft extends BlockPowerConverter {
     @Override
     @SideOnly(Side.CLIENT)
     public void registerIcons(IconRegister ir) {
-        _icons[0] = ir.registerIcon(PowerConverterCore.texturesFolder + getUnlocalizedName() + ".consumer.off");
-        _icons[1] = ir.registerIcon(PowerConverterCore.texturesFolder + getUnlocalizedName() + ".consumer.on");
-        _icons[2] = ir.registerIcon(PowerConverterCore.texturesFolder + getUnlocalizedName() + ".producer.off");
-        _icons[3] = ir.registerIcon(PowerConverterCore.texturesFolder + getUnlocalizedName() + ".producer.on");
+        String[] types = { "consumer", "producer" };
+        String[] states = { "on", "off" };
+        String folderName = getUnlocalizedName().substring("tile.powerconverters.".length());
+
+        int i = 0;
+        for(String type : types)
+        {
+            for(String state : states)
+            {
+                _icons[i] = ir.registerIcon(String.format("%s:%s/%s_%s", PowerConverterCore.modId, folderName, type, state));
+                i++;
+            }
+        }
     }
 }
