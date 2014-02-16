@@ -25,8 +25,8 @@ public class TileEntityBuildCraftProducer extends TileEntityEnergyProducer<IPowe
         for (Map.Entry<ForgeDirection, IPowerReceptor> output : getTiles().entrySet()) {
             PowerHandler.PowerReceiver pp = output.getValue().getPowerReceiver(output.getKey().getOpposite());
             if (pp != null && pp.getMinEnergyReceived() <= mj) {
-                float mjUsed = Math.min(mj, pp.powerRequest());
-                mjUsed = pp.receiveEnergy(PowerHandler.Type.STORAGE, mjUsed, output.getKey().getOpposite());
+                float mjUsed = (float) Math.min(mj, pp.powerRequest());
+                mjUsed = (float) pp.receiveEnergy(PowerHandler.Type.STORAGE, mjUsed, output.getKey().getOpposite());
 
                 mj -= mjUsed;
                 if (mj <= 0)

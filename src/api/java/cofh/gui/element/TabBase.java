@@ -4,7 +4,6 @@ import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 
-import codechicken.lib.vec.Rectangle4i;
 import cofh.gui.GuiBase;
 import cofh.gui.GuiProps;
 import cofh.gui.TabTracker;
@@ -162,15 +161,6 @@ public abstract class TabBase extends ElementBase {
 			} else {
 				TabTracker.setOpenedRightTab(this.getClass());
 			}
-		}
-	}
-
-	public Rectangle4i getBounds() {
-
-		if (side == 0) {
-			return new Rectangle4i(posX - currentWidth, posY, currentWidth, currentHeight);
-		} else {
-			return new Rectangle4i(posX, posY, currentWidth, currentHeight);
 		}
 	}
 }

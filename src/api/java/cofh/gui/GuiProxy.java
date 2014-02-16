@@ -9,7 +9,7 @@ public class GuiProxy {
 	 */
 	public static boolean shouldShowTooltip(GuiContainer gui) {
 
-		return gui.manager.shouldShowTooltip();
+		return false;
 	}
 
 }

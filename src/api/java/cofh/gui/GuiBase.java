@@ -117,7 +117,9 @@ public abstract class GuiBase extends GuiContainer {
 	@Override
 	protected void mouseClickMove(int mX, int mY, int lastClick, long timeSinceClick) {
 
-		Slot slot = this.getSlotAtPosition(mX, mY);
+        super.mouseClickMove(mX, mY, lastClick, timeSinceClick);
+
+		/*Slot slot = this.getSlotAtPosition(mX, mY);
 		ItemStack itemstack = this.mc.thePlayer.inventory.getItemStack();
 
 		if (this.field_94076_q && slot != null && itemstack != null && slot instanceof SlotFalseCopy) {
@@ -128,7 +130,7 @@ public abstract class GuiBase extends GuiContainer {
 		} else {
 			lastIndex = -1;
 			super.mouseClickMove(mX, mY, lastClick, timeSinceClick);
-		}
+		}*/
 	}
 
 	@Override
@@ -179,7 +181,6 @@ public abstract class GuiBase extends GuiContainer {
 	/**
 	 * Called by NEI if installed
 	 */
-	@Override
 	public List<String> handleTooltip(int mousex, int mousey, List<String> tooltip) {
 
 		if (GuiProxy.shouldShowTooltip(this)) {
