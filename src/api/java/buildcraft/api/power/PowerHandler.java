@@ -21,7 +21,7 @@ import net.minecraftforge.common.ForgeDirection;
  * If you plan emit power, you need only implement IPowerEmitter. You do not
  * need a PowerHandler. Engines have a PowerHandler because they can also
  * receive power from other Engines.
- *
+ * 
  * See TileRefinery for a simple example of a power using machine.
  *
  * @see IPowerReceptor
@@ -65,7 +65,7 @@ public final class PowerHandler {
 
 		public static final float DEFAULT_POWERLOSS = 1F;
 		public static final float MIN_POWERLOSS = 0.01F;
-		private final double powerLoss;
+		private final float powerLoss;
 
 		public PerditionCalculator() {
 			powerLoss = DEFAULT_POWERLOSS;
@@ -76,7 +76,7 @@ public final class PowerHandler {
 		 *
 		 * @param powerLoss power loss per tick
 		 */
-		public PerditionCalculator(double powerLoss) {
+		public PerditionCalculator(float powerLoss) {
 			if (powerLoss < MIN_POWERLOSS) {
 				powerLoss = MIN_POWERLOSS;
 			}
@@ -93,11 +93,13 @@ public final class PowerHandler {
 		 * @param ticksPassed ticks since the last time this function was called
 		 * @return
 		 */
-		public double applyPerdition(PowerHandler powerHandler, double current, long ticksPassed) {
+		public float applyPerdition(PowerHandler powerHandler, float current, long ticksPassed) {
+//			float prev = current;
 			current -= powerLoss * ticksPassed;
 			if (current < 0) {
 				current = 0;
 			}
+//			powerHandler.totalLostPower += prev - current;
 			return current;
 		}
 
@@ -108,19 +110,16 @@ public final class PowerHandler {
 		 *
 		 * @return percent of input to tax
 		 */
-		public double getTaxPercent() {
+		public float getTaxPercent() {
 			return 0;
 		}
 	}
 	public static final PerditionCalculator DEFAULT_PERDITION = new PerditionCalculator();
-	public static final double ROLLING_AVERAGE_WEIGHT = 100.0;
-	public static final double ROLLING_AVERAGE_NUMERATOR = ROLLING_AVERAGE_WEIGHT - 1;
-	public static final double ROLLING_AVERAGE_DENOMINATOR  = 1.0 / ROLLING_AVERAGE_WEIGHT;
-	private double minEnergyReceived;
-	private double maxEnergyReceived;
-	private double maxEnergyStored;
-	private double activationEnergy;
-	private double energyStored = 0;
+	private float minEnergyReceived;
+	private float maxEnergyReceived;
+	private float maxEnergyStored;
+	private float activationEnergy;
+	private float energyStored = 0;
 	private final SafeTimeTracker doWorkTracker = new SafeTimeTracker();
 	private final SafeTimeTracker sourcesTracker = new SafeTimeTracker();
 	private final SafeTimeTracker perditionTracker = new SafeTimeTracker();
@@ -129,10 +128,11 @@ public final class PowerHandler {
 	private PerditionCalculator perdition;
 	private final PowerReceiver receiver;
 	private final Type type;
-	// Tracking
-	private double averageLostPower = 0;
-	private double averageReceivedPower = 0;
-	private double averageUsedPower = 0;
+	// Debug
+//	private double totalLostPower = 0;
+//	private double totalReceivedPower = 0;
+//	private double totalUsedPower = 0;
+//	private long startTime = -1;
 
 	public PowerHandler(IPowerReceptor receptor, Type type) {
 		this.receptor = receptor;
@@ -145,23 +145,23 @@ public final class PowerHandler {
 		return receiver;
 	}
 
-	public double getMinEnergyReceived() {
+	public float getMinEnergyReceived() {
 		return minEnergyReceived;
 	}
 
-	public double getMaxEnergyReceived() {
+	public float getMaxEnergyReceived() {
 		return maxEnergyReceived;
 	}
 
-	public double getMaxEnergyStored() {
+	public float getMaxEnergyStored() {
 		return maxEnergyStored;
 	}
 
-	public double getActivationEnergy() {
+	public float getActivationEnergy() {
 		return activationEnergy;
 	}
 
-	public double getEnergyStored() {
+	public float getEnergyStored() {
 		return energyStored;
 	}
 
@@ -183,7 +183,7 @@ public final class PowerHandler {
 	 * store. Values tend to range between 100 and 5000. With 1000 and 1500
 	 * being common.
 	 */
-	public void configure(double minEnergyReceived, double maxEnergyReceived, double activationEnergy, double maxStoredEnergy) {
+	public void configure(float minEnergyReceived, float maxEnergyReceived, float activationEnergy, float maxStoredEnergy) {
 		if (minEnergyReceived > maxEnergyReceived) {
 			maxEnergyReceived = minEnergyReceived;
 		}
@@ -242,6 +242,13 @@ public final class PowerHandler {
 	 * design around this though if you are aware of the limitations.
 	 */
 	public void update() {
+//		if (startTime == -1)
+//			startTime = receptor.getWorld().getTotalWorldTime();
+//		else {
+//			long duration = receptor.getWorld().getTotalWorldTime() - startTime;
+//			System.out.printf("Power Stats: %s - Stored: %.2f Gained: %.2f - %.2f/t Lost: %.2f - %.2f/t Used: %.2f - %.2f/t%n", receptor.getClass().getSimpleName(), energyStored, totalReceivedPower, totalReceivedPower / duration, totalLostPower, totalLostPower / duration, totalUsedPower, totalUsedPower / duration);
+//		}
+
 		applyPerdition();
 		applyWork();
 		validateEnergy();
@@ -249,15 +256,12 @@ public final class PowerHandler {
 
 	private void applyPerdition() {
 		if (perditionTracker.markTimeIfDelay(receptor.getWorld(), 1) && energyStored > 0) {
-			double prev = energyStored;
-			double newEnergy = getPerdition().applyPerdition(this, energyStored, perditionTracker.durationOfLastDelay());
+			float newEnergy = getPerdition().applyPerdition(this, energyStored, perditionTracker.durationOfLastDelay());
 			if (newEnergy == 0 || newEnergy < energyStored)
 				energyStored = newEnergy;
 			else
 				energyStored = DEFAULT_PERDITION.applyPerdition(this, energyStored, perditionTracker.durationOfLastDelay());
 			validateEnergy();
-
-			averageLostPower = (averageLostPower * ROLLING_AVERAGE_NUMERATOR + (prev - energyStored)) * ROLLING_AVERAGE_DENOMINATOR;
 		}
 	}
 
@@ -292,10 +296,10 @@ public final class PowerHandler {
 	 * @param doUse
 	 * @return amount used
 	 */
-	public double useEnergy(double min, double max, boolean doUse) {
+	public float useEnergy(float min, float max, boolean doUse) {
 		applyPerdition();
 
-		double result = 0;
+		float result = 0;
 
 		if (energyStored >= min) {
 			if (energyStored <= max) {
@@ -313,8 +317,8 @@ public final class PowerHandler {
 
 		validateEnergy();
 
-		if (doUse)
-			averageUsedPower = (averageUsedPower * ROLLING_AVERAGE_NUMERATOR + result) * ROLLING_AVERAGE_DENOMINATOR;
+//		if (doUse)
+//			totalUsedPower += result;
 
 		return result;
 	}
@@ -325,7 +329,7 @@ public final class PowerHandler {
 
 	public void readFromNBT(NBTTagCompound data, String tag) {
 		NBTTagCompound nbt = data.getCompoundTag(tag);
-		energyStored = nbt.getDouble("energyStored");
+		energyStored = nbt.getFloat("storedEnergy");
 	}
 
 	public void writeToNBT(NBTTagCompound data) {
@@ -334,7 +338,7 @@ public final class PowerHandler {
 
 	public void writeToNBT(NBTTagCompound data, String tag) {
 		NBTTagCompound nbt = new NBTTagCompound();
-		nbt.setDouble("energyStored", energyStored);
+		nbt.setFloat("storedEnergy", energyStored);
 		data.setCompoundTag(tag, nbt);
 	}
 
@@ -343,36 +347,24 @@ public final class PowerHandler {
 		private PowerReceiver() {
 		}
 
-		public double getMinEnergyReceived() {
+		public float getMinEnergyReceived() {
 			return minEnergyReceived;
 		}
 
-		public double getMaxEnergyReceived() {
+		public float getMaxEnergyReceived() {
 			return maxEnergyReceived;
 		}
 
-		public double getMaxEnergyStored() {
+		public float getMaxEnergyStored() {
 			return maxEnergyStored;
 		}
 
-		public double getActivationEnergy() {
+		public float getActivationEnergy() {
 			return activationEnergy;
 		}
 
-		public double getEnergyStored() {
+		public float getEnergyStored() {
 			return energyStored;
-		}
-
-		public double getAveragePowerReceived() {
-			return averageReceivedPower;
-		}
-
-		public double getAveragePowerUsed() {
-			return averageUsedPower;
-		}
-
-		public double getAveragePowerLost() {
-			return averageLostPower;
 		}
 
 		public Type getType() {
@@ -388,7 +380,7 @@ public final class PowerHandler {
 		 *
 		 * @return
 		 */
-		public double powerRequest() {
+		public float powerRequest() {
 			update();
 			return Math.min(maxEnergyReceived, maxEnergyStored - energyStored);
 		}
@@ -402,8 +394,8 @@ public final class PowerHandler {
 		 * @param from
 		 * @return the amount of power used
 		 */
-		public double receiveEnergy(Type source, final double quantity, ForgeDirection from) {
-			double used = quantity;
+		public float receiveEnergy(Type source, final float quantity, ForgeDirection from) {
+			float used = quantity;
 			if (source == Type.ENGINE) {
 				if (used < minEnergyReceived) {
 					return 0;
@@ -424,7 +416,7 @@ public final class PowerHandler {
 				used = Math.min(quantity, maxEnergyReceived);
 			}
 
-			averageReceivedPower = (averageReceivedPower * ROLLING_AVERAGE_NUMERATOR + used) * ROLLING_AVERAGE_DENOMINATOR;
+//			totalReceivedPower += used;
 
 			return used;
 		}
@@ -434,7 +426,7 @@ public final class PowerHandler {
 	 *
 	 * @return the amount the power changed by
 	 */
-	public double addEnergy(double quantity) {
+	public float addEnergy(float quantity) {
 		energyStored += quantity;
 
 		if (energyStored > maxEnergyStored) {
@@ -450,7 +442,7 @@ public final class PowerHandler {
 		return quantity;
 	}
 
-	public void setEnergy(double quantity) {
+	public void setEnergy(float quantity) {
 		this.energyStored = quantity;
 		validateEnergy();
 	}

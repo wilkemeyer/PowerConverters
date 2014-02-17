@@ -37,7 +37,7 @@ public class TileEntityBuildCraftConsumer extends TileEntityEnergyConsumer<IPowe
             _mjLastTick = 0;
         }
 
-        float consumed = (float) _powerProvider.useEnergy(0, _powerProvider.getEnergyStored(), false);
+        float consumed = _powerProvider.useEnergy(0, _powerProvider.getEnergyStored(), false);
         float energyToUse = consumed * getPowerSystem().getInternalEnergyPerInput();
         float leftOvers = (float) storeEnergy(energyToUse, false);
 

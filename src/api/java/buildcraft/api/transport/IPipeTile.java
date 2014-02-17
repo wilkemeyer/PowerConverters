@@ -9,13 +9,17 @@ package buildcraft.api.transport;
 
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.fluids.IFluidHandler;
 
-public interface IPipeTile {
+public interface IPipeTile extends ISolidSideTile, IFluidHandler {
 
 	public enum PipeType {
 
 		ITEM, FLUID, POWER, STRUCTURE;
 	}
+
+	@Deprecated
+	IPipe getPipe();
 
 	PipeType getPipeType();
 
@@ -30,20 +34,6 @@ public interface IPipeTile {
 	 * @return Amount of items used from the passed stack.
 	 */
 	int injectItem(ItemStack stack, boolean doAdd, ForgeDirection from);
-
-	/**
-	 * True if the pipe is connected to the block/pipe in the specific direction
-	 *
-	 * @param wire
-	 * @return true if connect
-	 */
+	
 	boolean isPipeConnected(ForgeDirection with);
-
-	/**
-	 * True if the pipe has a powered wire of the specified color.
-	 *
-	 * @param wire
-	 * @return true if powered
-	 */
-	boolean isWireActive(PipeWire wire);
 }
