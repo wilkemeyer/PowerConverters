@@ -4,8 +4,7 @@ Build status: [](http://jamesmckay.id.au:8080/job/Power%20Converters/badge/icon)
 
 Information
 --
-No topic yet. It is coming.
-
+[Minecraft Forum Topic](http://www.minecraftforum.net/topic/2407074-164-powerconverters-originally-by-powercrystals)
 
 Other topics:
 * [Origial topic by PowerCrystals (support for minecraft 1.5)](http://www.minecraftforum.net/topic/1629898-0)
