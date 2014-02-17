@@ -69,15 +69,20 @@ public final class PowerConverterCore
     @EventHandler
     public void preInit(FMLPreInitializationEvent evt)
     {
-	powerSystemSteam = new PowerSystem("Steam", "STEAM", 500, 500,/*875, 875,*/null, null, "mB/t");
-	PowerSystem.registerPowerSystem(powerSystemSteam);
-	for (LoaderBase base : bases)
-	    base.load(LoaderBase.Stage.PREINIT);
+        File dir = evt.getModConfigurationDirectory();
+        loadConfig(dir);
 
-	File dir = evt.getModConfigurationDirectory();
-	loadConfig(dir);
-	new LangHandler(modId, new File(new File(dir, modId.toLowerCase()), "lang")).init();
-    }
+        converterBlockCommon = new BlockPowerConverterCommon(blockIdCommon);
+        GameRegistry.registerBlock(converterBlockCommon, ItemBlockPowerConverterCommon.class, converterBlockCommon.getUnlocalizedName());
+        GameRegistry.registerTileEntity(TileEntityEnergyBridge.class, "powerConverterEnergyBridge");
+        GameRegistry.registerTileEntity(TileEntityCharger.class, "powerConverterUniversalCharger");
+
+
+        powerSystemSteam = new PowerSystem("Steam", "STEAM", 500, 500,/*875, 875,*/null, null, "mB/t");
+        PowerSystem.registerPowerSystem(powerSystemSteam);
+        for (LoaderBase base : bases)
+            base.load(LoaderBase.Stage.PREINIT);
+        }
 
     @EventHandler
     public void init(FMLInitializationEvent evt) throws Exception
@@ -91,11 +96,6 @@ public final class PowerConverterCore
     @EventHandler
     public void postInit(FMLPostInitializationEvent evt) throws Exception
     {
-	converterBlockCommon = new BlockPowerConverterCommon(blockIdCommon);
-	GameRegistry.registerBlock(converterBlockCommon, ItemBlockPowerConverterCommon.class, converterBlockCommon.getUnlocalizedName());
-	GameRegistry.registerTileEntity(TileEntityEnergyBridge.class, "powerConverterEnergyBridge");
-	GameRegistry.registerTileEntity(TileEntityCharger.class, "powerConverterUniversalCharger");
-
 	for (LoaderBase base : bases)
 	    base.load(LoaderBase.Stage.POSTINIT);
 
