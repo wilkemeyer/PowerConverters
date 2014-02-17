@@ -49,7 +49,7 @@ public class BlockPowerConverterIndustrialCraft extends BlockPowerConverter
     @SideOnly(Side.CLIENT)
     public void registerIcons(IconRegister ir)
     {
-        String[] voltages = { "lv", "mv", "hv" };
+        String[] voltages = { "lv", "mv", "hv", "ev", "uv" };
         String[] types = { "consumer", "producer" };
         String[] states = { "on", "off" };
         String folderName = getUnlocalizedName().substring("tile.powerconverters.".length());
