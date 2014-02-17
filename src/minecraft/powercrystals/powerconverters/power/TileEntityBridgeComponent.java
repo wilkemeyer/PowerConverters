@@ -89,6 +89,11 @@ public class TileEntityBridgeComponent<T> extends TileEntity implements INeighbo
     }
 
     @Override
+    public void onChunkUnload() {
+        invalidate();
+    }
+
+    @Override
     public void readFromNBT(NBTTagCompound tagCompound) {
         super.readFromNBT(tagCompound);
         if (_voltageIndex == 0) {
