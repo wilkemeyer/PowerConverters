@@ -21,8 +21,8 @@ public class ItemBlockPowerConverterBuildCraft extends ItemBlock {
     @Override
     public String getUnlocalizedName(ItemStack itemstack) {
         int md = itemstack.getItemDamage();
-        if (md == 0) return "bc.consumer";
-        if (md == 1) return "bc.producer";
+        if (md == 0) return "powerconverters.bc.consumer";
+        if (md == 1) return "powerconverters.bc.producer";
         return "unknown";
     }
 
