@@ -11,12 +11,12 @@ import powercrystals.powerconverters.mods.reference.ModIDReference;
 import powercrystals.powerconverters.power.TileEntityEnergyConsumer;
 
 @Optional.Interface(modid = ModIDReference.BUILDCRAFT, iface = InterfaceReference.BuildCraft.IPipeConnection)
-public class TileEntitySteamConsumer extends TileEntityEnergyConsumer<IFluidContainerItem> implements IFluidHandler, IPipeConnection {
+public class TileEntitySteamConsumer extends TileEntityEnergyConsumer<IFluidHandler> implements IFluidHandler, IPipeConnection {
     private FluidTank _steamTank;
     private int _mBLastTick;
 
     public TileEntitySteamConsumer() {
-        super(PowerConverterCore.powerSystemSteam, 0, IFluidContainerItem.class);
+        super(PowerConverterCore.powerSystemSteam, 0, IFluidHandler.class);
         _steamTank = new FluidTank(FluidContainerRegistry.BUCKET_VOLUME);
     }
 
