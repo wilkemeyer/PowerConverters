@@ -16,7 +16,7 @@ Installation
 1. Make sure you have MinecraftForge installed
   * [MinecraftForge Download](http://files.minecraftforge.net/ "Download MinecraftForge")
 2. Download a PowerConverters build as provided in the download link
-  * [Power Converters Download](http://jamesmckay.id.au:8080/job/Power%20Converters/ "Download Power Converters")
+  * [Power Converters Download](http://jamesmckay.id.au:8080/job/Power%20Converters/lastStableBuild/ "Download Power Converters")
 3. Place the zip file you downloaded in your mods folder
 
 Credits
