@@ -180,17 +180,38 @@ public final class PowerConverterCore
 	    GameRegistry.registerTileEntity(TileEntitySteamConsumer.class, "powerConverterSteamConsumer");
 	    GameRegistry.registerTileEntity(TileEntitySteamProducer.class, "powerConverterSteamProducer");
 
+        ItemStack stackPowerBridge = new ItemStack(converterBlockCommon, 1, 0);
+
 	    if (Loader.isModLoaded("Railcraft"))
 	    {
-		//GameRegistry.addRecipe(new ItemStack(converterBlockSteam, 1, 0), "G G", " E ", "G G", 'G', Item.ingotGold, 'E', new ItemStack((Block) (Class.forName("mods.railcraft.common.blocks.RailcraftBlocks").getMethod("getBlockMachineBeta").invoke(null)), 1, 8));
-	    } else
-	    {
+            Object entrySteelPlate = itemstackIfNoOredict("plateSteel", GameRegistry.findItem("Railcraft", "railcraft.part.plate.steel"));
+
+            ItemStack stackValve = GameRegistry.findItemStack("Railcraft", "tank.steel.gauge", 1);
+            ItemStack stackLiquidFirebox = GameRegistry.findItemStack("Railcraft", "boiler.firebox.liquid", 1);
+            ItemStack stackIndustrialEngine = GameRegistry.findItemStack("Railcraft", "engine.steam.high", 1);
+
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(converterBlockSteam, 1, 0), true,
+                    "PVP",
+                    "VBV",
+                    "PLP",
+                    'P', entrySteelPlate,
+                    'V', stackValve,
+                    'B', stackPowerBridge,
+                    'L', stackLiquidFirebox));
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(converterBlockSteam, 1, 2), true,
+                    "PVP",
+                    "VEV",
+                    "PLP",
+                    'P', entrySteelPlate,
+                    'V', stackValve,
+                    'E', stackIndustrialEngine,
+                    'L', stackLiquidFirebox));
+	    }
 		//Object fzRegistry = Class.forName("factorization.common.Core").getField("registry").get(null);
 		//GameRegistry.addRecipe(new ItemStack(converterBlockSteam, 1, 0), "G G", " E ", "G G", 'G', Item.ingotGold, 'E', (Class.forName("factorization.common.Registry").getField("steamturbine_item").get(fzRegistry)));
-	    }
 
-	    GameRegistry.addShapelessRecipe(new ItemStack(converterBlockSteam, 1, 1), new ItemStack(converterBlockSteam, 1, 0));
-	    GameRegistry.addShapelessRecipe(new ItemStack(converterBlockSteam, 1, 0), new ItemStack(converterBlockSteam, 1, 1));
+	    /*GameRegistry.addShapelessRecipe(new ItemStack(converterBlockSteam, 1, 1), new ItemStack(converterBlockSteam, 1, 0));
+	    GameRegistry.addShapelessRecipe(new ItemStack(converterBlockSteam, 1, 0), new ItemStack(converterBlockSteam, 1, 1));*/
     }
 
     private static void loadConfig(File dir)
