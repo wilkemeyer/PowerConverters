@@ -1,16 +1,19 @@
 package powercrystals.powerconverters;
 
-import java.io.File;
-import java.io.InputStream;
-import java.util.Properties;
-
 import com.google.common.base.Throwables;
+import cpw.mods.fml.common.Loader;
+import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.Mod.EventHandler;
+import cpw.mods.fml.common.event.FMLInitializationEvent;
+import cpw.mods.fml.common.event.FMLPostInitializationEvent;
+import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.network.NetworkMod;
+import cpw.mods.fml.common.network.NetworkRegistry;
+import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.Configuration;
-import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
@@ -28,15 +31,10 @@ import powercrystals.powerconverters.power.steam.BlockPowerConverterSteam;
 import powercrystals.powerconverters.power.steam.ItemBlockPowerConverterSteam;
 import powercrystals.powerconverters.power.steam.TileEntitySteamConsumer;
 import powercrystals.powerconverters.power.steam.TileEntitySteamProducer;
-import cpw.mods.fml.common.Loader;
-import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.Mod.EventHandler;
-import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLPostInitializationEvent;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.network.NetworkMod;
-import cpw.mods.fml.common.network.NetworkRegistry;
-import cpw.mods.fml.common.registry.GameRegistry;
+
+import java.io.File;
+import java.io.InputStream;
+import java.util.Properties;
 //import powercrystals.powerconverters.power.steam.BlockPowerConverterSteam;
 //import powercrystals.powerconverters.power.steam.ItemBlockPowerConverterSteam;
 //import powercrystals.powerconverters.power.steam.TileEntitySteamConsumer;
@@ -59,6 +57,7 @@ public final class PowerConverterCore
             stream.close();
         }
         catch (Exception e) {
+            //noinspection ThrowableResultOfMethodCallIgnored
             Throwables.propagate(e);
         }
 
@@ -88,6 +87,7 @@ public final class PowerConverterCore
     private static int blockIdSteam;
     private LoaderBase[] bases = new LoaderBase[] { BuildCraft.INSTANCE, /*Factorization.INSTANCE,*/IndustrialCraft.INSTANCE, ThermalExpansion.INSTANCE };
 
+    @SuppressWarnings("UnusedDeclaration")
     @EventHandler
     public void preInit(FMLPreInitializationEvent evt)
     {
@@ -108,6 +108,7 @@ public final class PowerConverterCore
             base.load(LoaderBase.Stage.PREINIT);
         }
 
+    @SuppressWarnings("UnusedParameters")
     @EventHandler
     public void init(FMLInitializationEvent evt) throws Exception
     {
@@ -117,6 +118,7 @@ public final class PowerConverterCore
 	    base.load(LoaderBase.Stage.INIT);
     }
 
+    @SuppressWarnings("UnusedParameters")
     @EventHandler
     public void postInit(FMLPostInitializationEvent evt) throws Exception
     {
@@ -148,6 +150,7 @@ public final class PowerConverterCore
         Object entryGlass = itemstackIfNoOredict("blockGlass", Block.glass);
         Object entryDiamond = itemstackIfNoOredict("gemDiamond", Item.diamond);
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(converterBlockCommon, 1, 0), true, new Object[]{
+                // Energy Bridge
                 "GRG",
                 "LDL",
                 "GRG",
@@ -157,6 +160,7 @@ public final class PowerConverterCore
                 'D', entryDiamond
         }));
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(converterBlockCommon, 1, 2), true, new Object[]{
+                // Universal charger
                 "GRG",
                 "ICI",
                 "GRG",
@@ -191,6 +195,7 @@ public final class PowerConverterCore
             ItemStack stackIndustrialEngine = GameRegistry.findItemStack("Railcraft", "engine.steam.high", 1);
 
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(converterBlockSteam, 1, 0), true,
+                    // Steam consumer
                     "PVP",
                     "VBV",
                     "PLP",
@@ -199,6 +204,7 @@ public final class PowerConverterCore
                     'B', stackPowerBridge,
                     'L', stackLiquidFirebox));
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(converterBlockSteam, 1, 2), true,
+                    // Steam producer
                     "PVP",
                     "VEV",
                     "PLP",
