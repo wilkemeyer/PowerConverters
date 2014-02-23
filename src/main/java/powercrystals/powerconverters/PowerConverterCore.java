@@ -7,8 +7,10 @@ import java.util.Properties;
 import com.google.common.base.Throwables;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.Configuration;
+import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
@@ -130,23 +132,7 @@ public final class PowerConverterCore
 	System.out.println("To prevent over powered infinite energy, use a steam throttle values of less than 5");
 	System.out.println("+++++++++++++++++++++++++[PowerConverters][NOTICE]+++++++++++++++++++++++++");
 
-	//original recipes
-        GameRegistry.addShapedRecipe(new ItemStack(converterBlockCommon, 1, 0), // Energy Bridge
-                "GRG",
-                "LDL",
-                "GRG",
-                'R', Item.redstone,
-                'G', Item.ingotGold,
-                'L', Block.glass,
-                'D', Item.diamond);
-        GameRegistry.addShapedRecipe(new ItemStack(converterBlockCommon, 1, 2), // Universal Charger
-                "GRG",
-                "ICI",
-                "GRG",
-                'R', Item.redstone,
-                'G', Item.ingotGold,
-                'I', Item.ingotIron,
-                'C', Block.chest);
+        registerRecipes();
 
 	NetworkRegistry.instance().registerGuiHandler(instance, new PCGUIHandler());
 	MinecraftForge.EVENT_BUS.register(instance);
@@ -155,9 +141,40 @@ public final class PowerConverterCore
 	bases = null;
     }
 
+    private void registerRecipes() {
+        Object entryGold = itemstackIfNoOredict("ingotGold", Item.ingotGold);
+        Object entryRedstone = itemstackIfNoOredict("dustRedstone", Item.redstone);
+        Object entryIron = itemstackIfNoOredict("ingotIron", Item.ingotIron);
+        Object entryGlass = itemstackIfNoOredict("blockGlass", Block.glass);
+        Object entryDiamond = itemstackIfNoOredict("gemDiamond", Item.diamond);
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(converterBlockCommon, 1, 0), true, new Object[]{
+                "GRG",
+                "LDL",
+                "GRG",
+                'R', entryRedstone,
+                'G', entryGold,
+                'L', entryGlass,
+                'D', entryDiamond
+        }));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(converterBlockCommon, 1, 2), true, new Object[]{
+                "GRG",
+                "ICI",
+                "GRG",
+                'R', entryRedstone,
+                'G', entryGold,
+                'I', entryIron,
+                'C', Block.chest
+        }));
+
+
+    }
+
+    private Object itemstackIfNoOredict(String oredict, Object itemStack) {
+        return OreDictionary.getOres(oredict).isEmpty() ? itemStack : oredict;
+    }
+
     private void loadSteamConverters() throws Exception
     {
-	{
 	    converterBlockSteam = new BlockPowerConverterSteam(blockIdSteam);
 	    GameRegistry.registerBlock(converterBlockSteam, ItemBlockPowerConverterSteam.class, converterBlockSteam.getUnlocalizedName());
 	    GameRegistry.registerTileEntity(TileEntitySteamConsumer.class, "powerConverterSteamConsumer");
@@ -174,7 +191,6 @@ public final class PowerConverterCore
 
 	    GameRegistry.addShapelessRecipe(new ItemStack(converterBlockSteam, 1, 1), new ItemStack(converterBlockSteam, 1, 0));
 	    GameRegistry.addShapelessRecipe(new ItemStack(converterBlockSteam, 1, 0), new ItemStack(converterBlockSteam, 1, 1));
-	}
     }
 
     private static void loadConfig(File dir)
