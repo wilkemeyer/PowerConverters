@@ -6,9 +6,12 @@ import java.util.Properties;
 
 import com.google.common.base.Throwables;
 import net.minecraft.block.Block;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.oredict.OreDictionary;
+import net.minecraftforge.oredict.ShapedOreRecipe;
 import powercrystals.powerconverters.common.BlockPowerConverterCommon;
 import powercrystals.powerconverters.common.ItemBlockPowerConverterCommon;
 import powercrystals.powerconverters.common.TileEntityCharger;
@@ -128,8 +131,22 @@ public final class PowerConverterCore
 	System.out.println("+++++++++++++++++++++++++[PowerConverters][NOTICE]+++++++++++++++++++++++++");
 
 	//original recipes
-	//    GameRegistry.addRecipe(new ItemStack(converterBlockCommon, 1, 0), "GRG", "LDL", "GRG", 'G', Item.ingotGold, 'R', Item.redstone, 'L', Block.glass, 'D', Item.diamond);
-	//    GameRegistry.addRecipe(new ItemStack(converterBlockCommon, 1, 2), "GRG", "ICI", "GRG", 'G', Item.ingotGold, 'R', Item.redstone, 'I', Item.ingotIron, 'C', Block.chest);
+        GameRegistry.addShapedRecipe(new ItemStack(converterBlockCommon, 1, 0), // Energy Bridge
+                "GRG",
+                "LDL",
+                "GRG",
+                'R', Item.redstone,
+                'G', Item.ingotGold,
+                'L', Block.glass,
+                'D', Item.diamond);
+        GameRegistry.addShapedRecipe(new ItemStack(converterBlockCommon, 1, 2), // Universal Charger
+                "GRG",
+                "ICI",
+                "GRG",
+                'R', Item.redstone,
+                'G', Item.ingotGold,
+                'I', Item.ingotIron,
+                'C', Block.chest);
 
 	NetworkRegistry.instance().registerGuiHandler(instance, new PCGUIHandler());
 	MinecraftForge.EVENT_BUS.register(instance);
