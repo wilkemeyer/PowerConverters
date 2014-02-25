@@ -24,7 +24,7 @@ public class TileEntityCharger extends TileEntityEnergyProducer<IInventory> {
     @Override
     public void updateEntity() {
         super.updateEntity();
-        if (_player != null && _player.getDistance(xCoord, yCoord, zCoord) > 2D)
+        if (_player != null && _player.getDistance(xCoord, yCoord + 2, zCoord) > 1.5D)
             setPlayer(null);
     }
 
