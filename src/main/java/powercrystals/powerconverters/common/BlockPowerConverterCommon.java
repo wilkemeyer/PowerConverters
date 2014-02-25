@@ -37,8 +37,8 @@ public class BlockPowerConverterCommon extends BlockContainer
     {
         String folderName = getUnlocalizedName().substring("tile.powerconverters.".length());
         _iconBridge = ir.registerIcon(String.format("%s:%s/bridge", PowerConverterCore.modId, folderName));
-        _iconChargerOff = ir.registerIcon(String.format("%s:%s/charger_on", PowerConverterCore.modId, folderName));
-        _iconChargerOn = ir.registerIcon(String.format("%s:%s/charger_off", PowerConverterCore.modId, folderName));
+        _iconChargerOff = ir.registerIcon(String.format("%s:%s/charger_off", PowerConverterCore.modId, folderName));
+        _iconChargerOn = ir.registerIcon(String.format("%s:%s/charger_on", PowerConverterCore.modId, folderName));
     }
 
     @Override
