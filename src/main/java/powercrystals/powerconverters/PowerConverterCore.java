@@ -101,6 +101,12 @@ public final class PowerConverterCore
         GameRegistry.registerTileEntity(TileEntityEnergyBridge.class, "powerConverterEnergyBridge");
         GameRegistry.registerTileEntity(TileEntityCharger.class, "powerConverterUniversalCharger");
 
+        if(powerSystemSteamEnabled) {
+            converterBlockSteam = new BlockPowerConverterSteam(blockIdSteam);
+            GameRegistry.registerBlock(converterBlockSteam, ItemBlockPowerConverterSteam.class, converterBlockSteam.getUnlocalizedName());
+            GameRegistry.registerTileEntity(TileEntitySteamConsumer.class, "powerConverterSteamConsumer");
+            GameRegistry.registerTileEntity(TileEntitySteamProducer.class, "powerConverterSteamProducer");
+        }
 
         powerSystemSteam = new PowerSystem("Steam", "STEAM", 500, 500,/*875, 875,*/null, null, "mB/t");
         PowerSystem.registerPowerSystem(powerSystemSteam);
@@ -112,8 +118,6 @@ public final class PowerConverterCore
     @EventHandler
     public void init(FMLInitializationEvent evt) throws Exception
     {
-	if (powerSystemSteamEnabled)
-	    loadSteamConverters();
 	for (LoaderBase base : bases)
 	    base.load(LoaderBase.Stage.INIT);
     }
@@ -135,6 +139,9 @@ public final class PowerConverterCore
 	System.out.println("+++++++++++++++++++++++++[PowerConverters][NOTICE]+++++++++++++++++++++++++");
 
         registerRecipes();
+        if (powerSystemSteamEnabled) {
+            loadSteamConverters();
+        }
 
 	NetworkRegistry.instance().registerGuiHandler(instance, new PCGUIHandler());
 	MinecraftForge.EVENT_BUS.register(instance);
@@ -179,10 +186,6 @@ public final class PowerConverterCore
 
     private void loadSteamConverters() throws Exception
     {
-	    converterBlockSteam = new BlockPowerConverterSteam(blockIdSteam);
-	    GameRegistry.registerBlock(converterBlockSteam, ItemBlockPowerConverterSteam.class, converterBlockSteam.getUnlocalizedName());
-	    GameRegistry.registerTileEntity(TileEntitySteamConsumer.class, "powerConverterSteamConsumer");
-	    GameRegistry.registerTileEntity(TileEntitySteamProducer.class, "powerConverterSteamProducer");
 
         ItemStack stackPowerBridge = new ItemStack(converterBlockCommon, 1, 0);
 
