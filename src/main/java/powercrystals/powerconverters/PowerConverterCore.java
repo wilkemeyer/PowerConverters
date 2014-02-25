@@ -191,11 +191,11 @@ public final class PowerConverterCore
 
 	    if (Loader.isModLoaded("Railcraft"))
 	    {
-            Object entrySteelPlate = itemstackIfNoOredict("plateSteel", GameRegistry.findItem("Railcraft", "railcraft.part.plate.steel"));
+            Object entrySteelPlate = itemstackIfNoOredict("plateSteel", GameRegistry.findItemStack("Railcraft", "part.plate.steel", 1));
 
-            ItemStack stackValve = GameRegistry.findItemStack("Railcraft", "tank.steel.gauge", 1);
-            ItemStack stackLiquidFirebox = GameRegistry.findItemStack("Railcraft", "boiler.firebox.liquid", 1);
-            ItemStack stackIndustrialEngine = GameRegistry.findItemStack("Railcraft", "engine.steam.high", 1);
+            ItemStack stackValve = GameRegistry.findItemStack("Railcraft", "machine.beta.tank.steel.gauge", 1);
+            ItemStack stackLiquidFirebox = GameRegistry.findItemStack("Railcraft", "machine.beta.boiler.firebox.liquid", 1);
+            ItemStack stackIndustrialEngine = GameRegistry.findItemStack("Railcraft", "machine.beta.engine.steam.high", 1);
 
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(converterBlockSteam, 1, 0), true,
                     // Steam consumer
