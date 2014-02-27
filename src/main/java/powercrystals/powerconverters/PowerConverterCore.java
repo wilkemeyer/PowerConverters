@@ -151,11 +151,17 @@ public final class PowerConverterCore
     }
 
     private void registerRecipes() {
-        Object entryGold = itemstackIfNoOredict("ingotGold", Item.ingotGold);
-        Object entryRedstone = itemstackIfNoOredict("dustRedstone", Item.redstone);
-        Object entryIron = itemstackIfNoOredict("ingotIron", Item.ingotIron);
-        Object entryGlass = itemstackIfNoOredict("blockGlass", Block.glass);
-        Object entryDiamond = itemstackIfNoOredict("gemDiamond", Item.diamond);
+        ItemStack stackGold = new ItemStack(Item.ingotGold);
+        ItemStack stackRedstone = new ItemStack(Item.redstone);
+        ItemStack stackIron = new ItemStack(Item.ingotIron);
+        ItemStack stackGlass = new ItemStack(Block.glass);
+        ItemStack stackDiamond = new ItemStack(Item.diamond);
+
+        Object entryGold = tryOreDict("ingotGold", stackGold);
+        Object entryRedstone = tryOreDict("dustRedstone", stackRedstone);
+        Object entryIron = tryOreDict("ingotIron", stackIron);
+        Object entryGlass = tryOreDict("blockGlass", stackGlass);
+        Object entryDiamond = tryOreDict("gemDiamond", stackDiamond);
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(converterBlockCommon, 1, 0), true, new Object[]{
                 // Energy Bridge
                 "GRG",
@@ -180,8 +186,13 @@ public final class PowerConverterCore
 
     }
 
-    private Object itemstackIfNoOredict(String oredict, Object itemStack) {
-        return OreDictionary.getOres(oredict).isEmpty() ? itemStack : oredict;
+    private Object tryOreDict(String name, ItemStack itemStack) {
+        for(ItemStack ore : OreDictionary.getOres(name)) {
+            if(ore.isItemEqual(itemStack)) {
+                return name;
+            }
+        }
+        return itemStack;
     }
 
     private void loadSteamConverters() throws Exception
@@ -191,7 +202,7 @@ public final class PowerConverterCore
 
 	    if (Loader.isModLoaded("Railcraft"))
 	    {
-            Object entrySteelPlate = itemstackIfNoOredict("plateSteel", GameRegistry.findItemStack("Railcraft", "part.plate.steel", 1));
+            Object entrySteelPlate = tryOreDict("plateSteel", GameRegistry.findItemStack("Railcraft", "part.plate.steel", 1));
 
             ItemStack stackValve = GameRegistry.findItemStack("Railcraft", "machine.beta.tank.steel.gauge", 1);
             ItemStack stackLiquidFirebox = GameRegistry.findItemStack("Railcraft", "machine.beta.boiler.firebox.liquid", 1);
@@ -206,15 +217,15 @@ public final class PowerConverterCore
                     'V', stackValve,
                     'B', stackPowerBridge,
                     'L', stackLiquidFirebox));
-            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(converterBlockSteam, 1, 2), true,
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(converterBlockSteam, 1, 1), true,
                     // Steam producer
                     "PVP",
-                    "VEV",
-                    "PLP",
+                    "VBV",
+                    "PEP",
                     'P', entrySteelPlate,
                     'V', stackValve,
-                    'E', stackIndustrialEngine,
-                    'L', stackLiquidFirebox));
+                    'B', stackPowerBridge,
+                    'E', stackIndustrialEngine));
 	    }
 		//Object fzRegistry = Class.forName("factorization.common.Core").getField("registry").get(null);
 		//GameRegistry.addRecipe(new ItemStack(converterBlockSteam, 1, 0), "G G", " E ", "G G", 'G', Item.ingotGold, 'E', (Class.forName("factorization.common.Registry").getField("steamturbine_item").get(fzRegistry)));
