@@ -28,7 +28,7 @@ public class BlockPowerConverterBuildCraft extends BlockPowerConverter {
     @SideOnly(Side.CLIENT)
     public void registerIcons(IconRegister ir) {
         String[] types = { "consumer", "producer" };
-        String[] states = { "on", "off" };
+        String[] states = { "off", "on" };
         String folderName = getUnlocalizedName().substring("tile.powerconverters.".length());
 
         int i = 0;

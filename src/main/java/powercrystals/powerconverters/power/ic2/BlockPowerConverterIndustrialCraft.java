@@ -51,7 +51,7 @@ public class BlockPowerConverterIndustrialCraft extends BlockPowerConverter
     {
         String[] voltages = { "lv", "mv", "hv", "ev", "uv" };
         String[] types = { "consumer", "producer" };
-        String[] states = { "on", "off" };
+        String[] states = { "off", "on" };
         String folderName = getUnlocalizedName().substring("tile.powerconverters.".length());
 
         int i = 0;
