@@ -24,8 +24,14 @@ public class TileEntityCharger extends TileEntityEnergyProducer<IInventory> {
     @Override
     public void updateEntity() {
         super.updateEntity();
-        if (_player != null && _player.getDistance(xCoord, yCoord + 2, zCoord) > 1.5D)
-            setPlayer(null);
+        if(_player != null) {
+            int pX = (int) Math.floor(_player.posX);
+            int pY = (int) Math.floor(_player.posY - _player.getYOffset());
+            int pZ = (int) Math.floor(_player.posZ);
+            if (pX != xCoord || pY - 1 != yCoord || pZ != zCoord) {
+                setPlayer(null);
+            }
+        }
     }
 
     @Override
@@ -65,7 +71,7 @@ public class TileEntityCharger extends TileEntityEnergyProducer<IInventory> {
     }
 
     public void setPlayer(EntityPlayer player) {
-        if (worldObj.isRemote && _player != player) {
+        if (_player != player) {
             worldObj.markBlockForRenderUpdate(xCoord, yCoord, zCoord);
             _player = player;
         }
