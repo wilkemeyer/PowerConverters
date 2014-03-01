@@ -11,8 +11,44 @@ import powercrystals.powerconverters.common.BridgeSideData;
 import powercrystals.powerconverters.common.TileEntityEnergyBridge;
 import powercrystals.powerconverters.power.PowerSystem;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class ContainerEnergyBridge extends Container {
-    private static final int _numParams = 7;
+    private static enum _sideData {
+        VOLTAGE_INDEX,
+        IS_CONSUMER,
+        IS_PRODUCER,
+        POWER_SYSTEM_ID,
+        IS_CONNECTED,
+
+        /*
+         * Int is broken up into shorts (see ICrafting)
+         */
+        OUTPUT_RATE_HIGH, // HIGH BITS (break up int into shorts)
+        OUTPUT_RATE_LOW, // LOW BITS (break up int into shorts)
+        ENERGY_STORED_HIGH,
+        ENERGY_STORED_LOW
+    }
+    private static final int _flagOffset = 1000;
+    private static enum _otherData {
+        INPUT_LIMITED(1000),
+        /*
+         * Ints are broken up into shorts (see ICrafting)
+         */
+        ENERGY_SCALED_HIGH(1001),
+        ENERGY_SCALED_LOW(1002);
+
+        int value;
+        _otherData(int newValue) { value = newValue; }
+        int getValue() { return value; }
+    }
+    private static final Map<Integer, _otherData> _otherDataMap = new HashMap<Integer, _otherData>();
+    static {
+        for(_otherData data : _otherData.values()) {
+            _otherDataMap.put(data.getValue(), data);
+        }
+    }
 
     private TileEntityEnergyBridge _bridge;
 
@@ -28,20 +64,69 @@ public class ContainerEnergyBridge extends Container {
 
     @Override
     public void updateProgressBar(int var, int value) {
-        if (var == 1000) _bridge.setIsInputLimited(value != 0);
-        else if (var == 1001) _bridge.setEnergyScaled(value);
-        else {
-            int side = var / _numParams;
-            int sidevar = var % _numParams;
+        if(var < _flagOffset) {
+            int outputRateCombined, energyStoredCombined;
 
-            if (sidevar == 0) _bridge.getDataForSide(ForgeDirection.getOrientation(side)).voltageNameIndex = value;
-            if (sidevar == 1) _bridge.getDataForSide(ForgeDirection.getOrientation(side)).isConsumer = (value != 0);
-            if (sidevar == 2) _bridge.getDataForSide(ForgeDirection.getOrientation(side)).isProducer = (value != 0);
-            if (sidevar == 3)
-                _bridge.getDataForSide(ForgeDirection.getOrientation(side)).powerSystem = PowerSystem.getPowerSystemById(value);
-            if (sidevar == 4) _bridge.getDataForSide(ForgeDirection.getOrientation(side)).isConnected = (value != 0);
-            if (sidevar == 5) _bridge.getDataForSide(ForgeDirection.getOrientation(side)).outputRate = value;
-            if (sidevar == 6) _bridge.setEnergyStored(value);
+            ForgeDirection dir = ForgeDirection.getOrientation(var / _sideData.values().length);
+            BridgeSideData sideData = _bridge.getDataForSide(dir);
+            int sideVar = var % _sideData.values().length;
+            switch (_sideData.values()[sideVar])
+            {
+                case VOLTAGE_INDEX:
+                    sideData.voltageNameIndex = value;
+                    break;
+                case IS_CONSUMER:
+                    sideData.isConsumer = (value != 0);
+                    break;
+                case IS_PRODUCER:
+                    sideData.isProducer = (value != 0);
+                    break;
+                case POWER_SYSTEM_ID:
+                    sideData.powerSystem = PowerSystem.getPowerSystemById(value);
+                    break;
+                case IS_CONNECTED:
+                    sideData.isConnected = (value != 0);
+                    break;
+                case OUTPUT_RATE_HIGH:
+                    int outputRateLow = ((int)sideData.outputRate) & 0xFFFF;
+                    outputRateCombined = (value << 16) | outputRateLow;
+                    sideData.outputRate = outputRateCombined;
+                    break;
+                case OUTPUT_RATE_LOW:
+                    int outputRateHigh = ((int)sideData.outputRate) & 0xFFFF0000;
+                    outputRateCombined = outputRateHigh | (value & 0xFFFF);
+                    sideData.outputRate = outputRateCombined;
+                    break;
+                case ENERGY_STORED_HIGH:
+                    int energyStoredLow = _bridge.getEnergyStored() & 0xFFFF;
+                    energyStoredCombined = (value << 16) | energyStoredLow;
+                    _bridge.setEnergyStored(energyStoredCombined);
+                    break;
+                case ENERGY_STORED_LOW:
+                    int energyStoredHigh = _bridge.getEnergyStored() & 0xFFFF0000;
+                    energyStoredCombined = energyStoredHigh | (value & 0xFFFF);
+                    _bridge.setEnergyStored(energyStoredCombined);
+                    break;
+            }
+        }
+        else {
+            int energyScaledCombined;
+            switch (_otherDataMap.get(var))
+            {
+                case INPUT_LIMITED:
+                    _bridge.setIsInputLimited(value != 0);
+                    break;
+                case ENERGY_SCALED_HIGH:
+                    int energyScaledLow = _bridge.getEnergyScaled() & 0xFFFF;
+                    energyScaledCombined = (value << 16) | energyScaledLow;
+                    _bridge.setEnergyScaled(energyScaledCombined);
+                    break;
+                case ENERGY_SCALED_LOW:
+                    int energyScaledHigh = _bridge.getEnergyScaled() & 0xFFFF0000;
+                    energyScaledCombined = energyScaledHigh | (value & 0xFFFF);
+                    _bridge.setEnergyScaled(energyScaledCombined);
+                    break;
+            }
         }
     }
 
@@ -53,22 +138,26 @@ public class ContainerEnergyBridge extends Container {
             BridgeSideData data = _bridge.getDataForSide(d);
             for (Object _crafter : crafters) {
                 ICrafting crafter = (ICrafting) _crafter;
-                crafter.sendProgressBarUpdate(this, side * _numParams, data.voltageNameIndex);
-                crafter.sendProgressBarUpdate(this, side * _numParams + 1, data.isConsumer ? 1 : 0);
-                crafter.sendProgressBarUpdate(this, side * _numParams + 2, data.isProducer ? 1 : 0);
+                int sideVal = side * _sideData.values().length;
+                crafter.sendProgressBarUpdate(this, sideVal + _sideData.VOLTAGE_INDEX.ordinal(), data.voltageNameIndex);
+                crafter.sendProgressBarUpdate(this, sideVal + _sideData.IS_CONSUMER.ordinal(), data.isConsumer ? 1 : 0);
+                crafter.sendProgressBarUpdate(this, sideVal + _sideData.IS_PRODUCER.ordinal(), data.isProducer ? 1 : 0);
                 if (data.powerSystem != null) {
-                    crafter.sendProgressBarUpdate(this, side * _numParams + 3, data.powerSystem.getId());
+                    crafter.sendProgressBarUpdate(this, sideVal + _sideData.POWER_SYSTEM_ID.ordinal(), data.powerSystem.getId());
                 }
-                crafter.sendProgressBarUpdate(this, side * _numParams + 4, data.isConnected ? 1 : 0);
-                crafter.sendProgressBarUpdate(this, side * _numParams + 5, (int) data.outputRate);
-                crafter.sendProgressBarUpdate(this, side * _numParams + 6, _bridge.getEnergyStored());
+                crafter.sendProgressBarUpdate(this, sideVal + _sideData.IS_CONNECTED.ordinal(), data.isConnected ? 1 : 0);
+                crafter.sendProgressBarUpdate(this, sideVal + _sideData.OUTPUT_RATE_HIGH.ordinal(), (short)(((int)data.outputRate) >> 16));
+                crafter.sendProgressBarUpdate(this, sideVal + _sideData.OUTPUT_RATE_LOW.ordinal(), (short)(((int)data.outputRate) & 0xFFFF));
+                crafter.sendProgressBarUpdate(this, _sideData.ENERGY_STORED_HIGH.ordinal(), (short)(_bridge.getEnergyStored() >> 16));
+                crafter.sendProgressBarUpdate(this, _sideData.ENERGY_STORED_LOW.ordinal(), (short)(_bridge.getEnergyStored() & 0xFFFF));
             }
         }
 
         for (Object _crafter : crafters) {
             ICrafting crafter = (ICrafting) _crafter;
-            crafter.sendProgressBarUpdate(this, 1000, _bridge.isInputLimited() ? 1 : 0);
-            crafter.sendProgressBarUpdate(this, 1001, _bridge.getEnergyScaled());
+            crafter.sendProgressBarUpdate(this, _otherData.INPUT_LIMITED.getValue(), _bridge.isInputLimited() ? 1 : 0);
+            crafter.sendProgressBarUpdate(this, _otherData.ENERGY_SCALED_HIGH.getValue(), (short)(_bridge.getEnergyScaled() >> 16));
+            crafter.sendProgressBarUpdate(this, _otherData.ENERGY_SCALED_LOW.getValue(), (short)(_bridge.getEnergyScaled() & 0xFFFF));
         }
     }
 
