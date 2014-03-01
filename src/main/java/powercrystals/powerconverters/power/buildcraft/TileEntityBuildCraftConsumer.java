@@ -1,5 +1,6 @@
 package powercrystals.powerconverters.power.buildcraft;
 
+import buildcraft.api.power.IPowerEmitter;
 import buildcraft.api.power.IPowerReceptor;
 import buildcraft.api.power.PowerHandler;
 import buildcraft.api.power.PowerHandler.PowerReceiver;
@@ -10,13 +11,13 @@ import net.minecraftforge.common.ForgeDirection;
 import powercrystals.powerconverters.mods.BuildCraft;
 import powercrystals.powerconverters.power.TileEntityEnergyConsumer;
 
-public class TileEntityBuildCraftConsumer extends TileEntityEnergyConsumer<IPowerReceptor> implements IPowerReceptor, IPipeConnection {
+public class TileEntityBuildCraftConsumer extends TileEntityEnergyConsumer<IPowerEmitter> implements IPowerReceptor, IPipeConnection {
     private PowerHandler _powerProvider;
     private int _mjLastTick = 0;
     private long _lastTickInjected;
 
     public TileEntityBuildCraftConsumer() {
-        super(BuildCraft.INSTANCE.powerSystem, 0, IPowerReceptor.class);
+        super(BuildCraft.INSTANCE.powerSystem, 0, IPowerEmitter.class);
         _powerProvider = new PowerHandler(this, PowerHandler.Type.MACHINE);
         _powerProvider.configure(0, 100, 0, 1000); // 25 latency
     }
