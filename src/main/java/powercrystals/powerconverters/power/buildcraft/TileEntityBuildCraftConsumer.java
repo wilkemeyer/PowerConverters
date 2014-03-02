@@ -6,15 +6,23 @@ import buildcraft.api.power.PowerHandler;
 import buildcraft.api.power.PowerHandler.PowerReceiver;
 import buildcraft.api.transport.IPipeConnection;
 import buildcraft.api.transport.IPipeTile;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import powercrystals.powerconverters.mods.BuildCraft;
+import powercrystals.powerconverters.position.BlockPosition;
 import powercrystals.powerconverters.power.TileEntityEnergyConsumer;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class TileEntityBuildCraftConsumer extends TileEntityEnergyConsumer<IPowerEmitter> implements IPowerReceptor, IPipeConnection {
     private PowerHandler _powerProvider;
     private int _mjLastTick = 0;
     private long _lastTickInjected;
+
+    private Map<ForgeDirection, IPipeTile> _adjacentPipes;
+    private Map<ForgeDirection, IPowerEmitter> _adjacentPowerSources;
 
     public TileEntityBuildCraftConsumer() {
         super(BuildCraft.INSTANCE.powerSystem, 0, IPowerEmitter.class);
@@ -72,4 +80,58 @@ public class TileEntityBuildCraftConsumer extends TileEntityEnergyConsumer<IPowe
     public ConnectOverride overridePipeConnection(IPipeTile.PipeType pipeType, ForgeDirection direction) {
         return pipeType == IPipeTile.PipeType.POWER ? ConnectOverride.DEFAULT : ConnectOverride.DISCONNECT;
     }
+
+    @Override
+    public void onNeighboorChanged() {
+        super.onNeighboorChanged();
+
+        _adjacentPipes = new HashMap<ForgeDirection, IPipeTile>();
+        _adjacentPowerSources = new HashMap<ForgeDirection, IPowerEmitter>();
+
+        for(ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
+            TileEntity te = BlockPosition.getAdjacentTileEntity(this, direction);
+            if(te == null) {
+                continue;
+            }
+            if(IPipeTile.class.isAssignableFrom(te.getClass())) {
+                _adjacentPipes.put(direction, (IPipeTile)te);
+            }
+            else if(IPowerEmitter.class.isAssignableFrom(te.getClass())) {
+                _adjacentPowerSources.put(direction, (IPowerEmitter)te);
+            }
+        }
+    }
+
+    @Override
+    public boolean isConnected() {
+        for(Map.Entry<ForgeDirection, IPipeTile> pipeEntry : _adjacentPipes.entrySet()) {
+            if(pipeEntry.getValue().isPipeConnected(pipeEntry.getKey().getOpposite())) {
+                return true;
+            }
+        }
+        for(Map.Entry<ForgeDirection, IPowerEmitter> emitterEntry : _adjacentPowerSources.entrySet()) {
+            if(emitterEntry.getValue().canEmitPowerFrom(emitterEntry.getKey().getOpposite())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean isSideConnected(int side) {
+        ForgeDirection direction = ForgeDirection.getOrientation(side);
+        IPipeTile pipe = _adjacentPipes.get(direction);
+        if(pipe != null && pipe.isPipeConnected(direction)) {
+            return true;
+        }
+        IPowerEmitter emitter = _adjacentPowerSources.get(direction);
+        return emitter != null && emitter.canEmitPowerFrom(direction);
+    }
+
+    @Override
+    public boolean isSideConnectedClient(int side) {
+        TileEntity te = BlockPosition.getAdjacentTileEntity(this, ForgeDirection.getOrientation(side));
+        return te != null && (IPipeTile.class.isAssignableFrom(te.getClass()) || IPowerEmitter.class.isAssignableFrom(te.getClass()));
+    }
+
 }
