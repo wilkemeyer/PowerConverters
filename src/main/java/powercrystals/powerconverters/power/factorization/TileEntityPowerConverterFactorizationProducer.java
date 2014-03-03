@@ -3,8 +3,10 @@ package powercrystals.powerconverters.power.factorization;
 import factorization.api.Charge;
 import factorization.api.Coord;
 import factorization.api.IChargeConductor;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.ForgeDirection;
 import powercrystals.powerconverters.mods.Factorization;
+import powercrystals.powerconverters.position.BlockPosition;
 import powercrystals.powerconverters.power.TileEntityEnergyProducer;
 
 import java.util.Map.Entry;
@@ -12,6 +14,7 @@ import java.util.Map.Entry;
 public class TileEntityPowerConverterFactorizationProducer extends TileEntityEnergyProducer<IChargeConductor> implements IChargeConductor {
     private Charge _charge = new Charge(this);
     private static final int _maxCG = 1000;
+    private boolean neighbourDirty = false;
 
     public TileEntityPowerConverterFactorizationProducer() {
         super(Factorization.INSTANCE.powerSystem, 0, IChargeConductor.class);
@@ -49,6 +52,35 @@ public class TileEntityPowerConverterFactorizationProducer extends TileEntityEne
     @Override
     public Coord getCoord() {
         return new Coord(this);
+    }
+
+    @Override
+    public void onNeighboorChanged() {
+        super.onNeighboorChanged();
+
+        try
+        {
+            Class fzNullClass = Class.forName("factorization.shared.TileEntityFzNull");
+            for (ForgeDirection d : ForgeDirection.VALID_DIRECTIONS) {
+                TileEntity te = BlockPosition.getAdjacentTileEntity(this, d);
+                //noinspection unchecked
+                if(te != null && fzNullClass != null && fzNullClass.isAssignableFrom(te.getClass())) {
+                    neighbourDirty = true;
+                }
+            }
+        } catch (ClassNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public boolean isConnected() {
+        if(neighbourDirty) {
+            onNeighboorChanged();
+            neighbourDirty = false;
+        }
+        return super.isConnected();
     }
 }
 

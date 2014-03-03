@@ -69,6 +69,7 @@ public class TileEntityPowerConverterFactorizationConsumer extends TileEntityEne
             Class fzNullClass = Class.forName("factorization.shared.TileEntityFzNull");
             for (ForgeDirection d : ForgeDirection.VALID_DIRECTIONS) {
                 TileEntity te = BlockPosition.getAdjacentTileEntity(this, d);
+                //noinspection unchecked
                 if(te != null && fzNullClass.isAssignableFrom(te.getClass())) {
                     neighbourDirty = true;
                 }
