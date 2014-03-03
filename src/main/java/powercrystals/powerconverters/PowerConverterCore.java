@@ -23,6 +23,7 @@ import powercrystals.powerconverters.common.TileEntityCharger;
 import powercrystals.powerconverters.common.TileEntityEnergyBridge;
 import powercrystals.powerconverters.gui.PCGUIHandler;
 import powercrystals.powerconverters.mods.BuildCraft;
+import powercrystals.powerconverters.mods.Factorization;
 import powercrystals.powerconverters.mods.IndustrialCraft;
 import powercrystals.powerconverters.mods.ThermalExpansion;
 import powercrystals.powerconverters.mods.base.LoaderBase;
@@ -85,7 +86,7 @@ public final class PowerConverterCore
 
     private static int blockIdCommon;
     private static int blockIdSteam;
-    private LoaderBase[] bases = new LoaderBase[] { BuildCraft.INSTANCE, /*Factorization.INSTANCE,*/IndustrialCraft.INSTANCE, ThermalExpansion.INSTANCE };
+    private LoaderBase[] bases = new LoaderBase[] { BuildCraft.INSTANCE, Factorization.INSTANCE,IndustrialCraft.INSTANCE, ThermalExpansion.INSTANCE };
 
     @SuppressWarnings("UnusedDeclaration")
     @EventHandler
