@@ -36,10 +36,6 @@ import powercrystals.powerconverters.power.steam.TileEntitySteamProducer;
 import java.io.File;
 import java.io.InputStream;
 import java.util.Properties;
-//import powercrystals.powerconverters.power.steam.BlockPowerConverterSteam;
-//import powercrystals.powerconverters.power.steam.ItemBlockPowerConverterSteam;
-//import powercrystals.powerconverters.power.steam.TileEntitySteamConsumer;
-//import powercrystals.powerconverters.power.steam.TileEntitySteamProducer;
 
 @Mod(modid = PowerConverterCore.modId, name = PowerConverterCore.modName, dependencies = "after:BuildCraft|Energy;after:factorization;after:IC2;after:Railcraft;after:ThermalExpansion")
 @NetworkMod(clientSideRequired = true, serverSideRequired = false)
@@ -183,8 +179,6 @@ public final class PowerConverterCore
                 'I', entryIron,
                 'C', Block.chest
         }));
-
-
     }
 
     private Object tryOreDict(String name, ItemStack itemStack) {
@@ -198,41 +192,24 @@ public final class PowerConverterCore
 
     private void loadSteamConverters() throws Exception
     {
-
-        ItemStack stackPowerBridge = new ItemStack(converterBlockCommon, 1, 0);
-
 	    if (Loader.isModLoaded("Railcraft"))
 	    {
-            Object entrySteelPlate = tryOreDict("plateSteel", GameRegistry.findItemStack("Railcraft", "part.plate.steel", 1));
+            ItemStack stackGold = new ItemStack(Item.ingotGold);
+            Object entryGold = tryOreDict("ingotGold", stackGold);
 
-            ItemStack stackValve = GameRegistry.findItemStack("Railcraft", "machine.beta.tank.steel.gauge", 1);
-            ItemStack stackLiquidFirebox = GameRegistry.findItemStack("Railcraft", "machine.beta.boiler.firebox.liquid", 1);
-            ItemStack stackIndustrialEngine = GameRegistry.findItemStack("Railcraft", "machine.beta.engine.steam.high", 1);
+            ItemStack stackIndustrialEngine = GameRegistry.findItemStack("Railcraft", "machine.beta.engine.steam.low", 1);
 
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(converterBlockSteam, 1, 0), true,
                     // Steam consumer
-                    "PVP",
-                    "VBV",
-                    "PLP",
-                    'P', entrySteelPlate,
-                    'V', stackValve,
-                    'B', stackPowerBridge,
-                    'L', stackLiquidFirebox));
-            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(converterBlockSteam, 1, 1), true,
-                    // Steam producer
-                    "PVP",
-                    "VBV",
-                    "PEP",
-                    'P', entrySteelPlate,
-                    'V', stackValve,
-                    'B', stackPowerBridge,
+                    "G G",
+                    " E ",
+                    "G G",
+                    'G', entryGold,
                     'E', stackIndustrialEngine));
 	    }
-		//Object fzRegistry = Class.forName("factorization.common.Core").getField("registry").get(null);
-		//GameRegistry.addRecipe(new ItemStack(converterBlockSteam, 1, 0), "G G", " E ", "G G", 'G', Item.ingotGold, 'E', (Class.forName("factorization.common.Registry").getField("steamturbine_item").get(fzRegistry)));
 
-	    /*GameRegistry.addShapelessRecipe(new ItemStack(converterBlockSteam, 1, 1), new ItemStack(converterBlockSteam, 1, 0));
-	    GameRegistry.addShapelessRecipe(new ItemStack(converterBlockSteam, 1, 0), new ItemStack(converterBlockSteam, 1, 1));*/
+	    GameRegistry.addShapelessRecipe(new ItemStack(converterBlockSteam, 1, 1), new ItemStack(converterBlockSteam, 1, 0));
+	    GameRegistry.addShapelessRecipe(new ItemStack(converterBlockSteam, 1, 0), new ItemStack(converterBlockSteam, 1, 1));
     }
 
     private static void loadConfig(File dir)
