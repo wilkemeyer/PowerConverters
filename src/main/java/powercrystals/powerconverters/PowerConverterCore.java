@@ -181,7 +181,7 @@ public final class PowerConverterCore
         }));
     }
 
-    private Object tryOreDict(String name, ItemStack itemStack) {
+    public static Object tryOreDict(String name, ItemStack itemStack) {
         for(ItemStack ore : OreDictionary.getOres(name)) {
             if(ore.isItemEqual(itemStack)) {
                 return name;

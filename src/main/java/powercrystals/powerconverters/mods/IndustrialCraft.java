@@ -4,6 +4,7 @@ import ic2.api.item.Items;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.oredict.ShapedOreRecipe;
 import powercrystals.powerconverters.PowerConverterCore;
 import powercrystals.powerconverters.common.TileEntityCharger;
 import powercrystals.powerconverters.mods.base.LoaderBase;
@@ -51,37 +52,93 @@ public final class IndustrialCraft extends LoaderBase
     @Override
     protected void postInit()
     {
-	GameRegistry.addShapelessRecipe(new ItemStack(converterBlock, 1, 1), new ItemStack(converterBlock, 1, 0));
-	GameRegistry.addShapelessRecipe(new ItemStack(converterBlock, 1, 0), new ItemStack(converterBlock, 1, 1));
-	GameRegistry.addShapelessRecipe(new ItemStack(converterBlock, 1, 3), new ItemStack(converterBlock, 1, 2));
-	GameRegistry.addShapelessRecipe(new ItemStack(converterBlock, 1, 2), new ItemStack(converterBlock, 1, 3));
-	GameRegistry.addShapelessRecipe(new ItemStack(converterBlock, 1, 5), new ItemStack(converterBlock, 1, 4));
-	GameRegistry.addShapelessRecipe(new ItemStack(converterBlock, 1, 4), new ItemStack(converterBlock, 1, 5));
-	GameRegistry.addShapelessRecipe(new ItemStack(converterBlock, 1, 7), new ItemStack(converterBlock, 1, 6));
-	GameRegistry.addShapelessRecipe(new ItemStack(converterBlock, 1, 6), new ItemStack(converterBlock, 1, 7));
-	GameRegistry.addShapelessRecipe(new ItemStack(converterBlock, 1, 9), new ItemStack(converterBlock, 1, 8));
-	GameRegistry.addShapelessRecipe(new ItemStack(converterBlock, 1, 8), new ItemStack(converterBlock, 1, 9));
-	GameRegistry.addRecipe(new ItemStack(converterBlock, 1, 0), "CPC", "PTP", "CPC", 'C', Items.getItem("insulatedTinCableItem"), 'P', Items.getItem("platetin"), 'T', Items.getItem("reBattery"));
-	GameRegistry.addRecipe(new ItemStack(converterBlock, 1, 2), "CPC", "PTP", "CPC", 'C', Items.getItem("insulatedCopperCableItem"), 'P', Items.getItem("platecopper"), 'T', Items.getItem("lvTransformer"));
-	GameRegistry.addRecipe(new ItemStack(converterBlock, 1, 4), "CPC", "PTP", "CPC", 'C', Items.getItem("insulatedGoldCableItem"), 'P', Items.getItem("plategold"), 'T', Items.getItem("mvTransformer"));
-	GameRegistry.addRecipe(new ItemStack(converterBlock, 1, 6), "CPC", "PTP", "CPC", 'C', Items.getItem("insulatedIronCableItem"), 'P', Items.getItem("plateiron"), 'T', Items.getItem("hvTransformer"));
-	GameRegistry.addRecipe(new ItemStack(converterBlock, 1, 8), "CPC", "PTP", "CPC", 'C', Items.getItem("glassFiberCableItem"), 'P', Items.getItem("platelapi"), 'T', Items.getItem("evTransformer"));
-	//GameRegistry.addRecipe(new ItemStack(converterBlock, 1, 0), "G G", " T ", "G G", 'G', Item.ingotGold, 'T', Items.getItem("lvTransformer"));
-	//GameRegistry.addRecipe(new ItemStack(converterBlock, 1, 2), "G G", " T ", "G G", 'G', Item.ingotGold, 'T', Items.getItem("mvTransformer"));
-	//GameRegistry.addRecipe(new ItemStack(converterBlock, 1, 4), "G G", " T ", "G G", 'G', Item.ingotGold, 'T', Items.getItem("hvTransformer"));
-	//GameRegistry.addRecipe(new ItemStack(converterBlock, 1, 6), "G G", " T ", "G G", 'G', Item.ingotGold, 'T', Items.getItem("evTransformer"));
-	ItemStack fluid = new ItemStack(Items.getItem("ejectorUpgrade").itemID, 1, 4);
-	ItemStack storage = Items.getItem("batBox");
-	ItemStack cable = Items.getItem("insulatedGoldCableItem");
-	ItemStack tin = Items.getItem("platetin");
-	ItemStack charger = Items.getItem("RTGenerator");
-	ItemStack transmit = Items.getItem("insulatedIronCableItem");
-	if (IndustrialCraft.INSTANCE.powerSystem.getRecipesEnabled())
-	{
-	    GameRegistry.addRecipe(new ItemStack(PowerConverterCore.converterBlockCommon, 1, 0), "CTC", "SDS", "CTC", 'C', cable, 'T', tin, 'S', storage, 'D', Item.diamond);
-	    GameRegistry.addRecipe(new ItemStack(PowerConverterCore.converterBlockCommon, 1, 2), "T#T", "CSC", "TCT", 'T', transmit, 'C', cable, 'S', Block.chest, '#', charger);
-	    if (PowerConverterCore.powerSystemSteamEnabled)
-		GameRegistry.addRecipe(new ItemStack(PowerConverterCore.converterBlockSteam, 1, 0), "CPC", "PTP", "CPC", 'C', Items.getItem("FluidCell"), 'P', Items.getItem("platebronze"), 'T', fluid);
-	}
+        GameRegistry.addShapelessRecipe(new ItemStack(converterBlock, 1, 1), new ItemStack(converterBlock, 1, 0));
+        GameRegistry.addShapelessRecipe(new ItemStack(converterBlock, 1, 0), new ItemStack(converterBlock, 1, 1));
+        GameRegistry.addShapelessRecipe(new ItemStack(converterBlock, 1, 3), new ItemStack(converterBlock, 1, 2));
+        GameRegistry.addShapelessRecipe(new ItemStack(converterBlock, 1, 2), new ItemStack(converterBlock, 1, 3));
+        GameRegistry.addShapelessRecipe(new ItemStack(converterBlock, 1, 5), new ItemStack(converterBlock, 1, 4));
+        GameRegistry.addShapelessRecipe(new ItemStack(converterBlock, 1, 4), new ItemStack(converterBlock, 1, 5));
+        GameRegistry.addShapelessRecipe(new ItemStack(converterBlock, 1, 7), new ItemStack(converterBlock, 1, 6));
+        GameRegistry.addShapelessRecipe(new ItemStack(converterBlock, 1, 6), new ItemStack(converterBlock, 1, 7));
+        GameRegistry.addShapelessRecipe(new ItemStack(converterBlock, 1, 9), new ItemStack(converterBlock, 1, 8));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(converterBlock, 1, 0), true, new Object[]{
+                "CPC",
+                "PTP",
+                "CPC",
+                'C', Items.getItem("insulatedTinCableItem"),
+                'P', PowerConverterCore.tryOreDict("plateTin", Items.getItem("platetin")),
+                'T', Items.getItem("reBattery")
+        }));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(converterBlock, 1, 2), true, new Object[]{
+                "CPC",
+                "PTP",
+                "CPC",
+                'C', Items.getItem("insulatedCopperCableItem"),
+                'P', PowerConverterCore.tryOreDict("plateCopper", Items.getItem("platecopper")),
+                'T', Items.getItem("lvTransformer")
+        }));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(converterBlock, 1, 4), true, new Object[]{
+                "CPC",
+                "PTP",
+                "CPC",
+                'C', Items.getItem("insulatedGoldCableItem"),
+                'P', PowerConverterCore.tryOreDict("plateGold", Items.getItem("plategold")),
+                'T', Items.getItem("mvTransformer")
+        }));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(converterBlock, 1, 6), true, new Object[]{
+                "CPC",
+                "PTP",
+                "CPC",
+                'C', Items.getItem("insulatedIronCableItem"),
+                'P', PowerConverterCore.tryOreDict("plateIron", Items.getItem("plateiron")),
+                'T', Items.getItem("hvTransformer")
+        }));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(converterBlock, 1, 8), true, new Object[]{
+                "CPC",
+                "PTP",
+                "CPC",
+                'C', Items.getItem("glassFiberCableItem"),
+                'P', PowerConverterCore.tryOreDict("plateLapis", Items.getItem("platelapi")),
+                'T', Items.getItem("evTransformer")
+        }));
+
+        ItemStack fluid = new ItemStack(Items.getItem("ejectorUpgrade").itemID, 1, 4);
+        ItemStack storage = Items.getItem("batBox");
+        ItemStack cable = Items.getItem("insulatedGoldCableItem");
+        Object tin = PowerConverterCore.tryOreDict("plateTin", Items.getItem("platetin"));
+        Object bronze = PowerConverterCore.tryOreDict("plateBronze", Items.getItem("platebronze"));
+        ItemStack charger = Items.getItem("RTGenerator");
+        ItemStack transmit = Items.getItem("insulatedIronCableItem");
+        if (IndustrialCraft.INSTANCE.powerSystem.getRecipesEnabled())
+        {
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(PowerConverterCore.converterBlockCommon, 1, 0), true, new Object[]{
+                    "CTC",
+                    "SDS",
+                    "CTC",
+                    'C', cable,
+                    'T', tin,
+                    'S', storage,
+                    'D', Item.diamond
+            }));
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(PowerConverterCore.converterBlockCommon, 1, 2), true, new Object[]{
+                    "T#T",
+                    "CSC",
+                    "TCT",
+                    'T', transmit,
+                    'C', cable,
+                    'S', Block.chest,
+                    '#', charger
+            }));
+            if (PowerConverterCore.powerSystemSteamEnabled) {
+                GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(PowerConverterCore.converterBlockSteam, 1, 0), true, new Object[]{
+                        "CPC",
+                        "PTP",
+                        "CPC",
+                        'C', Items.getItem("FluidCell"),
+                        'P', bronze,
+                        'T', fluid
+                }));
+            }
+        }
     }
 }
