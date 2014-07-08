@@ -31,15 +31,13 @@ public class BlockPowerConverterRF extends BlockPowerConverter {
     @Override
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister ir) {
-        String[] types = { "consumer", "producer" };
-        String[] states = { "off", "on" };
+        String[] types = {"consumer", "producer"};
+        String[] states = {"off", "on"};
         String folderName = getUnlocalizedName().substring("tile.powerconverters.".length());
 
         int i = 0;
-        for(String type : types)
-        {
-            for(String state : states)
-            {
+        for (String type : types) {
+            for (String state : states) {
                 _icons[i] = ir.registerIcon(String.format("%s:%s/%s_%s", PowerConverterCore.modId, folderName, type, state));
                 i++;
             }

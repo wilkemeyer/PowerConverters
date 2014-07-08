@@ -88,29 +88,28 @@ public class TileEntityBuildCraftConsumer extends TileEntityEnergyConsumer<IPowe
         _adjacentPipes = new HashMap<ForgeDirection, IPipeTile>();
         _adjacentPowerSources = new HashMap<ForgeDirection, IPowerEmitter>();
 
-        for(ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
+        for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
             TileEntity te = BlockPosition.getAdjacentTileEntity(this, direction);
-            if(te == null) {
+            if (te == null) {
                 continue;
             }
-            if(IPipeTile.class.isAssignableFrom(te.getClass())) {
-                _adjacentPipes.put(direction, (IPipeTile)te);
-            }
-            else if(IPowerEmitter.class.isAssignableFrom(te.getClass())) {
-                _adjacentPowerSources.put(direction, (IPowerEmitter)te);
+            if (IPipeTile.class.isAssignableFrom(te.getClass())) {
+                _adjacentPipes.put(direction, (IPipeTile) te);
+            } else if (IPowerEmitter.class.isAssignableFrom(te.getClass())) {
+                _adjacentPowerSources.put(direction, (IPowerEmitter) te);
             }
         }
     }
 
     @Override
     public boolean isConnected() {
-        for(Map.Entry<ForgeDirection, IPipeTile> pipeEntry : _adjacentPipes.entrySet()) {
-            if(pipeEntry.getValue().isPipeConnected(pipeEntry.getKey().getOpposite())) {
+        for (Map.Entry<ForgeDirection, IPipeTile> pipeEntry : _adjacentPipes.entrySet()) {
+            if (pipeEntry.getValue().isPipeConnected(pipeEntry.getKey().getOpposite())) {
                 return true;
             }
         }
-        for(Map.Entry<ForgeDirection, IPowerEmitter> emitterEntry : _adjacentPowerSources.entrySet()) {
-            if(emitterEntry.getValue().canEmitPowerFrom(emitterEntry.getKey().getOpposite())) {
+        for (Map.Entry<ForgeDirection, IPowerEmitter> emitterEntry : _adjacentPowerSources.entrySet()) {
+            if (emitterEntry.getValue().canEmitPowerFrom(emitterEntry.getKey().getOpposite())) {
                 return true;
             }
         }
@@ -121,7 +120,7 @@ public class TileEntityBuildCraftConsumer extends TileEntityEnergyConsumer<IPowe
     public boolean isSideConnected(int side) {
         ForgeDirection direction = ForgeDirection.getOrientation(side);
         IPipeTile pipe = _adjacentPipes.get(direction);
-        if(pipe != null && pipe.isPipeConnected(direction)) {
+        if (pipe != null && pipe.isPipeConnected(direction)) {
             return true;
         }
         IPowerEmitter emitter = _adjacentPowerSources.get(direction);

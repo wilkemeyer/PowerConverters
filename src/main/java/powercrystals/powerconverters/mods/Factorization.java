@@ -1,9 +1,7 @@
 package powercrystals.powerconverters.mods;
 
 import cpw.mods.fml.common.registry.GameRegistry;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import powercrystals.powerconverters.PowerConverterCore;
 import powercrystals.powerconverters.mods.base.LoaderBase;
 import powercrystals.powerconverters.power.PowerSystem;
 import powercrystals.powerconverters.power.factorization.BlockPowerConverterFactorization;
@@ -18,8 +16,7 @@ import powercrystals.powerconverters.power.factorization.TileEntityPowerConverte
  * Time: 2:50 PM
  * To change this template use File | Settings | File Templates.
  */
-public class Factorization extends LoaderBase
-{
+public class Factorization extends LoaderBase {
     public static final Factorization INSTANCE = new Factorization();
 
     private Factorization() {
@@ -30,8 +27,7 @@ public class Factorization extends LoaderBase
     public PowerSystem powerSystem;
 
     @Override
-    protected void preInit()
-    {
+    protected void preInit() {
         powerSystem = new PowerSystem("Factorization", "FZ", 175, 175, null, null, "CG/t");
         PowerSystem.registerPowerSystem(powerSystem);
     }
@@ -49,7 +45,9 @@ public class Factorization extends LoaderBase
         try {
             Object fzRegistry = Class.forName("factorization.shared.Core").getField("registry").get(null);
             GameRegistry.addRecipe(new ItemStack(converterBlock, 1, 0),
-                    "I I", " B ", "I I",
+                    "I I",
+                    " B ",
+                    "I I",
                     'I', GameRegistry.findItem("minecraft", "gold_ingot"),
                     'B', (Class.forName("factorization.common.Registry").getField("solarboiler_item").get(fzRegistry)));
         } catch (Throwable t) {

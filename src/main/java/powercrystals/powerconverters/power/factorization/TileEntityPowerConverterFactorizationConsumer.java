@@ -64,25 +64,23 @@ public class TileEntityPowerConverterFactorizationConsumer extends TileEntityEne
     public void onNeighboorChanged() {
         super.onNeighboorChanged();
 
-        try
-        {
+        try {
             Class fzNullClass = Class.forName("factorization.shared.TileEntityFzNull");
             for (ForgeDirection d : ForgeDirection.VALID_DIRECTIONS) {
                 TileEntity te = BlockPosition.getAdjacentTileEntity(this, d);
                 //noinspection unchecked
-                if(te != null && fzNullClass.isAssignableFrom(te.getClass())) {
+                if (te != null && fzNullClass.isAssignableFrom(te.getClass())) {
                     neighbourDirty = true;
                 }
             }
-        } catch (ClassNotFoundException e)
-        {
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
 
     @Override
     public boolean isConnected() {
-        if(neighbourDirty) {
+        if (neighbourDirty) {
             onNeighboorChanged();
             neighbourDirty = false;
         }

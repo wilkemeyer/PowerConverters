@@ -15,10 +15,8 @@ import java.util.List;
  * Time: 3:10 PM
  * To change this template use File | Settings | File Templates.
  */
-public class ItemBlockPowerConverterFactorization extends ItemBlock
-{
-    public ItemBlockPowerConverterFactorization(Block block)
-    {
+public class ItemBlockPowerConverterFactorization extends ItemBlock {
+    public ItemBlockPowerConverterFactorization(Block block) {
         super(block);
         setHasSubtypes(true);
         setMaxDamage(0);

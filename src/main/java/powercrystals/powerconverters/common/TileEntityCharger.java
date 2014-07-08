@@ -24,7 +24,7 @@ public class TileEntityCharger extends TileEntityEnergyProducer<IInventory> {
     @Override
     public void updateEntity() {
         super.updateEntity();
-        if(_player != null) {
+        if (_player != null) {
             int pX = (int) Math.floor(_player.posX);
             int pY = (int) Math.floor(_player.posY - _player.getYOffset());
             int pZ = (int) Math.floor(_player.posZ);

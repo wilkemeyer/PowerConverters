@@ -11,7 +11,7 @@ public abstract class TileEntityEnergyConsumer<T> extends TileEntityBridgeCompon
     }
 
     /**
-     * @param energy amount of energy to store
+     * @param energy   amount of energy to store
      * @param simulate whether to actually store the energy
      * @return energy left over
      */

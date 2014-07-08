@@ -2,8 +2,6 @@ package powercrystals.powerconverters.power.factorization;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
@@ -18,10 +16,8 @@ import powercrystals.powerconverters.power.BlockPowerConverter;
  * Time: 2:53 PM
  * To change this template use File | Settings | File Templates.
  */
-public class BlockPowerConverterFactorization extends BlockPowerConverter
-{
-    public BlockPowerConverterFactorization()
-    {
+public class BlockPowerConverterFactorization extends BlockPowerConverter {
+    public BlockPowerConverterFactorization() {
         super(2);
         setBlockName("powerconverters.factorization");
         setCreativeTab(PCCreativeTab.tab);
@@ -38,15 +34,13 @@ public class BlockPowerConverterFactorization extends BlockPowerConverter
     @Override
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister ir) {
-        String[] types = { "consumer", "producer" };
-        String[] states = { "off", "on" };
+        String[] types = {"consumer", "producer"};
+        String[] states = {"off", "on"};
         String folderName = getUnlocalizedName().substring("tile.powerconverters.".length());
 
         int i = 0;
-        for(String type : types)
-        {
-            for(String state : states)
-            {
+        for (String type : types) {
+            for (String state : states) {
                 _icons[i] = ir.registerIcon(String.format("%s:%s/%s_%s", PowerConverterCore.modId, folderName, type, state));
                 i++;
             }

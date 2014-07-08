@@ -38,8 +38,7 @@ import java.io.InputStream;
 import java.util.Properties;
 
 @Mod(modid = PowerConverterCore.modId, name = PowerConverterCore.modName, dependencies = "after:BuildCraft|Energy;after:factorization;after:IC2;after:Railcraft;after:ThermalExpansion")
-public final class PowerConverterCore
-{
+public final class PowerConverterCore {
     public static final String modId = "PowerConverters";
     public static final String modName = "Power Converters";
     public static final String version;
@@ -51,8 +50,7 @@ public final class PowerConverterCore
             InputStream stream = PowerConverterCore.class.getClassLoader().getResourceAsStream("version.properties");
             prop.load(stream);
             stream.close();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             //noinspection ThrowableResultOfMethodCallIgnored
             Throwables.propagate(e);
         }
@@ -74,14 +72,13 @@ public final class PowerConverterCore
     public static PowerSystem powerSystemSteam;
     public static boolean powerSystemSteamEnabled;
 
-    private LoaderBase[] bases = new LoaderBase[] { BuildCraft.INSTANCE, Factorization.INSTANCE,IndustrialCraft.INSTANCE, ThermalExpansion.INSTANCE };
+    private LoaderBase[] bases = new LoaderBase[]{BuildCraft.INSTANCE, Factorization.INSTANCE, IndustrialCraft.INSTANCE, ThermalExpansion.INSTANCE};
 
     public Logger logger;
 
     @SuppressWarnings("UnusedDeclaration")
     @EventHandler
-    public void preInit(FMLPreInitializationEvent evt)
-    {
+    public void preInit(FMLPreInitializationEvent evt) {
         logger = evt.getModLog();
         evt.getModMetadata().version = PowerConverterCore.version;
 
@@ -93,7 +90,7 @@ public final class PowerConverterCore
         GameRegistry.registerTileEntity(TileEntityEnergyBridge.class, "powerConverterEnergyBridge");
         GameRegistry.registerTileEntity(TileEntityCharger.class, "powerConverterUniversalCharger");
 
-        if(powerSystemSteamEnabled) {
+        if (powerSystemSteamEnabled) {
             converterBlockSteam = new BlockPowerConverterSteam();
             GameRegistry.registerBlock(converterBlockSteam, ItemBlockPowerConverterSteam.class, converterBlockSteam.getUnlocalizedName());
             GameRegistry.registerTileEntity(TileEntitySteamConsumer.class, "powerConverterSteamConsumer");
@@ -104,42 +101,40 @@ public final class PowerConverterCore
         PowerSystem.registerPowerSystem(powerSystemSteam);
         for (LoaderBase base : bases)
             base.load(LoaderBase.Stage.PREINIT);
-        }
-
-    @SuppressWarnings("UnusedParameters")
-    @EventHandler
-    public void init(FMLInitializationEvent evt) throws Exception
-    {
-	for (LoaderBase base : bases)
-	    base.load(LoaderBase.Stage.INIT);
     }
 
     @SuppressWarnings("UnusedParameters")
     @EventHandler
-    public void postInit(FMLPostInitializationEvent evt) throws Exception
-    {
-	for (LoaderBase base : bases)
-	    base.load(LoaderBase.Stage.POSTINIT);
+    public void init(FMLInitializationEvent evt) throws Exception {
+        for (LoaderBase base : bases)
+            base.load(LoaderBase.Stage.INIT);
+    }
 
-	logger.info("+++++++++++++++++++++++++[PowerConverters][NOTICE]+++++++++++++++++++++++++");
-	logger.info("Default power ratios are based on FTB standards and not all mods follow these");
-	logger.info("If you find conflicting ratios in your pack, please adjust the config acoordingly or remove PC");
-	logger.info("These conflicts are not the fault of any mod author. It is the nature on minecraft");
-	logger.info("-------------------------[PowerConverters][STEAM]-------------------------");
-	logger.info("Default steam ratios, while based on standards, will create infinite energy loops");
-	logger.info("To prevent over powered infinite energy, use a steam throttle values of less than 5");
-	logger.info("+++++++++++++++++++++++++[PowerConverters][NOTICE]+++++++++++++++++++++++++");
+    @SuppressWarnings("UnusedDeclaration")
+    @EventHandler
+    public void postInit(FMLPostInitializationEvent unused) throws Exception {
+        for (LoaderBase base : bases)
+            base.load(LoaderBase.Stage.POSTINIT);
+
+        logger.info("+++++++++++++++++++++++++[PowerConverters][NOTICE]+++++++++++++++++++++++++");
+        logger.info("Default power ratios are based on FTB standards and not all mods follow these");
+        logger.info("If you find conflicting ratios in your pack, please adjust the config acoordingly or remove PC");
+        logger.info("These conflicts are not the fault of any mod author. It is the nature on minecraft");
+        logger.info("-------------------------[PowerConverters][STEAM]-------------------------");
+        logger.info("Default steam ratios, while based on standards, will create infinite energy loops");
+        logger.info("To prevent over powered infinite energy, use a steam throttle values of less than 5");
+        logger.info("+++++++++++++++++++++++++[PowerConverters][NOTICE]+++++++++++++++++++++++++");
 
         registerRecipes();
         if (powerSystemSteamEnabled) {
             loadSteamConverters();
         }
 
-	NetworkRegistry.INSTANCE.registerGuiHandler(instance, new PCGUIHandler());
-	MinecraftForge.EVENT_BUS.register(instance);
+        NetworkRegistry.INSTANCE.registerGuiHandler(instance, new PCGUIHandler());
+        MinecraftForge.EVENT_BUS.register(instance);
 
-	// Cleanup
-	bases = null;
+        // Cleanup
+        bases = null;
     }
 
     private void registerRecipes() {
@@ -177,18 +172,16 @@ public final class PowerConverterCore
     }
 
     public static Object tryOreDict(String name, ItemStack itemStack) {
-        for(ItemStack ore : OreDictionary.getOres(name)) {
-            if(ore.isItemEqual(itemStack)) {
+        for (ItemStack ore : OreDictionary.getOres(name)) {
+            if (ore.isItemEqual(itemStack)) {
                 return name;
             }
         }
         return itemStack;
     }
 
-    private void loadSteamConverters() throws Exception
-    {
-	    if (Loader.isModLoaded("Railcraft"))
-	    {
+    private void loadSteamConverters() throws Exception {
+        if (Loader.isModLoaded("Railcraft")) {
             ItemStack stackGold = new ItemStack(GameRegistry.findItem("minecraft", "gold_ingot"));
             Object entryGold = tryOreDict("ingotGold", stackGold);
 
@@ -201,22 +194,21 @@ public final class PowerConverterCore
                     "G G",
                     'G', entryGold,
                     'E', stackIndustrialEngine));
-	    }
+        }
 
-	    GameRegistry.addShapelessRecipe(new ItemStack(converterBlockSteam, 1, 1), new ItemStack(converterBlockSteam, 1, 0));
-	    GameRegistry.addShapelessRecipe(new ItemStack(converterBlockSteam, 1, 0), new ItemStack(converterBlockSteam, 1, 1));
+        GameRegistry.addShapelessRecipe(new ItemStack(converterBlockSteam, 1, 1), new ItemStack(converterBlockSteam, 1, 0));
+        GameRegistry.addShapelessRecipe(new ItemStack(converterBlockSteam, 1, 0), new ItemStack(converterBlockSteam, 1, 1));
     }
 
-    private static void loadConfig(File dir)
-    {
-	dir = new File(new File(dir, modId.toLowerCase()), "common.cfg");
-	Configuration c = new Configuration(dir);
+    private static void loadConfig(File dir) {
+        dir = new File(new File(dir, modId.toLowerCase()), "common.cfg");
+        Configuration c = new Configuration(dir);
 
-	bridgeBufferSize = c.get(Configuration.CATEGORY_GENERAL, "BridgeBufferSize", 160000000).getInt();
-	throttleSteamConsumer = c.get("Throttles", "Steam.Consumer", 1000, "mB/t").getInt();
-	throttleSteamProducer = c.get("Throttles", "Steam.Producer", 1000, "mB/t (Sugested value for mod exploit handling = 1; this does not diminish steam return)").getInt();
+        bridgeBufferSize = c.get(Configuration.CATEGORY_GENERAL, "BridgeBufferSize", 160000000).getInt();
+        throttleSteamConsumer = c.get("Throttles", "Steam.Consumer", 1000, "mB/t").getInt();
+        throttleSteamProducer = c.get("Throttles", "Steam.Producer", 1000, "mB/t (Sugested value for mod exploit handling = 1; this does not diminish steam return)").getInt();
 
-	PowerSystem.loadConfig(c);
-	c.save();
+        PowerSystem.loadConfig(c);
+        c.save();
     }
 }

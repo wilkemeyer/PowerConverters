@@ -57,7 +57,8 @@ public class TileEntityEnergyBridge extends TileEntity implements INeighboorUpda
 
     /**
      * Stores energy in the internal buffer
-     * @param energy how much current to store
+     *
+     * @param energy   how much current to store
      * @param simulate whether to actually store the power
      * @return how much energy was stored
      */
@@ -70,7 +71,8 @@ public class TileEntityEnergyBridge extends TileEntity implements INeighboorUpda
 
     /**
      * Uses energy from the internal buffer
-     * @param energy how much current to draw
+     *
+     * @param energy   how much current to draw
      * @param simulate whether to actually draw the power
      * @return how much energy was used
      */

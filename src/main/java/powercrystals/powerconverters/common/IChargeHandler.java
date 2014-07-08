@@ -11,15 +11,13 @@ public interface IChargeHandler {
     public PowerSystem getPowerSystem();
 
     /**
-     *
      * @param stack stack to check before calling charge/discharge methods
      * @return whether the stack is applicable to receive/give energy
      */
     boolean canHandle(ItemStack stack);
 
     /**
-     *
-     * @param stack applicable stack
+     * @param stack       applicable stack
      * @param energyInput energy to give
      * @return energy remaining after charge
      */

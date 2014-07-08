@@ -7,6 +7,7 @@ import net.minecraft.inventory.Container;
 
 /**
  * A GuiContainer wrapper to expose some protected fields
+ *
  * @author samrg472
  */
 public abstract class ExposedGuiContainer extends GuiContainer {

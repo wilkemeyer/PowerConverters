@@ -1,8 +1,7 @@
 package powercrystals.powerconverters.mods;
 
+import cpw.mods.fml.common.registry.GameRegistry;
 import ic2.api.item.IC2Items;
-import net.minecraft.block.Block;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import powercrystals.powerconverters.PowerConverterCore;
@@ -14,44 +13,38 @@ import powercrystals.powerconverters.power.ic2.ChargeHandlerIndustrialCraft;
 import powercrystals.powerconverters.power.ic2.ItemBlockPowerConverterIndustrialCraft;
 import powercrystals.powerconverters.power.ic2.TileEntityIndustrialCraftConsumer;
 import powercrystals.powerconverters.power.ic2.TileEntityIndustrialCraftProducer;
-import cpw.mods.fml.common.registry.GameRegistry;
 
 /**
  * @author samrg472
  */
-public final class IndustrialCraft extends LoaderBase
-{
+public final class IndustrialCraft extends LoaderBase {
 
     public static final IndustrialCraft INSTANCE = new IndustrialCraft();
 
     public BlockPowerConverterIndustrialCraft converterBlock;
     public PowerSystem powerSystem;
 
-    private IndustrialCraft()
-    {
-	super("IC2");
+    private IndustrialCraft() {
+        super("IC2");
     }
 
     @Override
-    protected void preInit()
-    {
-	powerSystem = new PowerSystem("IndustrialCraft", "IC2", 4000, 4000,/*1800, 1800,*/new String[] { "LV", "MV", "HV", "EV", "AV" }, new int[] { 32, 128, 512, 2048, 8192 }, "EU/t");
-	PowerSystem.registerPowerSystem(powerSystem);
-	TileEntityCharger.registerChargeHandler(new ChargeHandlerIndustrialCraft());
+    protected void preInit() {
+        powerSystem = new PowerSystem("IndustrialCraft", "IC2", 4000, 4000,/*1800, 1800,*/new String[]{"LV", "MV", "HV", "EV", "AV"}, new int[]{32, 128, 512, 2048, 8192}, "EU/t");
+        PowerSystem.registerPowerSystem(powerSystem);
+        TileEntityCharger.registerChargeHandler(new ChargeHandlerIndustrialCraft());
     }
 
     @Override
-    protected void init()
-    {
-	converterBlock = new BlockPowerConverterIndustrialCraft();
-	GameRegistry.registerBlock(converterBlock, ItemBlockPowerConverterIndustrialCraft.class, converterBlock.getUnlocalizedName());
-	GameRegistry.registerTileEntity(TileEntityIndustrialCraftConsumer.class, "powerConverterIC2Consumer");
-	GameRegistry.registerTileEntity(TileEntityIndustrialCraftProducer.class, "powerConverterIC2Producer");
+    protected void init() {
+        converterBlock = new BlockPowerConverterIndustrialCraft();
+        GameRegistry.registerBlock(converterBlock, ItemBlockPowerConverterIndustrialCraft.class, converterBlock.getUnlocalizedName());
+        GameRegistry.registerTileEntity(TileEntityIndustrialCraftConsumer.class, "powerConverterIC2Consumer");
+        GameRegistry.registerTileEntity(TileEntityIndustrialCraftProducer.class, "powerConverterIC2Producer");
     }
 
     @Override
-    protected void postInit()
-    {
+    protected void postInit() {
         GameRegistry.addShapelessRecipe(new ItemStack(converterBlock, 1, 1), new ItemStack(converterBlock, 1, 0));
         GameRegistry.addShapelessRecipe(new ItemStack(converterBlock, 1, 0), new ItemStack(converterBlock, 1, 1));
         GameRegistry.addShapelessRecipe(new ItemStack(converterBlock, 1, 3), new ItemStack(converterBlock, 1, 2));
@@ -109,8 +102,7 @@ public final class IndustrialCraft extends LoaderBase
         Object bronze = PowerConverterCore.tryOreDict("plateBronze", IC2Items.getItem("platebronze"));
         ItemStack charger = IC2Items.getItem("RTGenerator");
         ItemStack transmit = IC2Items.getItem("insulatedIronCableItem");
-        if (IndustrialCraft.INSTANCE.powerSystem.getRecipesEnabled())
-        {
+        if (IndustrialCraft.INSTANCE.powerSystem.getRecipesEnabled()) {
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(PowerConverterCore.converterBlockCommon, 1, 0), true, new Object[]{
                     "CTC",
                     "SDS",
