@@ -38,7 +38,7 @@ public class Factorization extends LoaderBase
 
     @Override
     protected void init() {
-        converterBlock = new BlockPowerConverterFactorization(PowerConverterCore.blockIdFactorization);
+        converterBlock = new BlockPowerConverterFactorization();
         GameRegistry.registerBlock(converterBlock, ItemBlockPowerConverterFactorization.class, converterBlock.getUnlocalizedName());
         GameRegistry.registerTileEntity(TileEntityPowerConverterFactorizationConsumer.class, "powerConverterFZConsumer");
         GameRegistry.registerTileEntity(TileEntityPowerConverterFactorizationProducer.class, "powerConverterFZProducer");
@@ -50,7 +50,7 @@ public class Factorization extends LoaderBase
             Object fzRegistry = Class.forName("factorization.shared.Core").getField("registry").get(null);
             GameRegistry.addRecipe(new ItemStack(converterBlock, 1, 0),
                     "I I", " B ", "I I",
-                    'I', Item.ingotGold,
+                    'I', GameRegistry.findItem("minecraft", "gold_ingot"),
                     'B', (Class.forName("factorization.common.Registry").getField("solarboiler_item").get(fzRegistry)));
         } catch (Throwable t) {
             t.printStackTrace(System.err);

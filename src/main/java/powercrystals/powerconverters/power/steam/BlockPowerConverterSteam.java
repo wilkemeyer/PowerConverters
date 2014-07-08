@@ -2,7 +2,7 @@ package powercrystals.powerconverters.power.steam;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import powercrystals.powerconverters.PowerConverterCore;
@@ -10,23 +10,23 @@ import powercrystals.powerconverters.gui.PCCreativeTab;
 import powercrystals.powerconverters.power.BlockPowerConverter;
 
 public class BlockPowerConverterSteam extends BlockPowerConverter {
-    public BlockPowerConverterSteam(int blockId) {
-        super(blockId, 2);
-        setUnlocalizedName("powerconverters.steam");
+    public BlockPowerConverterSteam() {
+        super(2);
+        setBlockName("powerconverters.steam");
         setCreativeTab(PCCreativeTab.tab);
     }
 
     @Override
-    public TileEntity createTileEntity(World world, int metadata) {
+    public TileEntity createNewTileEntity(World world, int metadata) {
         if (metadata == 0) return new TileEntitySteamConsumer();
         else if (metadata == 1) return new TileEntitySteamProducer();
 
-        return createNewTileEntity(world);
+        return null;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void registerIcons(IconRegister ir) {
+    public void registerBlockIcons(IIconRegister ir) {
         String[] types = { "consumer", "producer" };
         String[] states = { "off", "on" };
         String folderName = getUnlocalizedName().substring("tile.powerconverters.".length());

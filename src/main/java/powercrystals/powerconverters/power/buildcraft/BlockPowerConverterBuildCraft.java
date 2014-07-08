@@ -2,7 +2,7 @@ package powercrystals.powerconverters.power.buildcraft;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import powercrystals.powerconverters.PowerConverterCore;
@@ -10,23 +10,23 @@ import powercrystals.powerconverters.gui.PCCreativeTab;
 import powercrystals.powerconverters.power.BlockPowerConverter;
 
 public class BlockPowerConverterBuildCraft extends BlockPowerConverter {
-    public BlockPowerConverterBuildCraft(int blockId) {
-        super(blockId, 2);
-        setUnlocalizedName("powerconverters.bc");
+    public BlockPowerConverterBuildCraft() {
+        super(2);
+        setBlockName("powerconverters.bc");
         setCreativeTab(PCCreativeTab.tab);
     }
 
     @Override
-    public TileEntity createTileEntity(World world, int metadata) {
+    public TileEntity createNewTileEntity(World world, int metadata) {
         if (metadata == 0) return new TileEntityBuildCraftConsumer();
         else if (metadata == 1) return new TileEntityBuildCraftProducer();
 
-        return createNewTileEntity(world);
+        return createNewTileEntity(world, metadata);
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void registerIcons(IconRegister ir) {
+    public void registerBlockIcons(IIconRegister ir) {
         String[] types = { "consumer", "producer" };
         String[] states = { "off", "on" };
         String folderName = getUnlocalizedName().substring("tile.powerconverters.".length());

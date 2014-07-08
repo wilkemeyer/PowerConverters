@@ -9,7 +9,7 @@ import powercrystals.powerconverters.common.TileEntityEnergyBridge;
 public class PCGUIHandler implements IGuiHandler {
     @Override
     public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
-        TileEntity te = world.getBlockTileEntity(x, y, z);
+        TileEntity te = world.getTileEntity(x, y, z);
         if (te != null && te instanceof TileEntityEnergyBridge) {
             return new ContainerEnergyBridge((TileEntityEnergyBridge) te, player.inventory);
         }
@@ -18,7 +18,7 @@ public class PCGUIHandler implements IGuiHandler {
 
     @Override
     public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
-        TileEntity te = world.getBlockTileEntity(x, y, z);
+        TileEntity te = world.getTileEntity(x, y, z);
         if (te != null && te instanceof TileEntityEnergyBridge) {
             return new GuiEnergyBridge(new ContainerEnergyBridge((TileEntityEnergyBridge) te, player.inventory), (TileEntityEnergyBridge) te);
         }

@@ -21,7 +21,7 @@ public abstract class ExposedGuiContainer extends GuiContainer {
     }
 
     public RenderItem getItemRenderer() {
-        return itemRenderer;
+        return itemRender;
     }
 
     public int getGuiTop() {
@@ -33,6 +33,11 @@ public abstract class ExposedGuiContainer extends GuiContainer {
     }
 
     public FontRenderer getFontRenderer() {
-        return fontRenderer;
+        return fontRendererObj;
+    }
+
+    // Temporary. Maps function from old name.to srg name
+    public boolean isPointInRegion(int p1, int p2, int p3, int p4, int p5, int p6) {
+        return func_146978_c(p1, p2, p3, p4, p5, p6);
     }
 }

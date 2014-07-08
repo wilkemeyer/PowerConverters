@@ -2,7 +2,7 @@ package powercrystals.powerconverters.gui;
 
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
-import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.common.util.ForgeDirection;
 import org.lwjgl.opengl.GL11;
 import powercrystals.powerconverters.PowerConverterCore;
 import powercrystals.powerconverters.common.BridgeSideData;
@@ -53,18 +53,18 @@ public class GuiEnergyBridge extends ExposedGuiContainer {
 
     @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-        fontRenderer.drawString(StatCollector.translateToLocal("powerconverters.common.bridge.name"), 8, 6, 4210752);
+        fontRendererObj.drawString(StatCollector.translateToLocal("powerconverters.common.bridge.name"), 8, 6, 4210752);
 
         if (_bridge.isInputLimited()) {
-            fontRenderer.drawString(StatCollector.translateToLocal("powerconverters.inputlimited"), 98, 6, -1);
+            fontRendererObj.drawString(StatCollector.translateToLocal("powerconverters.inputlimited"), 98, 6, -1);
         } else {
-            fontRenderer.drawString(StatCollector.translateToLocal("powerconverters.outputlimited"), 90, 6, -1);
+            fontRendererObj.drawString(StatCollector.translateToLocal("powerconverters.outputlimited"), 90, 6, -1);
         }
 
         for (int i = 0; i < 6; i++) {
             ForgeDirection dir = ForgeDirection.getOrientation(i);
 
-            fontRenderer.drawString(StatCollector.translateToLocal("powerconverters." + dir.toString().toLowerCase()), 10, 6 + 12 * (i + 1), -1);
+            fontRendererObj.drawString(StatCollector.translateToLocal("powerconverters." + dir.toString().toLowerCase()), 10, 6 + 12 * (i + 1), -1);
             BridgeSideData data = _bridge.getDataForSide(dir);
 
             if ((data.isConsumer || data.isProducer) && data.powerSystem != null) {
@@ -72,21 +72,21 @@ public class GuiEnergyBridge extends ExposedGuiContainer {
                 if (data.powerSystem.getVoltageNames() != null) {
                     name += " " + data.powerSystem.getVoltageNames()[data.voltageNameIndex];
                 }
-                fontRenderer.drawString(name, 49, 6 + 12 * (i + 1), -1);
-                fontRenderer.drawString(data.isConsumer ? StatCollector.translateToLocal("powerconverters.in") : StatCollector.translateToLocal("powerconverters.out"), 92, 6 + 12 * (i + 1), -1);
-                fontRenderer.drawString(getOutputRateString(data), 119, 6 + 12 * (i + 1), -1);
+                fontRendererObj.drawString(name, 49, 6 + 12 * (i + 1), -1);
+                fontRendererObj.drawString(data.isConsumer ? StatCollector.translateToLocal("powerconverters.in") : StatCollector.translateToLocal("powerconverters.out"), 92, 6 + 12 * (i + 1), -1);
+                fontRendererObj.drawString(getOutputRateString(data), 119, 6 + 12 * (i + 1), -1);
             } else {
-                fontRenderer.drawString(StatCollector.translateToLocal("powerconverters.none"), 49, 6 + 12 * (i + 1), -1);
+                fontRendererObj.drawString(StatCollector.translateToLocal("powerconverters.none"), 49, 6 + 12 * (i + 1), -1);
             }
         }
 
-        fontRenderer.drawString("% CHG", 10, 90, -1);
+        fontRendererObj.drawString("% CHG", 10, 90, -1);
 
         GL11.glDisable(GL11.GL_LIGHTING);
         drawRect(46, 97, 46 + _bridge.getEnergyScaled(), 89, _barColor);
         GL11.glEnable(GL11.GL_LIGHTING);
 
-        fontRenderer.drawString(StatCollector.translateToLocal("container.inventory"), 8, ySize - 96 + 2, 4210752);
+        fontRendererObj.drawString(StatCollector.translateToLocal("container.inventory"), 8, ySize - 96 + 2, 4210752);
     }
 
     @Override

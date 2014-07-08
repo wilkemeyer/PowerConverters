@@ -5,7 +5,7 @@ import buildcraft.api.power.IPowerReceptor;
 import buildcraft.api.power.PowerHandler;
 import buildcraft.api.transport.IPipeConnection;
 import buildcraft.api.transport.IPipeTile;
-import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.common.util.ForgeDirection;
 import powercrystals.powerconverters.mods.BuildCraft;
 import powercrystals.powerconverters.power.TileEntityEnergyProducer;
 

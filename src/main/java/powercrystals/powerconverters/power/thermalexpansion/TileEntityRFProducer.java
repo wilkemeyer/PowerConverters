@@ -2,7 +2,7 @@ package powercrystals.powerconverters.power.thermalexpansion;
 
 import cofh.api.energy.IEnergyHandler;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.common.util.ForgeDirection;
 import powercrystals.powerconverters.common.TileEntityEnergyBridge;
 import powercrystals.powerconverters.mods.ThermalExpansion;
 import powercrystals.powerconverters.position.BlockPosition;
@@ -26,7 +26,7 @@ public class TileEntityRFProducer extends TileEntityEnergyProducer<IEnergyHandle
         if (energyToUse > 0) {
             List<BlockPosition> positions = new BlockPosition(xCoord, yCoord, zCoord).getAdjacent(true);
             for (BlockPosition p : positions) {
-                TileEntity te = worldObj.getBlockTileEntity(p.x, p.y, p.z);
+                TileEntity te = worldObj.getTileEntity(p.x, p.y, p.z);
                 if ((te instanceof IEnergyHandler) && !((te instanceof TileEntityRFConsumer) || (te instanceof TileEntityEnergyBridge))) {
                     IEnergyHandler eHandler = (IEnergyHandler) te;
                     final double received = eHandler.receiveEnergy(p.orientation, (int) (energyToUse), false);
@@ -51,7 +51,7 @@ public class TileEntityRFProducer extends TileEntityEnergyProducer<IEnergyHandle
     }
 
     @Override
-    public boolean canInterface(ForgeDirection from) {
+    public boolean canConnectEnergy(ForgeDirection from) {
         return true;
     }
 

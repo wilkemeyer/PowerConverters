@@ -1,14 +1,16 @@
 package powercrystals.powerconverters.common;
 
+import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 
 import java.util.List;
 
 public class ItemBlockPowerConverterCommon extends ItemBlock {
-    public ItemBlockPowerConverterCommon(int i) {
-        super(i);
+    public ItemBlockPowerConverterCommon(Block block) {
+        super(block);
         setHasSubtypes(true);
         setMaxDamage(0);
     }
@@ -28,8 +30,8 @@ public class ItemBlockPowerConverterCommon extends ItemBlock {
 
     @SuppressWarnings({"unchecked", "rawtypes"})
     @Override
-    public void getSubItems(int itemId, CreativeTabs creativeTab, List subTypes) {
-        subTypes.add(new ItemStack(itemId, 1, 0));
-        subTypes.add(new ItemStack(itemId, 1, 2));
+    public void getSubItems(Item item, CreativeTabs creativeTab, List subTypes) {
+        subTypes.add(new ItemStack(item, 1, 0));
+        subTypes.add(new ItemStack(item, 1, 2));
     }
 }

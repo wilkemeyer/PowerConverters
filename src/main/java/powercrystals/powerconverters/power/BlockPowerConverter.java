@@ -1,10 +1,11 @@
 package powercrystals.powerconverters.power;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import powercrystals.powerconverters.PowerConverterCore;
@@ -15,31 +16,31 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockPowerConverter extends BlockContainer
 {
-    protected Icon[] _icons;
+    protected IIcon[] _icons;
 
-    public BlockPowerConverter(int blockId, int metaCount)
+    public BlockPowerConverter(int metaCount)
     {
-	super(blockId, Material.iron);
+	super(Material.iron);
 	setHardness(2.0F);
-	_icons = new Icon[metaCount * 2];
+	_icons = new IIcon[metaCount * 2];
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public Icon getBlockTexture(IBlockAccess world, int x, int y, int z, int side)
+    public IIcon getIcon(IBlockAccess world, int x, int y, int z, int side)
     {
-	int offset = ((TileEntityBridgeComponent<?>) world.getBlockTileEntity(x, y, z)).isSideConnectedClient(side) ? 1 : 0;
+	int offset = ((TileEntityBridgeComponent<?>) world.getTileEntity(x, y, z)).isSideConnectedClient(side) ? 1 : 0;
 	return _icons[world.getBlockMetadata(x, y, z) * 2 + offset];
     }
 
     @Override
-    public Icon getIcon(int side, int metadata)
+    public IIcon getIcon(int side, int metadata)
     {
 	return _icons[metadata * 2];
     }
 
     @Override
-    public TileEntity createNewTileEntity(World world)
+    public TileEntity createNewTileEntity(World world, int meta)
     {
 	return null;
     }
@@ -57,9 +58,9 @@ public class BlockPowerConverter extends BlockContainer
     }
 
     @Override
-    public void onNeighborBlockChange(World world, int x, int y, int z, int id)
+    public void onNeighborBlockChange(World world, int x, int y, int z, Block block)
     {
-	TileEntity te = world.getBlockTileEntity(x, y, z);
+	TileEntity te = world.getTileEntity(x, y, z);
 	if (te != null && te instanceof INeighboorUpdateTile)
 	{
 	    ((INeighboorUpdateTile) te).onNeighboorChanged();
@@ -70,7 +71,7 @@ public class BlockPowerConverter extends BlockContainer
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int par6, float par7, float par8, float par9)
     {
-	TileEntity te = world.getBlockTileEntity(x, y, z);
+	TileEntity te = world.getTileEntity(x, y, z);
 	if (te != null && te instanceof TileEntityBridgeComponent<?>)
 	{
 	    TileEntityEnergyBridge bridge = ((TileEntityBridgeComponent<?>) te).getFirstBridge();

@@ -3,7 +3,7 @@ package powercrystals.powerconverters.power.steam;
 import buildcraft.api.transport.IPipeConnection;
 import buildcraft.api.transport.IPipeTile;
 import cpw.mods.fml.common.Optional;
-import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.*;
 import powercrystals.powerconverters.PowerConverterCore;
 import powercrystals.powerconverters.mods.reference.InterfaceReference;

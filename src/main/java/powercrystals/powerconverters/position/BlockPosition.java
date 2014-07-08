@@ -1,9 +1,7 @@
 package powercrystals.powerconverters.position;
 
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.World;
-import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.common.util.ForgeDirection;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -143,6 +141,6 @@ public class BlockPosition {
         BlockPosition p = new BlockPosition(start);
         p.orientation = direction;
         p.moveForwards(1);
-        return start.worldObj.getBlockTileEntity(p.x, p.y, p.z);
+        return start.getWorldObj().getTileEntity(p.x, p.y, p.z);
     }
 }

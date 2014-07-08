@@ -1,7 +1,7 @@
 package powercrystals.powerconverters.power.thermalexpansion;
 
 import cofh.api.energy.IEnergyHandler;
-import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.common.util.ForgeDirection;
 import powercrystals.powerconverters.common.TileEntityEnergyBridge;
 import powercrystals.powerconverters.mods.ThermalExpansion;
 import powercrystals.powerconverters.power.TileEntityEnergyConsumer;
@@ -49,7 +49,7 @@ public class TileEntityRFConsumer extends TileEntityEnergyConsumer<IEnergyHandle
     }
 
     @Override
-    public boolean canInterface(ForgeDirection from) {
+    public boolean canConnectEnergy(ForgeDirection from) {
         return true;
     }
 

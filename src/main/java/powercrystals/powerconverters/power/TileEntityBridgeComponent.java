@@ -2,7 +2,7 @@ package powercrystals.powerconverters.power;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.common.util.ForgeDirection;
 import powercrystals.powerconverters.common.TileEntityEnergyBridge;
 import powercrystals.powerconverters.position.BlockPosition;
 import powercrystals.powerconverters.position.INeighboorUpdateTile;

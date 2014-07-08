@@ -8,7 +8,7 @@ import buildcraft.api.transport.IPipeConnection;
 import buildcraft.api.transport.IPipeTile;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.common.util.ForgeDirection;
 import powercrystals.powerconverters.mods.BuildCraft;
 import powercrystals.powerconverters.position.BlockPosition;
 import powercrystals.powerconverters.power.TileEntityEnergyConsumer;
@@ -46,11 +46,11 @@ public class TileEntityBuildCraftConsumer extends TileEntityEnergyConsumer<IPowe
             _mjLastTick = 0;
         }
 
-        float consumed = _powerProvider.useEnergy(0, _powerProvider.getEnergyStored(), false);
-        float energyToUse = consumed * getPowerSystem().getInternalEnergyPerInput();
-        float leftOvers = (float) storeEnergy(energyToUse, false);
+        double consumed = _powerProvider.useEnergy(0, _powerProvider.getEnergyStored(), false);
+        double energyToUse = consumed * getPowerSystem().getInternalEnergyPerInput();
+        double leftOvers = (float) storeEnergy(energyToUse, false);
 
-        float finalConsumption = consumed - (leftOvers * getPowerSystem().getInternalEnergyPerInput());
+        double finalConsumption = consumed - (leftOvers * getPowerSystem().getInternalEnergyPerInput());
         if (finalConsumption > 0) {
             _powerProvider.useEnergy(0, finalConsumption, true);
             _mjLastTick = (int) finalConsumption;

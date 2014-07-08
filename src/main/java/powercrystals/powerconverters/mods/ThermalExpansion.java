@@ -42,7 +42,7 @@ public final class ThermalExpansion extends LoaderBase
     @Override
     protected void init()
     {
-	converterBlock = new BlockPowerConverterRF(PowerConverterCore.blockIdThermalExpansion);
+	converterBlock = new BlockPowerConverterRF();
 	GameRegistry.registerBlock(converterBlock, ItemBlockPowerConverterRF.class, converterBlock.getUnlocalizedName());
 	GameRegistry.registerTileEntity(TileEntityRFConsumer.class, "powerConverterRFConsumer");
 	GameRegistry.registerTileEntity(TileEntityRFProducer.class, "powerConverterRFProducer");
@@ -71,8 +71,23 @@ public final class ThermalExpansion extends LoaderBase
 	    ItemStack hconduit = GameRegistry.findItemStack("ThermalExpansion", "conduitEnergyHardened", 1);
 	    if (ThermalExpansion.INSTANCE.powerSystem.getRecipesEnabled())
 	    {
-		GameRegistry.addRecipe(new ItemStack(PowerConverterCore.converterBlockCommon, 1, 0), " T ", "SDS", " T ", 'T', transmit, 'S', storage, 'D', Item.diamond);
-		GameRegistry.addRecipe(new ItemStack(PowerConverterCore.converterBlockCommon, 1, 2), "T#T", "CSC", "TCT", 'T', transmit, 'C', hconduit, 'S', Block.chest, '#', charger);
+		GameRegistry.addRecipe(new ItemStack(PowerConverterCore.converterBlockCommon, 1, 0),
+                " T ",
+                "SDS",
+                " T ",
+                'T', transmit,
+                'S', storage,
+                'D', GameRegistry.findItem("minecraft", "diamond")
+        );
+		GameRegistry.addRecipe(new ItemStack(PowerConverterCore.converterBlockCommon, 1, 2),
+                "T#T",
+                "CSC",
+                "TCT",
+                'T', transmit,
+                'C', hconduit,
+                'S', GameRegistry.findBlock("minecraft", "chest"),
+                '#', charger
+        );
 		if (PowerConverterCore.powerSystemSteamEnabled)
 		    GameRegistry.addRecipe(new ItemStack(PowerConverterCore.converterBlockSteam, 1, 0), "CTC", "TST", "CTC", 'S', tank, 'C', fluid, 'T', frame);
 	    }

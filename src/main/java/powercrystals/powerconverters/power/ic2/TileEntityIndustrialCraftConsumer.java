@@ -6,7 +6,7 @@ import ic2.api.energy.tile.IEnergyEmitter;
 import ic2.api.energy.tile.IEnergySink;
 import net.minecraft.block.Block;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.common.MinecraftForge;
 import powercrystals.powerconverters.mods.IndustrialCraft;
 import powercrystals.powerconverters.power.TileEntityEnergyConsumer;
@@ -77,24 +77,19 @@ public class TileEntityIndustrialCraftConsumer extends TileEntityEnergyConsumer<
     }
 
     @Override
-    public double demandedEnergyUnits()
+    public double getDemandedEnergy()
     {
 	return getTotalEnergyDemand() / getPowerSystem().getInternalEnergyPerInput();
     }
 
     @Override
-    public double injectEnergyUnits(ForgeDirection directionFrom, double amount)
+    public int getSinkTier() {
+        return this._voltageIndex;
+    }
+
+    @Override
+    public double injectEnergy(ForgeDirection directionFrom, double amount, double voltage)
     {
-	if (amount > getMaxSafeInput())
-	{
-	    int id = worldObj.getBlockId(xCoord, yCoord, zCoord);
-	    int meta = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
-
-	    worldObj.setBlockToAir(xCoord, yCoord, zCoord);
-	    Block.blocksList[id].dropBlockAsItem(worldObj, xCoord, yCoord, zCoord, meta, 0);
-	    return amount;
-	}
-
 	double pcuNotStored = storeEnergy(amount * getPowerSystem().getInternalEnergyPerInput(), false);
 	double euNotStored = pcuNotStored / getPowerSystem().getInternalEnergyPerInput();
 
@@ -110,14 +105,6 @@ public class TileEntityIndustrialCraftConsumer extends TileEntityEnergyConsumer<
 	}
 
 	return euNotStored;
-    }
-
-    @Override
-    public int getMaxSafeInput()
-    {
-	if (getVoltageIndex() == 4)
-	    return Integer.MAX_VALUE;
-	return getPowerSystem().getVoltageValues()[getVoltageIndex()];
     }
 
     @Override

@@ -72,7 +72,7 @@ public class TileEntityCharger extends TileEntityEnergyProducer<IInventory> {
 
     public void setPlayer(EntityPlayer player) {
         if (_player != player) {
-            worldObj.markBlockForRenderUpdate(xCoord, yCoord, zCoord);
+            worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
             _player = player;
         }
     }

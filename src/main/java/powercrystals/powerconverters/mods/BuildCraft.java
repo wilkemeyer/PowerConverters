@@ -38,7 +38,7 @@ public final class BuildCraft extends LoaderBase
     @Override
     protected void init()
     {
-	converterBlock = new BlockPowerConverterBuildCraft(PowerConverterCore.blockIdBuildCraft);
+	converterBlock = new BlockPowerConverterBuildCraft();
 	GameRegistry.registerBlock(converterBlock, ItemBlockPowerConverterBuildCraft.class, converterBlock.getUnlocalizedName());
 	GameRegistry.registerTileEntity(TileEntityBuildCraftConsumer.class, "powerConverterBCConsumer");
 	GameRegistry.registerTileEntity(TileEntityBuildCraftProducer.class, "powerConverterBCProducer");
@@ -50,7 +50,9 @@ public final class BuildCraft extends LoaderBase
 	GameRegistry.addShapelessRecipe(new ItemStack(converterBlock, 1, 1), new ItemStack(converterBlock, 1, 0));
 	GameRegistry.addShapelessRecipe(new ItemStack(converterBlock, 1, 0), new ItemStack(converterBlock, 1, 1));
 	try
-	{//pipePowerGold BuildCraftTransport pipeStructureCobblestone
+	{
+        ItemStack redstoneBlock = new ItemStack(GameRegistry.findBlock("minecraft", "redstone_block"), 1);
+
 	    ItemStack cable = new ItemStack((Item) Class.forName("buildcraft.BuildCraftTransport").getField("pipePowerGold").get(null), 1, 0);
 	    ItemStack struct = new ItemStack((Item) Class.forName("buildcraft.BuildCraftTransport").getField("pipeStructureCobblestone").get(null), 1, 0);
 	    ItemStack gear = new ItemStack((Item) Class.forName("buildcraft.BuildCraftCore").getField("goldGearItem").get(null), 1, 0);
@@ -64,7 +66,7 @@ public final class BuildCraft extends LoaderBase
 
 	    if (BuildCraft.INSTANCE.powerSystem.getRecipesEnabled())
 	    {
-		GameRegistry.addRecipe(new ItemStack(PowerConverterCore.converterBlockCommon, 1, 0), "PPP", "PBP", "PPP", 'B', Block.blockRedstone, 'P', conduit);
+		GameRegistry.addRecipe(new ItemStack(PowerConverterCore.converterBlockCommon, 1, 0), "PPP", "PBP", "PPP", 'B', redstoneBlock, 'P', conduit);
 		GameRegistry.addRecipe(new ItemStack(PowerConverterCore.converterBlockCommon, 1, 2), "TGT", "#S#", "T#T", 'T', cable, 'S', chest, '#', engine, 'G', gear);
 		if (PowerConverterCore.powerSystemSteamEnabled)
 		    GameRegistry.addRecipe(new ItemStack(PowerConverterCore.converterBlockSteam, 1, 0), "GSG", "SES", "GSG", 'G', fluid, 'S', struct, 'E', pump);

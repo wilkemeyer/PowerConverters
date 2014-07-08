@@ -1,5 +1,7 @@
 package powercrystals.powerconverters.power.ic2;
 
+import cpw.mods.fml.common.registry.GameData;
+import cpw.mods.fml.common.registry.GameRegistry;
 import ic2.api.item.ElectricItem;
 import ic2.api.item.IElectricItem;
 import net.minecraft.item.Item;
@@ -16,20 +18,28 @@ public class ChargeHandlerIndustrialCraft implements IChargeHandler {
 
     @Override
     public boolean canHandle(ItemStack stack) {
-        return !(stack == null || Item.itemsList[stack.itemID] == null || !(Item.itemsList[stack.itemID] instanceof IElectricItem));
+        return stack != null && stack.getItem() instanceof IElectricItem;
     }
 
     @Override
     public int charge(ItemStack stack, int energyInput) {
-        int eu = (int) (energyInput / IndustrialCraft.INSTANCE.powerSystem.getInternalEnergyPerOutput());
-        eu -= ElectricItem.manager.charge(stack, eu, ((IElectricItem) Item.itemsList[stack.itemID]).getTier(stack), false, false);
-        return (int) (eu * IndustrialCraft.INSTANCE.powerSystem.getInternalEnergyPerOutput());
+        if(stack != null && stack.getItem() instanceof IElectricItem) {
+            IElectricItem electricItem = (IElectricItem) stack.getItem();
+            double eu = energyInput / IndustrialCraft.INSTANCE.powerSystem.getInternalEnergyPerOutput();
+            eu -= ElectricItem.manager.charge(stack, eu, electricItem.getTier(stack), false, false);
+            return (int) (eu * IndustrialCraft.INSTANCE.powerSystem.getInternalEnergyPerOutput());
+        }
+        return 0;
     }
 
     @Override
     public int discharge(ItemStack stack, int energyRequest) {
-        int eu = (int) (energyRequest / IndustrialCraft.INSTANCE.powerSystem.getInternalEnergyPerInput());
-        eu = ElectricItem.manager.discharge(stack, eu, ((IElectricItem) Item.itemsList[stack.itemID]).getTier(stack), false, false);
-        return (int) (eu * IndustrialCraft.INSTANCE.powerSystem.getInternalEnergyPerInput());
+        if(stack != null && stack.getItem() instanceof IElectricItem) {
+            IElectricItem electricItem = (IElectricItem) stack.getItem();
+            double eu = energyRequest / IndustrialCraft.INSTANCE.powerSystem.getInternalEnergyPerOutput();
+            eu = ElectricItem.manager.discharge(stack, eu, electricItem.getTier(stack), false, false, false);
+            return (int) (eu * IndustrialCraft.INSTANCE.powerSystem.getInternalEnergyPerInput());
+        }
+        return 0;
     }
 }

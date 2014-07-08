@@ -4,7 +4,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import powercrystals.powerconverters.PowerConverterCore;
@@ -20,10 +20,10 @@ import powercrystals.powerconverters.power.BlockPowerConverter;
  */
 public class BlockPowerConverterFactorization extends BlockPowerConverter
 {
-    public BlockPowerConverterFactorization(int par1)
+    public BlockPowerConverterFactorization()
     {
-        super(par1, 2);
-        setUnlocalizedName("powerconverters.factorization");
+        super(2);
+        setBlockName("powerconverters.factorization");
         setCreativeTab(PCCreativeTab.tab);
     }
 
@@ -32,12 +32,12 @@ public class BlockPowerConverterFactorization extends BlockPowerConverter
         if (metadata == 0) return new TileEntityPowerConverterFactorizationConsumer();
         else if (metadata == 1) return new TileEntityPowerConverterFactorizationProducer();
 
-        return createNewTileEntity(world);
+        return createNewTileEntity(world, metadata);
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void registerIcons(IconRegister ir) {
+    public void registerBlockIcons(IIconRegister ir) {
         String[] types = { "consumer", "producer" };
         String[] states = { "off", "on" };
         String folderName = getUnlocalizedName().substring("tile.powerconverters.".length());

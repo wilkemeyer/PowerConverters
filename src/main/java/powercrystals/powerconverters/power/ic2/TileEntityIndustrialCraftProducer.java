@@ -6,7 +6,7 @@ import ic2.api.energy.tile.IEnergyAcceptor;
 import ic2.api.energy.tile.IEnergySource;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.common.MinecraftForge;
 import powercrystals.powerconverters.common.TileEntityEnergyBridge;
 import powercrystals.powerconverters.mods.IndustrialCraft;
@@ -104,6 +104,11 @@ public class TileEntityIndustrialCraftProducer extends TileEntityEnergyProducer<
                 break;
         }
         lastSentEnergy = drawn;
+    }
+
+    @Override
+    public int getSourceTier() {
+        return _voltageIndex;
     }
 
     @Override

@@ -7,14 +7,13 @@ import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
-import net.minecraft.item.Item;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import powercrystals.powerconverters.common.BlockPowerConverterCommon;
@@ -38,7 +37,6 @@ import java.io.InputStream;
 import java.util.Properties;
 
 @Mod(modid = PowerConverterCore.modId, name = PowerConverterCore.modName, dependencies = "after:BuildCraft|Energy;after:factorization;after:IC2;after:Railcraft;after:ThermalExpansion")
-@NetworkMod(clientSideRequired = true, serverSideRequired = false)
 public final class PowerConverterCore
 {
     public static final String modId = "PowerConverters";
@@ -69,19 +67,12 @@ public final class PowerConverterCore
     @Mod.Instance(modId)
     public static PowerConverterCore instance;
 
-    public static int blockIdThermalExpansion;
-    public static int blockIdIndustrialCraft;
-    public static int blockIdFactorization;
-    public static int blockIdBuildCraft;
-
     public static int bridgeBufferSize;
     public static int throttleSteamConsumer;
     public static int throttleSteamProducer;
     public static PowerSystem powerSystemSteam;
     public static boolean powerSystemSteamEnabled;
 
-    private static int blockIdCommon;
-    private static int blockIdSteam;
     private LoaderBase[] bases = new LoaderBase[] { BuildCraft.INSTANCE, Factorization.INSTANCE,IndustrialCraft.INSTANCE, ThermalExpansion.INSTANCE };
 
     @SuppressWarnings("UnusedDeclaration")
@@ -93,13 +84,13 @@ public final class PowerConverterCore
         File dir = evt.getModConfigurationDirectory();
         loadConfig(dir);
 
-        converterBlockCommon = new BlockPowerConverterCommon(blockIdCommon);
+        converterBlockCommon = new BlockPowerConverterCommon();
         GameRegistry.registerBlock(converterBlockCommon, ItemBlockPowerConverterCommon.class, converterBlockCommon.getUnlocalizedName());
         GameRegistry.registerTileEntity(TileEntityEnergyBridge.class, "powerConverterEnergyBridge");
         GameRegistry.registerTileEntity(TileEntityCharger.class, "powerConverterUniversalCharger");
 
         if(powerSystemSteamEnabled) {
-            converterBlockSteam = new BlockPowerConverterSteam(blockIdSteam);
+            converterBlockSteam = new BlockPowerConverterSteam();
             GameRegistry.registerBlock(converterBlockSteam, ItemBlockPowerConverterSteam.class, converterBlockSteam.getUnlocalizedName());
             GameRegistry.registerTileEntity(TileEntitySteamConsumer.class, "powerConverterSteamConsumer");
             GameRegistry.registerTileEntity(TileEntitySteamProducer.class, "powerConverterSteamProducer");
@@ -126,6 +117,7 @@ public final class PowerConverterCore
 	for (LoaderBase base : bases)
 	    base.load(LoaderBase.Stage.POSTINIT);
 
+        // TODO: Fix with logger
 	System.out.println("+++++++++++++++++++++++++[PowerConverters][NOTICE]+++++++++++++++++++++++++");
 	System.out.println("Default power ratios are based on FTB standards and not all mods follow these");
 	System.out.println("If you find conflicting ratios in your pack, please adjust the config acoordingly or remove PC");
@@ -140,7 +132,7 @@ public final class PowerConverterCore
             loadSteamConverters();
         }
 
-	NetworkRegistry.instance().registerGuiHandler(instance, new PCGUIHandler());
+	NetworkRegistry.INSTANCE.registerGuiHandler(instance, new PCGUIHandler());
 	MinecraftForge.EVENT_BUS.register(instance);
 
 	// Cleanup
@@ -148,11 +140,11 @@ public final class PowerConverterCore
     }
 
     private void registerRecipes() {
-        ItemStack stackGold = new ItemStack(Item.ingotGold);
-        ItemStack stackRedstone = new ItemStack(Item.redstone);
-        ItemStack stackIron = new ItemStack(Item.ingotIron);
-        ItemStack stackGlass = new ItemStack(Block.glass);
-        ItemStack stackDiamond = new ItemStack(Item.diamond);
+        ItemStack stackGold = new ItemStack(GameRegistry.findItem("minecraft", "gold_ingot"));
+        ItemStack stackRedstone = new ItemStack(GameRegistry.findItem("minecraft", "redstone"));
+        ItemStack stackIron = new ItemStack(GameRegistry.findItem("minecraft", "iron_ingot"));
+        ItemStack stackGlass = new ItemStack(GameRegistry.findBlock("minecraft", "glass"));
+        ItemStack stackDiamond = new ItemStack(GameRegistry.findItem("minecraft", "diamond"));
 
         Object entryGold = tryOreDict("ingotGold", stackGold);
         Object entryRedstone = tryOreDict("dustRedstone", stackRedstone);
@@ -177,7 +169,7 @@ public final class PowerConverterCore
                 'R', entryRedstone,
                 'G', entryGold,
                 'I', entryIron,
-                'C', Block.chest
+                'C', Blocks.chest
         }));
     }
 
@@ -194,7 +186,7 @@ public final class PowerConverterCore
     {
 	    if (Loader.isModLoaded("Railcraft"))
 	    {
-            ItemStack stackGold = new ItemStack(Item.ingotGold);
+            ItemStack stackGold = new ItemStack(GameRegistry.findItem("minecraft", "gold_ingot"));
             Object entryGold = tryOreDict("ingotGold", stackGold);
 
             ItemStack stackIndustrialEngine = GameRegistry.findItemStack("Railcraft", "machine.beta.engine.steam.low", 1);
@@ -216,13 +208,6 @@ public final class PowerConverterCore
     {
 	dir = new File(new File(dir, modId.toLowerCase()), "common.cfg");
 	Configuration c = new Configuration(dir);
-
-	blockIdCommon = c.getBlock("ID.BlockCommon", 2850).getInt();
-	blockIdBuildCraft = c.getBlock("ID.BlockBuildcraft", 2851).getInt();
-	blockIdIndustrialCraft = c.getBlock("ID.BlockIndustrialCraft", 2852).getInt();
-	blockIdSteam = c.getBlock("ID.BlockSteam", 2853).getInt();
-	blockIdFactorization = c.getBlock("ID.BlockFactorization", 2854).getInt();
-	blockIdThermalExpansion = c.getBlock("ID.BlockThermalExpansion", 2855).getInt();
 
 	bridgeBufferSize = c.get(Configuration.CATEGORY_GENERAL, "BridgeBufferSize", 160000000).getInt();
 	throttleSteamConsumer = c.get("Throttles", "Steam.Consumer", 1000, "mB/t").getInt();

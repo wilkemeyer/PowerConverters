@@ -4,7 +4,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.common.util.ForgeDirection;
 import powercrystals.powerconverters.PowerConverterCore;
 import powercrystals.powerconverters.position.BlockPosition;
 import powercrystals.powerconverters.position.INeighboorUpdateTile;
@@ -137,7 +137,7 @@ public class TileEntityEnergyBridge extends TileEntity implements INeighboorUpda
             BlockPosition p = new BlockPosition(this);
             p.orientation = d;
             p.moveForwards(1);
-            TileEntity te = worldObj.getBlockTileEntity(p.x, p.y, p.z);
+            TileEntity te = worldObj.getTileEntity(p.x, p.y, p.z);
             if (te != null && te instanceof TileEntityEnergyProducer) {
                 producerTiles.put(d, (TileEntityEnergyProducer<?>) te);
             }
@@ -152,7 +152,7 @@ public class TileEntityEnergyBridge extends TileEntity implements INeighboorUpda
             p.orientation = dir;
             p.moveForwards(1);
 
-            TileEntity te = worldObj.getBlockTileEntity(p.x, p.y, p.z);
+            TileEntity te = worldObj.getTileEntity(p.x, p.y, p.z);
             if (te != null && te instanceof TileEntityBridgeComponent) {
                 if (te instanceof TileEntityEnergyConsumer) {
                     d.isConsumer = true;

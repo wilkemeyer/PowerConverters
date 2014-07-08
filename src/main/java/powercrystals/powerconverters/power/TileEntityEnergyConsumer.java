@@ -1,6 +1,6 @@
 package powercrystals.powerconverters.power;
 
-import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.common.util.ForgeDirection;
 import powercrystals.powerconverters.common.TileEntityEnergyBridge;
 
 import java.util.Map.Entry;

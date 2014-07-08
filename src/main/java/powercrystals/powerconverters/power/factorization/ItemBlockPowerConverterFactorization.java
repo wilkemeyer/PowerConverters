@@ -1,6 +1,8 @@
 package powercrystals.powerconverters.power.factorization;
 
+import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 
@@ -15,9 +17,9 @@ import java.util.List;
  */
 public class ItemBlockPowerConverterFactorization extends ItemBlock
 {
-    public ItemBlockPowerConverterFactorization(int id)
+    public ItemBlockPowerConverterFactorization(Block block)
     {
-        super(id);
+        super(block);
         setHasSubtypes(true);
         setMaxDamage(0);
     }
@@ -37,9 +39,9 @@ public class ItemBlockPowerConverterFactorization extends ItemBlock
 
     @SuppressWarnings({"unchecked", "rawtypes"})
     @Override
-    public void getSubItems(int itemId, CreativeTabs creativeTab, List subTypes) {
+    public void getSubItems(Item item, CreativeTabs creativeTab, List subTypes) {
         for (int i = 0; i <= 1; i++) {
-            subTypes.add(new ItemStack(itemId, 1, i));
+            subTypes.add(new ItemStack(item, 1, i));
         }
     }
 }

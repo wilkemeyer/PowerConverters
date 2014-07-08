@@ -1,6 +1,6 @@
 package powercrystals.powerconverters.power.ic2;
 
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import powercrystals.powerconverters.PowerConverterCore;
@@ -11,10 +11,10 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockPowerConverterIndustrialCraft extends BlockPowerConverter
 {
-    public BlockPowerConverterIndustrialCraft(int blockId)
+    public BlockPowerConverterIndustrialCraft()
     {
-	super(blockId, 10);
-	setUnlocalizedName("powerconverters.ic2");
+	super(10);
+	setBlockName("powerconverters.ic2");
 	setCreativeTab(PCCreativeTab.tab);
     }
 
@@ -42,12 +42,12 @@ public class BlockPowerConverterIndustrialCraft extends BlockPowerConverter
 	else if (metadata == 9)
 	    return new TileEntityIndustrialCraftProducer(4);
 
-	return createNewTileEntity(world);
+	return createNewTileEntity(world, metadata);
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void registerIcons(IconRegister ir)
+    public void registerBlockIcons(IIconRegister ir)
     {
         String[] voltages = { "lv", "mv", "hv", "ev", "uv" };
         String[] types = { "consumer", "producer" };
