@@ -1,4 +1,4 @@
-package powercrystals.powerconverters.power.thermalexpansion;
+package powercrystals.powerconverters.power.rf;
 
 import cofh.api.energy.IEnergyHandler;
 import net.minecraftforge.common.util.ForgeDirection;

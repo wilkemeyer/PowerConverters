@@ -7,11 +7,11 @@ import powercrystals.powerconverters.PowerConverterCore;
 import powercrystals.powerconverters.common.TileEntityCharger;
 import powercrystals.powerconverters.mods.base.LoaderBase;
 import powercrystals.powerconverters.power.PowerSystem;
-import powercrystals.powerconverters.power.thermalexpansion.BlockPowerConverterRF;
-import powercrystals.powerconverters.power.thermalexpansion.ChargeHandlerRF;
-import powercrystals.powerconverters.power.thermalexpansion.ItemBlockPowerConverterRF;
-import powercrystals.powerconverters.power.thermalexpansion.TileEntityRFConsumer;
-import powercrystals.powerconverters.power.thermalexpansion.TileEntityRFProducer;
+import powercrystals.powerconverters.power.rf.BlockPowerConverterRF;
+import powercrystals.powerconverters.power.rf.ChargeHandlerRF;
+import powercrystals.powerconverters.power.rf.ItemBlockPowerConverterRF;
+import powercrystals.powerconverters.power.rf.TileEntityRFConsumer;
+import powercrystals.powerconverters.power.rf.TileEntityRFProducer;
 
 /**
  * @author samrg472

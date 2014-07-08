@@ -1,4 +1,4 @@
-package powercrystals.powerconverters.power.thermalexpansion;
+package powercrystals.powerconverters.power.rf;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
