@@ -47,16 +47,16 @@ public final class BuildCraft extends LoaderBase {
         try {
             ItemStack redstoneBlock = new ItemStack(GameRegistry.findBlock("minecraft", "redstone_block"), 1);
 
-            ItemStack cable = new ItemStack((Item) Class.forName("buildcraft.BuildCraftTransport").getField("pipePowerGold").get(null), 1, 0);
-            ItemStack struct = new ItemStack((Item) Class.forName("buildcraft.BuildCraftTransport").getField("pipeStructureCobblestone").get(null), 1, 0);
-            ItemStack gear = new ItemStack((Item) Class.forName("buildcraft.BuildCraftCore").getField("goldGearItem").get(null), 1, 0);
-            ItemStack engine = new ItemStack((Block) Class.forName("buildcraft.BuildCraftEnergy").getField("engineBlock").get(null), 1, 1);
-            GameRegistry.addRecipe(new ItemStack(converterBlock, 1, 0), "GSG", "SES", "GSG", 'G', cable, 'S', struct, 'E', gear);
-            ItemStack pump = new ItemStack((Block) Class.forName("buildcraft.BuildCraftFactory").getField("pumpBlock").get(null), 1, 0);
+            Item cable = GameRegistry.findItem("Buildcraft|Transport", "item.buildcraftPipe.pipepowergold");
+            Item struct = GameRegistry.findItem("Buildcraft|Transport", "item.buildcraftPipe.pipestructurecobblestone");
+            Item conduit = GameRegistry.findItem("Buildcraft|Transport", "item.buildcraftPipe.pipePowerDiamond");
+            Item fluid = GameRegistry.findItem("Buildcraft|Transport", "item.buildcraftPipe.pipeFluidsGold");
 
-            ItemStack conduit = new ItemStack((Item) Class.forName("buildcraft.BuildCraftTransport").getField("pipePowerDiamond").get(null), 1, 0);
-            ItemStack chest = new ItemStack((Block) Class.forName("buildcraft.BuildCraftTransport").getField("filteredBufferBlock").get(null), 1, 0);
-            ItemStack fluid = new ItemStack((Item) Class.forName("buildcraft.BuildCraftTransport").getField("pipeFluidsGold").get(null), 1, 0);
+            Block chest = GameRegistry.findBlock("Buildcraft|Transport", "filteredBufferBlock");
+            Block engine = GameRegistry.findBlock("Buildcraft|Energy", "engineBlock");
+            Block pump = GameRegistry.findBlock("Buildcraft|Factory", "pumpBlock");
+
+            ItemStack gear = new ItemStack(GameRegistry.findItem("Buildcraft|Core", "goldGearItem"), 1, 1);
 
             if (BuildCraft.INSTANCE.powerSystem.getRecipesEnabled()) {
                 GameRegistry.addRecipe(new ItemStack(PowerConverterCore.converterBlockCommon, 1, 0),
@@ -86,6 +86,14 @@ public final class BuildCraft extends LoaderBase {
                     );
                 }
             }
+            GameRegistry.addRecipe(new ItemStack(converterBlock, 1, 0),
+                    "GSG",
+                    "SES",
+                    "GSG",
+                    'G', cable,
+                    'S', struct,
+                    'E', gear
+            );
         } catch (Throwable t) {
             t.printStackTrace(System.err);
         }
