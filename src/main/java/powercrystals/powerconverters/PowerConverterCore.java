@@ -16,6 +16,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
+import org.apache.logging.log4j.Logger;
 import powercrystals.powerconverters.common.BlockPowerConverterCommon;
 import powercrystals.powerconverters.common.ItemBlockPowerConverterCommon;
 import powercrystals.powerconverters.common.TileEntityCharger;
@@ -75,10 +76,13 @@ public final class PowerConverterCore
 
     private LoaderBase[] bases = new LoaderBase[] { BuildCraft.INSTANCE, Factorization.INSTANCE,IndustrialCraft.INSTANCE, ThermalExpansion.INSTANCE };
 
+    public Logger logger;
+
     @SuppressWarnings("UnusedDeclaration")
     @EventHandler
     public void preInit(FMLPreInitializationEvent evt)
     {
+        logger = evt.getModLog();
         evt.getModMetadata().version = PowerConverterCore.version;
 
         File dir = evt.getModConfigurationDirectory();
@@ -117,15 +121,14 @@ public final class PowerConverterCore
 	for (LoaderBase base : bases)
 	    base.load(LoaderBase.Stage.POSTINIT);
 
-        // TODO: Fix with logger
-	System.out.println("+++++++++++++++++++++++++[PowerConverters][NOTICE]+++++++++++++++++++++++++");
-	System.out.println("Default power ratios are based on FTB standards and not all mods follow these");
-	System.out.println("If you find conflicting ratios in your pack, please adjust the config acoordingly or remove PC");
-	System.out.println("These conflicts are not the fault of any mod author. It is the nature on minecraft");
-	System.out.println("-------------------------[PowerConverters][STEAM]-------------------------");
-	System.out.println("Default steam ratios, while based on standards, will create infinite energy loops");
-	System.out.println("To prevent over powered infinite energy, use a steam throttle values of less than 5");
-	System.out.println("+++++++++++++++++++++++++[PowerConverters][NOTICE]+++++++++++++++++++++++++");
+	logger.info("+++++++++++++++++++++++++[PowerConverters][NOTICE]+++++++++++++++++++++++++");
+	logger.info("Default power ratios are based on FTB standards and not all mods follow these");
+	logger.info("If you find conflicting ratios in your pack, please adjust the config acoordingly or remove PC");
+	logger.info("These conflicts are not the fault of any mod author. It is the nature on minecraft");
+	logger.info("-------------------------[PowerConverters][STEAM]-------------------------");
+	logger.info("Default steam ratios, while based on standards, will create infinite energy loops");
+	logger.info("To prevent over powered infinite energy, use a steam throttle values of less than 5");
+	logger.info("+++++++++++++++++++++++++[PowerConverters][NOTICE]+++++++++++++++++++++++++");
 
         registerRecipes();
         if (powerSystemSteamEnabled) {
