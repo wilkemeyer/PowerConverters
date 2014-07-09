@@ -2,9 +2,11 @@ package powercrystals.powerconverters.mods;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.item.ItemStack;
+import powercrystals.powerconverters.common.TileEntityCharger;
 import powercrystals.powerconverters.mods.base.LoaderBase;
 import powercrystals.powerconverters.power.PowerSystem;
 import powercrystals.powerconverters.power.rf.BlockPowerConverterRF;
+import powercrystals.powerconverters.power.rf.ChargeHandlerRF;
 import powercrystals.powerconverters.power.rf.ItemBlockPowerConverterRF;
 import powercrystals.powerconverters.power.rf.TileEntityRFConsumer;
 import powercrystals.powerconverters.power.rf.TileEntityRFProducer;
@@ -27,6 +29,7 @@ public final class EnderIO extends LoaderBase
     {
     	powerSystem = new PowerSystem("EnderIO", "RF", 437.5F, 437.5F, null, null, "RF/t");
     	PowerSystem.registerPowerSystem(powerSystem);
+        TileEntityCharger.registerChargeHandler(new ChargeHandlerRF());
     }
 
     @Override
