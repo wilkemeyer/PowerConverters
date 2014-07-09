@@ -33,7 +33,7 @@ public final class EnderIO extends LoaderBase
     protected void init()
     {
     	converterBlock = new BlockPowerConverterRF();
-    	GameRegistry.registerBlock(converterBlock, ItemBlockPowerConverterRF.class, converterBlock.getUnlocalizedName());
+        GameRegistry.registerBlock(converterBlock, ItemBlockPowerConverterRF.class, "converter.rf");
     	GameRegistry.registerTileEntity(TileEntityRFConsumer.class, "powerConverterRFConsumer");
     	GameRegistry.registerTileEntity(TileEntityRFProducer.class, "powerConverterRFProducer");
     }

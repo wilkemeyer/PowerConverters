@@ -38,7 +38,7 @@ public final class IndustrialCraft extends LoaderBase {
     @Override
     protected void init() {
         converterBlock = new BlockPowerConverterIndustrialCraft();
-        GameRegistry.registerBlock(converterBlock, ItemBlockPowerConverterIndustrialCraft.class, converterBlock.getUnlocalizedName());
+        GameRegistry.registerBlock(converterBlock, ItemBlockPowerConverterIndustrialCraft.class, "converter.ic2");
         GameRegistry.registerTileEntity(TileEntityIndustrialCraftConsumer.class, "powerConverterIC2Consumer");
         GameRegistry.registerTileEntity(TileEntityIndustrialCraftProducer.class, "powerConverterIC2Producer");
     }

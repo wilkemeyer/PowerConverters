@@ -93,7 +93,7 @@ public final class PowerConverterCore {
         loadConfig(dir);
 
         converterBlockCommon = new BlockPowerConverterCommon();
-        GameRegistry.registerBlock(converterBlockCommon, ItemBlockPowerConverterCommon.class, converterBlockCommon.getUnlocalizedName());
+        GameRegistry.registerBlock(converterBlockCommon, ItemBlockPowerConverterCommon.class, "converter.common");
         GameRegistry.registerTileEntity(TileEntityEnergyBridge.class, "powerConverterEnergyBridge");
         GameRegistry.registerTileEntity(TileEntityCharger.class, "powerConverterUniversalCharger");
 

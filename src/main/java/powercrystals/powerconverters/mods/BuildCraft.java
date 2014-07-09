@@ -35,7 +35,7 @@ public final class BuildCraft extends LoaderBase {
     @Override
     protected void init() {
         converterBlock = new BlockPowerConverterBuildCraft();
-        GameRegistry.registerBlock(converterBlock, ItemBlockPowerConverterBuildCraft.class, converterBlock.getUnlocalizedName());
+        GameRegistry.registerBlock(converterBlock, ItemBlockPowerConverterBuildCraft.class, "converter.bc");
         GameRegistry.registerTileEntity(TileEntityBuildCraftConsumer.class, "powerConverterBCConsumer");
         GameRegistry.registerTileEntity(TileEntityBuildCraftProducer.class, "powerConverterBCProducer");
     }

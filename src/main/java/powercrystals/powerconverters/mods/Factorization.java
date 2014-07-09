@@ -9,13 +9,6 @@ import powercrystals.powerconverters.power.factorization.ItemBlockPowerConverter
 import powercrystals.powerconverters.power.factorization.TileEntityPowerConverterFactorizationConsumer;
 import powercrystals.powerconverters.power.factorization.TileEntityPowerConverterFactorizationProducer;
 
-/**
- * Created with IntelliJ IDEA.
- * User: james
- * Date: 3/03/14
- * Time: 2:50 PM
- * To change this template use File | Settings | File Templates.
- */
 public class Factorization extends LoaderBase {
     public static final Factorization INSTANCE = new Factorization();
 
@@ -35,7 +28,7 @@ public class Factorization extends LoaderBase {
     @Override
     protected void init() {
         converterBlock = new BlockPowerConverterFactorization();
-        GameRegistry.registerBlock(converterBlock, ItemBlockPowerConverterFactorization.class, converterBlock.getUnlocalizedName());
+        GameRegistry.registerBlock(converterBlock, ItemBlockPowerConverterFactorization.class, "converter.fz");
         GameRegistry.registerTileEntity(TileEntityPowerConverterFactorizationConsumer.class, "powerConverterFZConsumer");
         GameRegistry.registerTileEntity(TileEntityPowerConverterFactorizationProducer.class, "powerConverterFZProducer");
     }
