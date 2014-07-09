@@ -23,6 +23,7 @@ import powercrystals.powerconverters.common.TileEntityCharger;
 import powercrystals.powerconverters.common.TileEntityEnergyBridge;
 import powercrystals.powerconverters.gui.PCGUIHandler;
 import powercrystals.powerconverters.mods.BuildCraft;
+import powercrystals.powerconverters.mods.EnderIO;
 import powercrystals.powerconverters.mods.Factorization;
 import powercrystals.powerconverters.mods.IndustrialCraft;
 import powercrystals.powerconverters.mods.ThermalExpansion;
@@ -72,7 +73,13 @@ public final class PowerConverterCore {
     public static PowerSystem powerSystemSteam;
     public static boolean powerSystemSteamEnabled;
 
-    private LoaderBase[] bases = new LoaderBase[]{BuildCraft.INSTANCE, Factorization.INSTANCE, IndustrialCraft.INSTANCE, ThermalExpansion.INSTANCE};
+    private LoaderBase[] bases = new LoaderBase[]{
+            BuildCraft.INSTANCE,
+            Factorization.INSTANCE,
+            IndustrialCraft.INSTANCE,
+            ThermalExpansion.INSTANCE,
+            EnderIO.INSTANCE
+    };
 
     public Logger logger;
 

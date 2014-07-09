@@ -3,7 +3,7 @@ package powercrystals.powerconverters.power.rf;
 import cofh.api.energy.IEnergyHandler;
 import net.minecraftforge.common.util.ForgeDirection;
 import powercrystals.powerconverters.common.TileEntityEnergyBridge;
-import powercrystals.powerconverters.mods.ThermalExpansion;
+import powercrystals.powerconverters.mods.EnderIO;
 import powercrystals.powerconverters.power.TileEntityEnergyConsumer;
 
 /**
@@ -14,7 +14,7 @@ public class TileEntityRFConsumer extends TileEntityEnergyConsumer<IEnergyHandle
     private int lastReceivedRF;
 
     public TileEntityRFConsumer() {
-        super(ThermalExpansion.INSTANCE.powerSystem, 0, IEnergyHandler.class);
+        super(EnderIO.INSTANCE.powerSystem, 0, IEnergyHandler.class);
     }
 
     @Override

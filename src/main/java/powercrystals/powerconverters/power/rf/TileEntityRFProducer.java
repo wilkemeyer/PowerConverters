@@ -4,7 +4,7 @@ import cofh.api.energy.IEnergyHandler;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
 import powercrystals.powerconverters.common.TileEntityEnergyBridge;
-import powercrystals.powerconverters.mods.ThermalExpansion;
+import powercrystals.powerconverters.mods.EnderIO;
 import powercrystals.powerconverters.position.BlockPosition;
 import powercrystals.powerconverters.power.TileEntityEnergyProducer;
 
@@ -16,7 +16,7 @@ import java.util.List;
 public class TileEntityRFProducer extends TileEntityEnergyProducer<IEnergyHandler> implements IEnergyHandler {
 
     public TileEntityRFProducer() {
-        super(ThermalExpansion.INSTANCE.powerSystem, 0, IEnergyHandler.class);
+        super(EnderIO.INSTANCE.powerSystem, 0, IEnergyHandler.class);
     }
 
     @Override

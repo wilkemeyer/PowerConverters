@@ -30,7 +30,7 @@ public final class IndustrialCraft extends LoaderBase {
 
     @Override
     protected void preInit() {
-        powerSystem = new PowerSystem("IndustrialCraft", "IC2", 4000, 4000,/*1800, 1800,*/new String[]{"LV", "MV", "HV", "EV", "AV"}, new int[]{32, 128, 512, 2048, 8192}, "EU/t");
+        powerSystem = new PowerSystem("IndustrialCraft", "IC2", 4000, 4000,/*1800, 1800,*/new String[]{"LV", "MV", "HV", "EV", "UV"}, new int[]{32, 128, 512, 2048, 8192}, "EU/t");
         PowerSystem.registerPowerSystem(powerSystem);
         TileEntityCharger.registerChargeHandler(new ChargeHandlerIndustrialCraft());
     }

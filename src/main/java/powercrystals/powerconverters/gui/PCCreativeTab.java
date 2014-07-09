@@ -13,7 +13,7 @@ public class PCCreativeTab extends CreativeTabs {
 
     @Override
     public Item getTabIconItem() {
-        return GameRegistry.findItem("powerconverters", "powerconverters.common");
+        return GameRegistry.findItem("PowerConverters", "tile.powerconverters.common");
     }
 
     @Override
