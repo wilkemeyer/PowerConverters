@@ -87,6 +87,8 @@ public final class PowerConverterCore {
         logger = evt.getModLog();
         evt.getModMetadata().version = PowerConverterCore.version;
 
+        registerPowerSystems();
+
         File dir = evt.getModConfigurationDirectory();
         loadConfig(dir);
 
@@ -94,8 +96,6 @@ public final class PowerConverterCore {
         GameRegistry.registerBlock(converterBlockCommon, ItemBlockPowerConverterCommon.class, "converter.common");
         GameRegistry.registerTileEntity(TileEntityEnergyBridge.class, "powerConverterEnergyBridge");
         GameRegistry.registerTileEntity(TileEntityCharger.class, "powerConverterUniversalCharger");
-
-        registerPowerSystems();
     }
 
     @SuppressWarnings("UnusedParameters")
@@ -132,7 +132,7 @@ public final class PowerConverterCore {
         enabledRecipes.add(new RecipeVanilla());
         manager.registerPowerSystem(new PowerSteam());
 
-        if(Loader.isModLoaded("Buildcraft|Energy")) {
+        if(Loader.isModLoaded("BuildCraft|Energy")) {
             enabledRecipes.add(new RecipeBuildCraft());
             if(manager.getPowerSystemByName(PowerBuildcraft.id) == null) {
                 manager.registerPowerSystem(new PowerBuildcraft());
