@@ -28,7 +28,6 @@ import powercrystals.powerconverters.crafting.mods.RecipeRailcraft;
 import powercrystals.powerconverters.crafting.mods.RecipeThermalExpansion;
 import powercrystals.powerconverters.crafting.mods.RecipeVanilla;
 import powercrystals.powerconverters.gui.PCGUIHandler;
-import powercrystals.powerconverters.power.PowerSystem;
 import powercrystals.powerconverters.power.PowerSystemManager;
 import powercrystals.powerconverters.power.systems.PowerBuildcraft;
 import powercrystals.powerconverters.power.systems.PowerFactorization;
@@ -72,10 +71,6 @@ public final class PowerConverterCore {
     public static PowerConverterCore instance;
 
     public static int bridgeBufferSize;
-    public static int throttleSteamConsumer;
-    public static int throttleSteamProducer;
-    public static PowerSystem powerSystemSteam;
-    public static boolean powerSystemSteamEnabled;
 
     private Set<RecipeProvider> enabledRecipes;
 
@@ -186,6 +181,7 @@ public final class PowerConverterCore {
         dir = new File(new File(dir, modId.toLowerCase()), "common.cfg");
         Configuration c = new Configuration(dir);
 
+        bridgeBufferSize = c.get(Configuration.CATEGORY_GENERAL, "bridgeBufferSize", 160000000).getInt();
         for(RecipeProvider provider : enabledRecipes) {
             provider.loadConfig(c);
         }

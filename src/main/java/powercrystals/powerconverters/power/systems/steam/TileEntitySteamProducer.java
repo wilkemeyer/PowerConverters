@@ -10,22 +10,24 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
-import powercrystals.powerconverters.PowerConverterCore;
 import powercrystals.powerconverters.mods.reference.InterfaceReference;
 import powercrystals.powerconverters.mods.reference.ModIDReference;
 import powercrystals.powerconverters.position.BlockPosition;
+import powercrystals.powerconverters.power.PowerSystemManager;
 import powercrystals.powerconverters.power.base.TileEntityEnergyProducer;
+import powercrystals.powerconverters.power.systems.PowerSteam;
 
 @Optional.Interface(modid = ModIDReference.BUILDCRAFT, iface = InterfaceReference.BuildCraft.IPipeConnection)
 public class TileEntitySteamProducer extends TileEntityEnergyProducer<IFluidHandler> implements IFluidHandler, IPipeConnection {
 
     public TileEntitySteamProducer() {
-        super(PowerConverterCore.powerSystemSteam, 0, IFluidHandler.class);
+        super(PowerSystemManager.getInstance().getPowerSystemByName(PowerSteam.id), 0, IFluidHandler.class);
     }
 
     @Override
     public double produceEnergy(double energy) {
-        energy = energy / PowerConverterCore.powerSystemSteam.getInternalEnergyPerOutput();
+        PowerSteam powerSteam = (PowerSteam) PowerSystemManager.getInstance().getPowerSystemByName(PowerSteam.id);
+        energy = energy / powerSteam.getInternalEnergyPerOutput();
         for (int i = 0; i < 6; i++) {
             BlockPosition bp = new BlockPosition(this);
             bp.orientation = ForgeDirection.getOrientation(i);
@@ -33,7 +35,7 @@ public class TileEntitySteamProducer extends TileEntityEnergyProducer<IFluidHand
             TileEntity te = worldObj.getTileEntity(bp.x, bp.y, bp.z);
 
             if (te instanceof IFluidHandler) {
-                final int steam = (int) Math.min(energy, PowerConverterCore.throttleSteamProducer);
+                final int steam = (int) Math.min(energy, powerSteam.getThrottleProducer());
                 FluidStack stack = FluidRegistry.getFluidStack("steam", steam);
                 if (stack == null)
                     FluidRegistry.getFluidStack("Steam", steam);
@@ -44,7 +46,7 @@ public class TileEntitySteamProducer extends TileEntityEnergyProducer<IFluidHand
                 return 0;
         }
 
-        return energy * PowerConverterCore.powerSystemSteam.getInternalEnergyPerOutput();
+        return energy * powerSteam.getInternalEnergyPerOutput();
     }
 
     @Override

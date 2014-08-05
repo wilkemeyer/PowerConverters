@@ -9,6 +9,7 @@ import powercrystals.powerconverters.PowerConverterCore;
 import powercrystals.powerconverters.crafting.RecipeProvider;
 import powercrystals.powerconverters.power.PowerSystem;
 import powercrystals.powerconverters.power.PowerSystemManager;
+import powercrystals.powerconverters.power.systems.PowerSteam;
 
 /**
  * Add recipes for Buildcraft
@@ -50,7 +51,8 @@ public class RecipeBuildCraft extends RecipeProvider {
                         '#', engine,
                         'G', gear
                 );
-                if (PowerConverterCore.powerSystemSteamEnabled) {
+                PowerSystem steam = PowerSystemManager.getInstance().getPowerSystemByName(PowerSteam.id);
+                if (steam != null) {
                     GameRegistry.addRecipe(new ItemStack(PowerConverterCore.converterBlockSteam, 1, 0),
                             "GSG",
                             "SES",

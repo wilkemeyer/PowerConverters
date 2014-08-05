@@ -68,4 +68,12 @@ public class PowerSteam extends PowerSystem {
         c.getCategory(CATEGORY_STEAM).get("throttle.steamConsumer").set(throttleConsumer);
         c.getCategory(CATEGORY_STEAM).get("throttle.steamProducer").set(throttleProducer);
     }
+
+    public int getThrottleConsumer() {
+        return throttleConsumer;
+    }
+
+    public int getThrottleProducer() {
+        return throttleProducer;
+    }
 }

@@ -10,10 +10,11 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
-import powercrystals.powerconverters.PowerConverterCore;
 import powercrystals.powerconverters.mods.reference.InterfaceReference;
 import powercrystals.powerconverters.mods.reference.ModIDReference;
+import powercrystals.powerconverters.power.PowerSystemManager;
 import powercrystals.powerconverters.power.base.TileEntityEnergyConsumer;
+import powercrystals.powerconverters.power.systems.PowerSteam;
 
 @Optional.Interface(modid = ModIDReference.BUILDCRAFT, iface = InterfaceReference.BuildCraft.IPipeConnection)
 public class TileEntitySteamConsumer extends TileEntityEnergyConsumer<IFluidHandler> implements IFluidHandler, IPipeConnection {
@@ -21,7 +22,7 @@ public class TileEntitySteamConsumer extends TileEntityEnergyConsumer<IFluidHand
     private int _mBLastTick;
 
     public TileEntitySteamConsumer() {
-        super(PowerConverterCore.powerSystemSteam, 0, IFluidHandler.class);
+        super(PowerSystemManager.getInstance().getPowerSystemByName(PowerSteam.id), 0, IFluidHandler.class);
         _steamTank = new FluidTank(FluidContainerRegistry.BUCKET_VOLUME);
     }
 
@@ -30,10 +31,11 @@ public class TileEntitySteamConsumer extends TileEntityEnergyConsumer<IFluidHand
         super.updateEntity();
 
         if (_steamTank.getFluidAmount() > 0) {
-            int amount = Math.min(_steamTank.getFluidAmount(), PowerConverterCore.throttleSteamConsumer);
-            float energy = amount * PowerConverterCore.powerSystemSteam.getInternalEnergyPerInput();
+            PowerSteam steam = (PowerSteam) PowerSystemManager.getInstance().getPowerSystemByName(PowerSteam.id);
+            int amount = Math.min(_steamTank.getFluidAmount(), steam.getThrottleConsumer());
+            float energy = amount * steam.getInternalEnergyPerInput();
             energy = (int) storeEnergy(energy, false);
-            int toDrain = (int) (amount - (energy / PowerConverterCore.powerSystemSteam.getInternalEnergyPerInput()));
+            int toDrain = (int) (amount - (energy / steam.getInternalEnergyPerInput()));
             _steamTank.drain(toDrain, true);
             _mBLastTick = toDrain;
         } else {

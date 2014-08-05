@@ -10,6 +10,7 @@ import powercrystals.powerconverters.PowerConverterCore;
 import powercrystals.powerconverters.crafting.RecipeProvider;
 import powercrystals.powerconverters.power.PowerSystem;
 import powercrystals.powerconverters.power.PowerSystemManager;
+import powercrystals.powerconverters.power.systems.PowerSteam;
 
 /**
  * Add recipes for IC2
@@ -46,7 +47,8 @@ public class RecipeIndustrialCraft extends RecipeProvider {
                     'S', GameRegistry.findItem("minecraft", "chest"),
                     '#', charger
             }));
-            if (PowerConverterCore.powerSystemSteamEnabled) {
+            PowerSystem steam = PowerSystemManager.getInstance().getPowerSystemByName(PowerSteam.id);
+            if (steam != null) {
                 GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(PowerConverterCore.converterBlockSteam, 1, 0), true, new Object[]{
                         "CPC",
                         "PTP",
