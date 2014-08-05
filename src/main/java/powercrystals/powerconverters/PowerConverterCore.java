@@ -165,7 +165,8 @@ public final class PowerConverterCore {
             enabledRecipes.add(new RecipeRailcraft());
         }
         if(Loader.isModLoaded("ThermalExpansion")) {
-            enabledRecipes.add(new RecipeThermalExpansion());
+            // TODO: Thermal Expansion recipes are broken.
+            // enabledRecipes.add(new RecipeThermalExpansion());
             if(manager.getPowerSystemByName(PowerRedstoneFlux.id) == null) {
                 manager.registerPowerSystem(new PowerRedstoneFlux());
             }
