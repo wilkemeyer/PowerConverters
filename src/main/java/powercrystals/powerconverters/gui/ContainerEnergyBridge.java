@@ -9,7 +9,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.util.ForgeDirection;
 import powercrystals.powerconverters.common.BridgeSideData;
 import powercrystals.powerconverters.common.TileEntityEnergyBridge;
-import powercrystals.powerconverters.power.PowerSystem;
+import powercrystals.powerconverters.power.PowerSystemManager;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -91,7 +91,7 @@ public class ContainerEnergyBridge extends Container {
                     sideData.isProducer = (value != 0);
                     break;
                 case POWER_SYSTEM_ID:
-                    sideData.powerSystem = PowerSystem.getPowerSystemById(value);
+                    sideData.powerSystem = PowerSystemManager.getInstance().getPowerSystemById(value);
                     break;
                 case IS_CONNECTED:
                     sideData.isConnected = (value != 0);
@@ -150,7 +150,7 @@ public class ContainerEnergyBridge extends Container {
                 crafter.sendProgressBarUpdate(this, sideVal + _sideData.IS_CONSUMER.ordinal(), data.isConsumer ? 1 : 0);
                 crafter.sendProgressBarUpdate(this, sideVal + _sideData.IS_PRODUCER.ordinal(), data.isProducer ? 1 : 0);
                 if (data.powerSystem != null) {
-                    crafter.sendProgressBarUpdate(this, sideVal + _sideData.POWER_SYSTEM_ID.ordinal(), data.powerSystem.getId());
+                    crafter.sendProgressBarUpdate(this, sideVal + _sideData.POWER_SYSTEM_ID.ordinal(), PowerSystemManager.getInstance().getPowerSystemId(data.powerSystem.getId()));
                 }
                 crafter.sendProgressBarUpdate(this, sideVal + _sideData.IS_CONNECTED.ordinal(), data.isConnected ? 1 : 0);
                 crafter.sendProgressBarUpdate(this, sideVal + _sideData.OUTPUT_RATE_HIGH.ordinal(), (short) (((int) data.outputRate) >> 16));

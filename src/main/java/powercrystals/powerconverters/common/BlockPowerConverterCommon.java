@@ -16,7 +16,7 @@ import net.minecraft.world.World;
 import powercrystals.powerconverters.PowerConverterCore;
 import powercrystals.powerconverters.gui.PCCreativeTab;
 import powercrystals.powerconverters.position.INeighboorUpdateTile;
-import powercrystals.powerconverters.power.TileEntityBridgeComponent;
+import powercrystals.powerconverters.power.base.TileEntityBridgeComponent;
 
 public class BlockPowerConverterCommon extends BlockContainer {
     private IIcon _iconBridge;

@@ -8,10 +8,10 @@ import net.minecraftforge.common.util.ForgeDirection;
 import powercrystals.powerconverters.PowerConverterCore;
 import powercrystals.powerconverters.position.BlockPosition;
 import powercrystals.powerconverters.position.INeighboorUpdateTile;
-import powercrystals.powerconverters.power.ICustomHandler;
-import powercrystals.powerconverters.power.TileEntityBridgeComponent;
-import powercrystals.powerconverters.power.TileEntityEnergyConsumer;
-import powercrystals.powerconverters.power.TileEntityEnergyProducer;
+import powercrystals.powerconverters.power.util.ICustomHandler;
+import powercrystals.powerconverters.power.base.TileEntityBridgeComponent;
+import powercrystals.powerconverters.power.base.TileEntityEnergyConsumer;
+import powercrystals.powerconverters.power.base.TileEntityEnergyProducer;
 
 import java.util.HashMap;
 import java.util.Map;

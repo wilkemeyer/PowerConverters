@@ -68,7 +68,7 @@ public class GuiEnergyBridge extends ExposedGuiContainer {
             BridgeSideData data = _bridge.getDataForSide(dir);
 
             if ((data.isConsumer || data.isProducer) && data.powerSystem != null) {
-                String name = data.powerSystem.getAbbreviation();
+                String name = data.powerSystem.getId();
                 if (data.powerSystem.getVoltageNames() != null) {
                     name += " " + data.powerSystem.getVoltageNames()[data.voltageNameIndex];
                 }
