@@ -5,7 +5,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 import powercrystals.powerconverters.common.TileEntityEnergyBridge;
 import powercrystals.powerconverters.power.PowerSystemManager;
 import powercrystals.powerconverters.power.base.TileEntityEnergyConsumer;
-import powercrystals.powerconverters.power.systems.PowerIndustrialcraft;
+import powercrystals.powerconverters.power.systems.PowerRedstoneFlux;
 
 /**
  * @author samrg472
@@ -15,7 +15,7 @@ public class TileEntityRFConsumer extends TileEntityEnergyConsumer<IEnergyHandle
     private int lastReceivedRF;
 
     public TileEntityRFConsumer() {
-        super(PowerSystemManager.getInstance().getPowerSystemByName(PowerIndustrialcraft.id), 0, IEnergyHandler.class);
+        super(PowerSystemManager.getInstance().getPowerSystemByName(PowerRedstoneFlux.id), 0, IEnergyHandler.class);
     }
 
     @Override
