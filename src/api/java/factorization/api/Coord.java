@@ -1,5 +1,8 @@
 package factorization.api;
 
+import net.minecraft.tileentity.TileEntity;
+
 public class Coord {
-    public Coord(IChargeConductor par1) {}
+    @SuppressWarnings("UnusedParameters")
+    public Coord(TileEntity par1) {}
 }

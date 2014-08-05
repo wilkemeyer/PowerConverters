@@ -139,14 +139,12 @@ public final class PowerConverterCore {
                 manager.registerPowerSystem(new PowerRedstoneFlux());
             }
         }
-        /* TODO: Factorization support is broken
         if(Loader.isModLoaded("factorization")) {
             enabledRecipes.add(new RecipeFactorization());
             if(manager.getPowerSystemByName(PowerFactorization.id) == null) {
                 manager.registerPowerSystem(new PowerFactorization());
             }
         }
-        */
         if(Loader.isModLoaded("IC2")) {
             enabledRecipes.add(new RecipeIndustrialCraft());
             if(manager.getPowerSystemByName(PowerIndustrialcraft.id) == null) {
@@ -160,8 +158,7 @@ public final class PowerConverterCore {
             enabledRecipes.add(new RecipeRailcraft());
         }
         if(Loader.isModLoaded("ThermalExpansion")) {
-            // TODO: Thermal Expansion recipes are broken.
-            // enabledRecipes.add(new RecipeThermalExpansion());
+            enabledRecipes.add(new RecipeThermalExpansion());
             if(manager.getPowerSystemByName(PowerRedstoneFlux.id) == null) {
                 manager.registerPowerSystem(new PowerRedstoneFlux());
             }
