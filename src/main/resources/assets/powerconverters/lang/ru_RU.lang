@@ -23,8 +23,8 @@ powerconverters.bc.producer.name=Производитель MJ
 powerconverters.steam.consumer.name=Потребитель пара
 powerconverters.steam.producer.name=Производитель пара
 
-powerconverters.fz.consumer.name=Потребитель энергии Factorization
-powerconverters.fz.producer.name=Производитель энергии Factorization
+powerconverters.factorization.consumer.name=Потребитель энергии Factorization
+powerconverters.factorization.producer.name=Производитель энергии Factorization
 
 powerconverters.te.consumer.name=Потребитель RF
 powerconverters.te.producer.name=Производитель RF
@@ -40,3 +40,4 @@ powerconverters.ic2.mv.producer.name=Производитель EU СН
 powerconverters.ic2.hv.producer.name=Производитель EU ВН
 powerconverters.ic2.ev.producer.name=Производитель EU СВН
 powerconverters.ic2.uv.producer.name=Производитель EU УН
+

@@ -23,8 +23,8 @@ powerconverters.bc.producer.name=MJ Producer
 powerconverters.steam.consumer.name=Steam Consumer
 powerconverters.steam.producer.name=Steam Producer
 
-powerconverters.fz.consumer.name=Factorization Consumer
-powerconverters.fz.producer.name=Factorization Producer
+powerconverters.factorization.consumer.name=Factorization Consumer
+powerconverters.factorization.producer.name=Factorization Producer
 
 powerconverters.te.consumer.name=RF Consumer
 powerconverters.te.producer.name=RF Producer

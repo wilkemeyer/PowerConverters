@@ -23,8 +23,8 @@ powerconverters.bc.producer.name=MJ产出器
 powerconverters.steam.consumer.name=蒸汽能转入器
 powerconverters.steam.producer.name=蒸汽能产出器
 
-powerconverters.fz.consumer.name=Fz能量转入器
-powerconverters.fz.producer.name=Fz能量产出器
+powerconverters.factorization.consumer.name=Fz能量转入器
+powerconverters.factorization.producer.name=Fz能量产出器
 
 powerconverters.te.consumer.name=RF转入器
 powerconverters.te.producer.name=RF产出器

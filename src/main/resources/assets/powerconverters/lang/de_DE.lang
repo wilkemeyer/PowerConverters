@@ -23,8 +23,8 @@ powerconverters.bc.producer.name=MJ-Produzent
 powerconverters.steam.consumer.name=Dampfkonsument
 powerconverters.steam.producer.name=Dampfproduzent
 
-powerconverters.fz.consumer.name=Factorization-Konsument
-powerconverters.fz.producer.name=Factorization-Produzent
+powerconverters.factorization.consumer.name=Factorization-Konsument
+powerconverters.factorization.producer.name=Factorization-Produzent
 
 powerconverters.te.consumer.name=RF-Konsument
 powerconverters.te.producer.name=RF-Produzent
