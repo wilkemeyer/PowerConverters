@@ -10,6 +10,7 @@ import powercrystals.powerconverters.PowerConverterCore;
 import powercrystals.powerconverters.crafting.RecipeProvider;
 import powercrystals.powerconverters.power.PowerSystem;
 import powercrystals.powerconverters.power.PowerSystemManager;
+import powercrystals.powerconverters.power.systems.PowerIndustrialcraft;
 import powercrystals.powerconverters.power.systems.PowerSteam;
 
 /**
@@ -60,7 +61,7 @@ public class RecipeIndustrialCraft extends RecipeProvider {
             }
         }
 
-        PowerSystem ic2 = PowerSystemManager.getInstance().getPowerSystemByName("ic2");
+        PowerSystem ic2 = PowerSystemManager.getInstance().getPowerSystemByName(PowerIndustrialcraft.id);
         if(ic2 != null) {
             Block converterBlock = ic2.block;
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(converterBlock, 1, 0), true, new Object[]{
