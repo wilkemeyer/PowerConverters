@@ -65,7 +65,6 @@ public final class PowerConverterCore {
     public static final String guiFolder = modId + ":" + "textures/gui/";
 
     public static Block converterBlockCommon;
-    public static Block converterBlockSteam;
 
     @Mod.Instance(modId)
     public static PowerConverterCore instance;

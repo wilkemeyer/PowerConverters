@@ -72,10 +72,9 @@ public class RecipeThermalExpansion extends RecipeProvider {
                     'E', energisticInfuser,
                     'R', receptionCoil
             );
-            // TODO: Work out why the recipe is not being added.
             PowerSystem steam = PowerSystemManager.getInstance().getPowerSystemByName(PowerSteam.id);
             if (steam != null) {
-                GameRegistry.addRecipe(new ItemStack(PowerConverterCore.converterBlockSteam, 1, 0),
+                GameRegistry.addRecipe(new ItemStack(steam.block, 1, 0),
                         "CNT",
                         "PAP",
                         "CFT",

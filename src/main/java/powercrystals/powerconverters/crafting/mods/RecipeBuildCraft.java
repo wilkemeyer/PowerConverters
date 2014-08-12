@@ -9,6 +9,7 @@ import powercrystals.powerconverters.PowerConverterCore;
 import powercrystals.powerconverters.crafting.RecipeProvider;
 import powercrystals.powerconverters.power.PowerSystem;
 import powercrystals.powerconverters.power.PowerSystemManager;
+import powercrystals.powerconverters.power.systems.PowerBuildcraft;
 import powercrystals.powerconverters.power.systems.PowerSteam;
 
 /**
@@ -23,16 +24,16 @@ public class RecipeBuildCraft extends RecipeProvider {
         try {
             ItemStack redstoneBlock = new ItemStack(GameRegistry.findBlock("minecraft", "redstone_block"), 1);
 
-            Item cable = GameRegistry.findItem("Buildcraft|Transport", "item.buildcraftPipe.pipepowergold");
-            Item struct = GameRegistry.findItem("Buildcraft|Transport", "item.buildcraftPipe.pipestructurecobblestone");
-            Item conduit = GameRegistry.findItem("Buildcraft|Transport", "item.buildcraftPipe.pipePowerDiamond");
-            Item fluid = GameRegistry.findItem("Buildcraft|Transport", "item.buildcraftPipe.pipeFluidsGold");
+            Item cable = GameRegistry.findItem("BuildCraft|Transport", "item.buildcraftPipe.pipepowergold");
+            Item struct = GameRegistry.findItem("BuildCraft|Transport", "item.buildcraftPipe.pipestructurecobblestone");
+            Item conduit = GameRegistry.findItem("BuildCraft|Transport", "item.buildcraftPipe.pipepowerdiamond");
+            Item fluid = GameRegistry.findItem("BuildCraft|Transport", "item.buildcraftPipe.pipefluidsgold");
 
-            Block chest = GameRegistry.findBlock("Buildcraft|Transport", "filteredBufferBlock");
-            Block engine = GameRegistry.findBlock("Buildcraft|Energy", "engineBlock");
-            Block pump = GameRegistry.findBlock("Buildcraft|Factory", "pumpBlock");
+            Block chest = GameRegistry.findBlock("BuildCraft|Transport", "filteredBufferBlock");
+            Block engine = GameRegistry.findBlock("BuildCraft|Energy", "engineBlock");
+            Block pump = GameRegistry.findBlock("BuildCraft|Factory", "pumpBlock");
 
-            ItemStack gear = new ItemStack(GameRegistry.findItem("Buildcraft|Core", "goldGearItem"), 1, 1);
+            ItemStack gear = new ItemStack(GameRegistry.findItem("BuildCraft|Core", "goldGearItem"), 1, 1);
 
             if (enableRecipes) {
                 GameRegistry.addRecipe(new ItemStack(PowerConverterCore.converterBlockCommon, 1, 0),
@@ -53,7 +54,7 @@ public class RecipeBuildCraft extends RecipeProvider {
                 );
                 PowerSystem steam = PowerSystemManager.getInstance().getPowerSystemByName(PowerSteam.id);
                 if (steam != null) {
-                    GameRegistry.addRecipe(new ItemStack(PowerConverterCore.converterBlockSteam, 1, 0),
+                    GameRegistry.addRecipe(new ItemStack(steam.block, 1, 0),
                             "GSG",
                             "SES",
                             "GSG",
@@ -64,7 +65,7 @@ public class RecipeBuildCraft extends RecipeProvider {
                 }
             }
 
-            PowerSystem buildcraft = PowerSystemManager.getInstance().getPowerSystemByName("BC");
+            PowerSystem buildcraft = PowerSystemManager.getInstance().getPowerSystemByName(PowerBuildcraft.id);
             if(buildcraft != null) {
                 Block converterBlock = buildcraft.block;
                 GameRegistry.addRecipe(new ItemStack(converterBlock, 1, 0),

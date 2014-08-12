@@ -50,7 +50,7 @@ public class RecipeIndustrialCraft extends RecipeProvider {
             }));
             PowerSystem steam = PowerSystemManager.getInstance().getPowerSystemByName(PowerSteam.id);
             if (steam != null) {
-                GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(PowerConverterCore.converterBlockSteam, 1, 0), true, new Object[]{
+                GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(steam.block, 1, 0), true, new Object[]{
                         "CPC",
                         "PTP",
                         "CPC",
