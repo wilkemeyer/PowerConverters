@@ -17,7 +17,7 @@ public class PowerSteam extends PowerSystem {
 
     public static final float DEFAULT_ENERGY_PER_INPUT = 500;
     public static final float DEFAULT_ENERGY_PER_OUTPUT = 500;
-    public static final String CATEGORY_STEAM = POWERSYSTEM_CATEGORY + ".bc";
+    public static final String CATEGORY_STEAM = POWERSYSTEM_CATEGORY + ".steam";
 
     private static final int THROTTLE_CONSUMER_DEFAULT = 1000;
     private static final int THROTTLE_PRODUCER_DEFAULT = 1000;
