@@ -181,6 +181,7 @@ public final class PowerConverterCore {
         for(RecipeProvider provider : enabledRecipes) {
             provider.loadConfig(c);
         }
+        PowerSystemManager.getInstance().loadConfigs(c);
 
         c.save();
     }

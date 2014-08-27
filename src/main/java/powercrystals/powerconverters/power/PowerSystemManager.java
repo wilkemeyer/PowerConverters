@@ -1,5 +1,7 @@
 package powercrystals.powerconverters.power;
 
+import net.minecraftforge.common.config.Configuration;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -54,6 +56,18 @@ public class PowerSystemManager {
     public void registerCommonRecipes() {
         for(PowerSystem powerSystem : powerSystems.values()) {
             powerSystem.registerCommonRecipes();
+        }
+    }
+
+    public void loadConfigs(Configuration c) {
+        for(PowerSystem powerSystem : powerSystems.values()) {
+            powerSystem.loadConfig(c);
+        }
+    }
+
+    public void saveConfigs(Configuration c) {
+        for(PowerSystem powerSystem : powerSystems.values()) {
+            powerSystem.saveConfig(c);
         }
     }
 }
