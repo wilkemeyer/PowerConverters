@@ -33,7 +33,7 @@ public class RecipeBuildCraft extends RecipeProvider {
             Block engine = GameRegistry.findBlock("BuildCraft|Energy", "engineBlock");
             Block pump = GameRegistry.findBlock("BuildCraft|Factory", "pumpBlock");
 
-            ItemStack gear = new ItemStack(GameRegistry.findItem("BuildCraft|Core", "goldGearItem"), 1, 1);
+            ItemStack gear = new ItemStack(GameRegistry.findItem("BuildCraft|Core", "goldGearItem"), 1, 0);
 
             if (enableRecipes) {
                 GameRegistry.addRecipe(new ItemStack(PowerConverterCore.converterBlockCommon, 1, 0),
