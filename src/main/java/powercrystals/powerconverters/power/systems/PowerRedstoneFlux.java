@@ -17,8 +17,8 @@ import powercrystals.powerconverters.power.systems.rf.TileEntityRFProducer;
 public class PowerRedstoneFlux extends PowerSystem {
     public static final String id = "RF";
 
-    public static final float DEFAULT_ENERGY_PER_INPUT = 437.5F;
-    public static final float DEFAULT_ENERGY_PER_OUTPUT = 437.5F;
+    public static final float DEFAULT_ENERGY_PER_INPUT = 1000;
+    public static final float DEFAULT_ENERGY_PER_OUTPUT = 1000;
     public static final String CATEGORY_BUILDCRAFT = POWERSYSTEM_CATEGORY + ".rf";
 
     public PowerRedstoneFlux() {

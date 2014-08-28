@@ -17,8 +17,8 @@ import powercrystals.powerconverters.power.systems.ic2.TileEntityIndustrialCraft
 public class PowerIndustrialcraft extends PowerSystem {
     public static final String id = "IC2";
 
-    public static final float DEFAULT_ENERGY_PER_INPUT = 175;
-    public static final float DEFAULT_ENERGY_PER_OUTPUT = 175;
+    public static final float DEFAULT_ENERGY_PER_INPUT = 4000;
+    public static final float DEFAULT_ENERGY_PER_OUTPUT = 4000;
     public static final String CATEGORY_FACTORIZATION = POWERSYSTEM_CATEGORY + ".ic2";
 
     public static final String[] VOLTAGE_NAMES = new String[]{"LV", "MV", "HV", "EV", "UV"};
