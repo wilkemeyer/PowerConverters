@@ -16,6 +16,13 @@ buildscript {
     }
 }
 
+repositories {
+	maven {
+		name = "ic2"
+		url = "http://maven.ic2.player.to/"
+	}
+}
+
 apply plugin: 'forge'
 
 // define the properties file
@@ -31,6 +38,11 @@ configFile.withReader {
 version = config.modVersion
 group= "powercrystals.powerconverters" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "PowerConverters"
+
+dependencies {
+	compile "net.industrial-craft:industrialcraft-2:${config.ic2_version}:api"
+	compile "com.mod-buildcraft:buildcraft:${config.buildcraft_version}:dev"
+}
 
 minecraft {
 	version = config.minecraft_version + "-" + config.forge_version
