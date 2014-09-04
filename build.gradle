@@ -42,6 +42,7 @@ archivesBaseName = "PowerConverters"
 dependencies {
 	compile "net.industrial-craft:industrialcraft-2:${config.ic2_version}:api"
 	compile "com.mod-buildcraft:buildcraft:${config.buildcraft_version}:dev"
+	compile "com.gregoriust.gregtech:gregtech_${config.minecraft_version}:${config.gregtech_version}:dev"
 }
 
 minecraft {

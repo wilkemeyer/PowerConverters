@@ -40,3 +40,23 @@ powerconverters.ic2.mv.producer.name=EU MV Producer
 powerconverters.ic2.hv.producer.name=EU HV Producer
 powerconverters.ic2.ev.producer.name=EU EV Producer
 powerconverters.ic2.uv.producer.name=EU UV Producer
+
+powerconverters.gt.ulv.consumer.name=GT ULV Consumer
+powerconverters.gt.lv.consumer.name=GT LV Consumer
+powerconverters.gt.mv.consumer.name=GT MV Consumer
+powerconverters.gt.hv.consumer.name=GT HV Consumer
+powerconverters.gt.ev.consumer.name=GT EV Consumer
+powerconverters.gt.iv.consumer.name=GT IV Consumer
+powerconverters.gt.luv.consumer.name=GT LuV Consumer
+powerconverters.gt.zpm.consumer.name=GT ZPM Consumer
+powerconverters.gt.uv.consumer.name=GT UV Consumer
+
+powerconverters.gt.ulv.producer.name=GT ULV Producer
+powerconverters.gt.lv.producer.name=GT LV Producer
+powerconverters.gt.mv.producer.name=GT MV Producer
+powerconverters.gt.hv.producer.name=GT HV Producer
+powerconverters.gt.ev.producer.name=GT EV Producer
+powerconverters.gt.iv.producer.name=GT IV Producer
+powerconverters.gt.luv.producer.name=GT LuV Producer
+powerconverters.gt.zpm.producer.name=GT ZPM Producer
+powerconverters.gt.uv.producer.name=GT UV Producer
