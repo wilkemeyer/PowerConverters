@@ -1,5 +1,5 @@
-powerconverters.inputlimited=输入限制
-powerconverters.outputlimited=输出限制
+powerconverters.inputlimited=输入限值
+powerconverters.outputlimited=输出限值
 
 powerconverters.in=输入
 powerconverters.out=输出
@@ -18,16 +18,16 @@ powerconverters.common.bridge.name=能量桥接器
 powerconverters.common.charger.name=通用充能台
 
 powerconverters.bc.consumer.name=MJ转入器
-powerconverters.bc.producer.name=MJ产出器
+powerconverters.bc.producer.name=MJ输出器
 
 powerconverters.steam.consumer.name=蒸汽能转入器
-powerconverters.steam.producer.name=蒸汽能产出器
+powerconverters.steam.producer.name=蒸汽能输出器
 
-powerconverters.factorization.consumer.name=Fz能量转入器
-powerconverters.factorization.producer.name=Fz能量产出器
+powerconverters.factorization.consumer.name=FZ能量转入器
+powerconverters.factorization.producer.name=FZ能量输出器
 
 powerconverters.te.consumer.name=RF转入器
-powerconverters.te.producer.name=RF产出器
+powerconverters.te.producer.name=RF输出器
 
 powerconverters.ic2.lv.consumer.name=EU-LV转入器
 powerconverters.ic2.mv.consumer.name=EU-MV转入器
@@ -35,8 +35,28 @@ powerconverters.ic2.hv.consumer.name=EU-HV转入器
 powerconverters.ic2.ev.consumer.name=EU-EV转入器
 powerconverters.ic2.uv.consumer.name=EU-UV转入器
 
-powerconverters.ic2.lv.producer.name=EU-LV产出器
-powerconverters.ic2.mv.producer.name=EU-MV产出器
-powerconverters.ic2.hv.producer.name=EU-HV产出器
-powerconverters.ic2.ev.producer.name=EU-EV产出器
-powerconverters.ic2.uv.producer.name=EU-UV产出器
+powerconverters.ic2.lv.producer.name=EU-LV输出器
+powerconverters.ic2.mv.producer.name=EU-MV输出器
+powerconverters.ic2.hv.producer.name=EU-HV输出器
+powerconverters.ic2.ev.producer.name=EU-EV输出器
+powerconverters.ic2.uv.producer.name=EU-UV输出器
+
+powerconverters.gt.ulv.consumer.name=GT-ULV转入器
+powerconverters.gt.lv.consumer.name=GT-LV转入器
+powerconverters.gt.mv.consumer.name=GT-MV转入器
+powerconverters.gt.hv.consumer.name=GT-HV转入器
+powerconverters.gt.ev.consumer.name=GT-EV转入器
+powerconverters.gt.iv.consumer.name=GT-IV转入器
+powerconverters.gt.luv.consumer.name=GT-LuV转入器
+powerconverters.gt.zpm.consumer.name=GT-ZPM转入器
+powerconverters.gt.uv.consumer.name=GT-UV转入器
+
+powerconverters.gt.ulv.producer.name=GT-ULV输出器
+powerconverters.gt.lv.producer.name=GT-LV输出器
+powerconverters.gt.mv.producer.name=GT-MV输出器
+powerconverters.gt.hv.producer.name=GT-HV输出器
+powerconverters.gt.ev.producer.name=GT-EV输出器
+powerconverters.gt.iv.producer.name=GT-IV输出器
+powerconverters.gt.luv.producer.name=GT-LuV输出器
+powerconverters.gt.zpm.producer.name=GT-ZPM输出器
+powerconverters.gt.uv.producer.name=GT-UV输出器
