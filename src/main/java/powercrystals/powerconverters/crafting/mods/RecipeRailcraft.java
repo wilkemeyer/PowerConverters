@@ -22,8 +22,12 @@ public class RecipeRailcraft extends RecipeProvider {
 
         ItemStack stackIndustrialEngine = GameRegistry.findItemStack("Railcraft", "machine.beta.engine.steam.low", 1);
 
+
         PowerSystem steam = PowerSystemManager.getInstance().getPowerSystemByName(PowerSteam.id);
         if(steam != null) {
+            if(entryGold == null || stackIndustrialEngine == null) {
+                PowerConverterCore.instance.logger.error("Railcraft recipe is missing items, not adding Power Converters recipe.");
+            }
             Block converterBlockSteam = steam.block;
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(converterBlockSteam, 1, 0), true,
                     // Steam consumer

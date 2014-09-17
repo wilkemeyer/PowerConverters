@@ -36,6 +36,13 @@ public class RecipeBuildCraft extends RecipeProvider {
             ItemStack gear = new ItemStack(GameRegistry.findItem("BuildCraft|Core", "goldGearItem"), 1, 0);
 
             if (enableRecipes) {
+                if(redstoneBlock.getItem() == null
+                        || cable == null
+                        || conduit == null
+                        || engine == null
+                        || chest == null) {
+                    PowerConverterCore.instance.logger.error("Buildcraft recipe is missing items, not adding Power Converters converter recipes.");
+                }
                 GameRegistry.addRecipe(new ItemStack(PowerConverterCore.converterBlockCommon, 1, 0),
                         "PPP",
                         "PBP",
@@ -68,6 +75,11 @@ public class RecipeBuildCraft extends RecipeProvider {
             PowerSystem buildcraft = PowerSystemManager.getInstance().getPowerSystemByName(PowerBuildcraft.id);
             if(buildcraft != null) {
                 Block converterBlock = buildcraft.block;
+                if(cable == null
+                        || struct == null
+                        || gear.getItem() == null) {
+                    PowerConverterCore.instance.logger.error("Buildcraft recipe is missing items, not adding Power Converters recipe.");
+                }
                 GameRegistry.addRecipe(new ItemStack(converterBlock, 1, 0),
                         "GSG",
                         "SES",
