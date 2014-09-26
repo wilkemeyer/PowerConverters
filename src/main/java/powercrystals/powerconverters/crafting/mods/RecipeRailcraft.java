@@ -27,6 +27,7 @@ public class RecipeRailcraft extends RecipeProvider {
         if(steam != null) {
             if(entryGold == null || stackIndustrialEngine == null) {
                 PowerConverterCore.instance.logger.error("Railcraft recipe is missing items, not adding Power Converters recipe.");
+                return;
             }
             Block converterBlockSteam = steam.block;
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(converterBlockSteam, 1, 0), true,

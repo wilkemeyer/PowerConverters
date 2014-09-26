@@ -79,6 +79,7 @@ public class RecipeBuildCraft extends RecipeProvider {
                         || struct == null
                         || gear.getItem() == null) {
                     PowerConverterCore.instance.logger.error("Buildcraft recipe is missing items, not adding Power Converters recipe.");
+                    return;
                 }
                 GameRegistry.addRecipe(new ItemStack(converterBlock, 1, 0),
                         "GSG",
