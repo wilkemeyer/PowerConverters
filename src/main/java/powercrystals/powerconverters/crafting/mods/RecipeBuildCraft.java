@@ -9,7 +9,7 @@ import powercrystals.powerconverters.PowerConverterCore;
 import powercrystals.powerconverters.crafting.RecipeProvider;
 import powercrystals.powerconverters.power.PowerSystem;
 import powercrystals.powerconverters.power.PowerSystemManager;
-import powercrystals.powerconverters.power.systems.PowerBuildcraft;
+import powercrystals.powerconverters.power.systems.PowerRedstoneFlux;
 import powercrystals.powerconverters.power.systems.PowerSteam;
 
 /**
@@ -72,9 +72,9 @@ public class RecipeBuildCraft extends RecipeProvider {
                 }
             }
 
-            PowerSystem buildcraft = PowerSystemManager.getInstance().getPowerSystemByName(PowerBuildcraft.id);
-            if(buildcraft != null) {
-                Block converterBlock = buildcraft.block;
+            PowerSystem rf = PowerSystemManager.getInstance().getPowerSystemByName(PowerRedstoneFlux.id);
+            if(rf != null) {
+                Block converterBlock = rf.block;
                 if(cable == null
                         || struct == null
                         || gear.getItem() == null) {

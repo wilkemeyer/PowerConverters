@@ -30,7 +30,6 @@ import powercrystals.powerconverters.crafting.mods.RecipeThermalExpansion;
 import powercrystals.powerconverters.crafting.mods.RecipeVanilla;
 import powercrystals.powerconverters.gui.PCGUIHandler;
 import powercrystals.powerconverters.power.PowerSystemManager;
-import powercrystals.powerconverters.power.systems.PowerBuildcraft;
 import powercrystals.powerconverters.power.systems.PowerFactorization;
 import powercrystals.powerconverters.power.systems.PowerIndustrialcraft;
 import powercrystals.powerconverters.power.systems.PowerRedstoneFlux;
@@ -130,8 +129,8 @@ public final class PowerConverterCore {
 
         if(Loader.isModLoaded("BuildCraft|Energy")) {
             enabledRecipes.add(new RecipeBuildCraft());
-            if(manager.getPowerSystemByName(PowerBuildcraft.id) == null) {
-                manager.registerPowerSystem(new PowerBuildcraft());
+            if(manager.getPowerSystemByName(PowerRedstoneFlux.id) == null) {
+                manager.registerPowerSystem(new PowerRedstoneFlux());
             }
         }
         if(Loader.isModLoaded("EnderIO")) {
