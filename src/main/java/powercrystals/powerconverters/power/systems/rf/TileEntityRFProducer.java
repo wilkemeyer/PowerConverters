@@ -30,7 +30,7 @@ public class TileEntityRFProducer extends TileEntityEnergyProducer<IEnergyHandle
                 TileEntity te = worldObj.getTileEntity(p.x, p.y, p.z);
                 if ((te instanceof IEnergyHandler) && !((te instanceof TileEntityRFConsumer) || (te instanceof TileEntityEnergyBridge))) {
                     IEnergyHandler eHandler = (IEnergyHandler) te;
-                    final double received = eHandler.receiveEnergy(p.orientation, (int) (energyToUse), false);
+                    final double received = eHandler.receiveEnergy(p.orientation.getOpposite(), (int) (energyToUse), false);
                     energy -= received * getPowerSystem().getInternalEnergyPerOutput();
                     if (energy <= 0)
                         break; // no more energy to give, so stop scanning
