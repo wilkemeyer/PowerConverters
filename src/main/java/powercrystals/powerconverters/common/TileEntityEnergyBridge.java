@@ -8,6 +8,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 import powercrystals.powerconverters.PowerConverterCore;
 import powercrystals.powerconverters.position.BlockPosition;
 import powercrystals.powerconverters.position.INeighboorUpdateTile;
+import powercrystals.powerconverters.power.PowerSystem;
 import powercrystals.powerconverters.power.util.ICustomHandler;
 import powercrystals.powerconverters.power.base.TileEntityBridgeComponent;
 import powercrystals.powerconverters.power.base.TileEntityEnergyConsumer;
@@ -119,7 +120,10 @@ public class TileEntityEnergyBridge extends TileEntity implements INeighboorUpda
                     if (energyNotProduced > energyRemaining) {
                         energyNotProduced = energyRemaining;
                     }
-                    updateProducerInfo(prod.getKey(), (int) ((energyRemaining - energyNotProduced) / prod.getValue().getPowerSystem().getInternalEnergyPerOutput()));
+                    PowerSystem producerPowerSystem= prod.getValue().getPowerSystem();
+                    if(producerPowerSystem != null) {
+                        updateProducerInfo(prod.getKey(), (int) ((energyRemaining - energyNotProduced) / producerPowerSystem.getInternalEnergyPerOutput()));
+                    }
                     energyRemaining = energyNotProduced;
                 } else {
                     prod.getValue().produceEnergy(0);
