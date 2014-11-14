@@ -13,5 +13,7 @@ public class Charge {
         return 0;
     }
 
-    public void addValue(int store) { }
+    public int addValue(int store) {
+        return store;
+    }
 }
