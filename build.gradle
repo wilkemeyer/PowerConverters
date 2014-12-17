@@ -21,6 +21,11 @@ repositories {
 		name = "ic2"
 		url = "http://maven.ic2.player.to/"
 	}
+	maven {
+		name = "calclavia"
+		url = "http://calclavia.com/maven/"
+	}
+
     ivy {
         url "http://www.mod-buildcraft.com/releases/BuildCraft/"
         layout 'pattern', {
@@ -50,6 +55,7 @@ dependencies {
 	compile "net.industrial-craft:industrialcraft-2:${config.ic2_version}:api"
 	compile "com.mod-buildcraft:buildcraft:${config.buildcraft_version}:dev"
 	compile "com.gregoriust.gregtech:gregtech_${config.minecraft_version}:${config.gregtech_version}:dev"
+	compile "dev.calclavia.resonantengine:resonant-engine:${config.resonantengine_version}:dev"
 }
 
 minecraft {
