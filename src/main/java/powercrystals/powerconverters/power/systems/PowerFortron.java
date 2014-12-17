@@ -23,7 +23,7 @@ public class PowerFortron extends PowerSystem {
 
     public static final float DEFAULT_ENERGY_PER_INPUT = 1000;
     public static final float DEFAULT_ENERGY_PER_OUTPUT = 1000;
-    public static final String CATEGORY_MFFS = POWERSYSTEM_CATEGORY + ".fortron";
+    public static final String CATEGORY_MFFS = POWERSYSTEM_CATEGORY + ".mffs";
 
     public PowerFortron() {
         name = "Fortron";
