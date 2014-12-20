@@ -40,3 +40,7 @@ powerconverters.ic2.mv.producer.name=EU MS-Produzent
 powerconverters.ic2.hv.producer.name=EU HS-Produzent
 powerconverters.ic2.ev.producer.name=EU ES-Produzent
 powerconverters.ic2.uv.producer.name=EU US-Produzent
+
+powerconverters.mffs.producer.name=MFFS Fortron-Produzent
+powerconverters.mffs.consumer.name=MFFS Fortron-Konsument
+

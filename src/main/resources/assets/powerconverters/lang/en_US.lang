@@ -60,3 +60,6 @@ powerconverters.gt.iv.producer.name=GT IV Producer
 powerconverters.gt.luv.producer.name=GT LuV Producer
 powerconverters.gt.zpm.producer.name=GT ZPM Producer
 powerconverters.gt.uv.producer.name=GT UV Producer
+
+powerconverters.mffs.producer.name=MFFS Fortron Producer
+powerconverters.mffs.consumer.name=MFFS Fortron Consumer
