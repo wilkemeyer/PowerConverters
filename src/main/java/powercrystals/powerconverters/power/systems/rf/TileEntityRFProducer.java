@@ -1,5 +1,8 @@
 package powercrystals.powerconverters.power.systems.rf;
 
+import cofh.api.energy.IEnergyConnection;
+import cofh.api.energy.IEnergyProvider;
+import cofh.api.energy.IEnergyReceiver;
 import cofh.api.energy.IEnergyHandler;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -14,36 +17,44 @@ import java.util.List;
 /**
  * @author samrg472
  */
-public class TileEntityRFProducer extends TileEntityEnergyProducer<IEnergyHandler> implements IEnergyHandler {
+public class TileEntityRFProducer extends TileEntityEnergyProducer<IEnergyConnection> implements IEnergyProvider {
 
     public TileEntityRFProducer() {
-        super(PowerSystemManager.getInstance().getPowerSystemByName(PowerRedstoneFlux.id), 0, IEnergyHandler.class);
+        super(PowerSystemManager.getInstance().getPowerSystemByName(PowerRedstoneFlux.id), 0, IEnergyConnection.class);
     }
 
     @Override
     public double produceEnergy(double energy) {
-        final double energyToUse = energy / getPowerSystem().getInternalEnergyPerOutput();
+    	final double tmpEnergyPerOutput = getPowerSystem().getInternalEnergyPerOutput();
+        final double energyToUse = energy / tmpEnergyPerOutput;
 
         if (energyToUse > 0) {
             List<BlockPosition> positions = new BlockPosition(xCoord, yCoord, zCoord).getAdjacent(true);
+            
             for (BlockPosition p : positions) {
                 TileEntity te = worldObj.getTileEntity(p.x, p.y, p.z);
-                if ((te instanceof IEnergyHandler) && !((te instanceof TileEntityRFConsumer) || (te instanceof TileEntityEnergyBridge))) {
-                    IEnergyHandler eHandler = (IEnergyHandler) te;
-                    final double received = eHandler.receiveEnergy(p.orientation.getOpposite(), (int) (energyToUse), false);
-                    energy -= received * getPowerSystem().getInternalEnergyPerOutput();
-                    if (energy <= 0)
-                        break; // no more energy to give, so stop scanning
-                }
+                if(te instanceof TileEntityRFConsumer || te instanceof TileEntityEnergyBridge)
+                	continue;
+				
+	            if(te instanceof IEnergyHandler) {
+					IEnergyHandler eHandler = (IEnergyHandler) te;
+					final double received = eHandler.receiveEnergy(p.orientation.getOpposite(), (int) (energyToUse), false);
+					energy -= (received * tmpEnergyPerOutput);
+					if (energy <= 0)
+						break;
+						
+	            }else if(te instanceof IEnergyReceiver){
+					IEnergyReceiver eReceiver = (IEnergyReceiver) te;
+					final double received = eReceiver.receiveEnergy(p.orientation.getOpposite(), (int) (energyToUse), false);
+					energy -= (received * tmpEnergyPerOutput);
+					if (energy <= 0)
+						break;
+					
+				}	                	
             }
         }
 
         return energy;
-    }
-
-    @Override
-    public int receiveEnergy(ForgeDirection from, int maxReceive, boolean simulate) {
-        return 0;
     }
 
     @Override
@@ -55,7 +66,7 @@ public class TileEntityRFProducer extends TileEntityEnergyProducer<IEnergyHandle
     public boolean canConnectEnergy(ForgeDirection from) {
         return true;
     }
-
+	
     @Override
     public int getEnergyStored(ForgeDirection from) {
         TileEntityEnergyBridge bridge = getFirstBridge();

@@ -1,6 +1,7 @@
 package powercrystals.powerconverters.power.systems.rf;
 
-import cofh.api.energy.IEnergyHandler;
+import cofh.api.energy.IEnergyConnection;
+import cofh.api.energy.IEnergyReceiver;
 import net.minecraftforge.common.util.ForgeDirection;
 import powercrystals.powerconverters.common.TileEntityEnergyBridge;
 import powercrystals.powerconverters.power.PowerSystemManager;
@@ -10,12 +11,12 @@ import powercrystals.powerconverters.power.systems.PowerRedstoneFlux;
 /**
  * @author samrg472
  */
-public class TileEntityRFConsumer extends TileEntityEnergyConsumer<IEnergyHandler> implements IEnergyHandler {
+public class TileEntityRFConsumer extends TileEntityEnergyConsumer<IEnergyConnection> implements IEnergyReceiver {
 
     private int lastReceivedRF;
 
     public TileEntityRFConsumer() {
-        super(PowerSystemManager.getInstance().getPowerSystemByName(PowerRedstoneFlux.id), 0, IEnergyHandler.class);
+        super(PowerSystemManager.getInstance().getPowerSystemByName(PowerRedstoneFlux.id), 0, IEnergyConnection.class);
     }
 
     @Override
@@ -42,11 +43,6 @@ public class TileEntityRFConsumer extends TileEntityEnergyConsumer<IEnergyHandle
             return lastReceivedRF;
         }
         return (int) (received / getPowerSystem().getInternalEnergyPerInput());
-    }
-
-    @Override
-    public int extractEnergy(ForgeDirection from, int maxExtract, boolean simulate) {
-        return 0;
     }
 
     @Override
