@@ -5,9 +5,14 @@ import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import net.minecraft.util.StatCollector;
+import net.minecraft.util.ChatComponentText;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
 import powercrystals.powerconverters.PowerConverterCore;
 import powercrystals.powerconverters.gui.PCCreativeTab;
 import powercrystals.powerconverters.power.base.BlockPowerConverter;
+import powercrystals.powerconverters.power.systems.gt.TileEntityGregTechProducer;
 
 public class BlockGregTech extends BlockPowerConverter {
     public BlockGregTech() {
@@ -76,4 +81,24 @@ public class BlockGregTech extends BlockPowerConverter {
             }
         }
     }
+
+    @Override
+	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int par6, float par7, float par8, float par9) {
+		TileEntity te = world.getTileEntity(x, y, z);		
+		
+		if( !world.isRemote && te instanceof TileEntityGregTechProducer) {
+			TileEntityGregTechProducer producer = (TileEntityGregTechProducer)te;			
+						    
+			if(player.isSneaking()){
+				long newAmperage = producer.incMaxAmperage();			
+				player.addChatMessage( new ChatComponentText( StatCollector.translateToLocalFormatted("powerconverters.gt.producer.amperageChanged", new Object[]{ newAmperage }) ));
+			
+			}
+		} else {
+			return super.onBlockActivated(world, x, y, z, player, par6, par7, par8, par9);
+		}	
+		
+		return false;
+	}
+	
 }

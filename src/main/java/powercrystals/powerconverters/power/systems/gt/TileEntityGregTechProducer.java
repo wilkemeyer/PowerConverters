@@ -61,6 +61,23 @@ public class TileEntityGregTechProducer extends BaseGTProducerTileEntity<IEnergy
     private void setMaxAmperage(long amp) {
     	maxAmperage = amp;
     }   
+    
+    /** 
+     * Incrases the maxAmperage by one Step overflow will be catched (>8 == 1)
+     * 
+     * @return long the new maxAmperage
+     */
+    public long incMaxAmperage(){
+		long tmp = (maxAmperage + 1);
+		
+		if(tmp > 8)
+			tmp = 1;
+		
+		maxAmperage = tmp;
+		
+		return maxAmperage;				    	
+    }
+
 
     @Override
     public void updateEntity() {
@@ -121,21 +138,11 @@ public class TileEntityGregTechProducer extends BaseGTProducerTileEntity<IEnergy
 		long usedEU = 0;
 				
 		if(lEU >= voltage) { // enough energy avail. to output at least 1A
-			long outAmpsMax;
-			
-			// Determnine how much energy we can send
-			if(lEU < (voltage * maxAmperage) ) {
-				outAmpsMax = (long)lEU / voltage;
-			} else {
-				outAmpsMax = maxAmperage;
-			}
-			
-
-			long ampsLeft = outAmpsMax;
+			long ampsLeft = lEU / voltage; 
 			
 			for (Entry<ForgeDirection, IEnergyConnected> it : this.getTiles().entrySet()) {
 			
-				if(ampsLeft <= 0)
+				if(ampsLeft < maxAmperage)
 					break;
 			
 				IEnergyConnected t = it.getValue();
@@ -146,7 +153,7 @@ public class TileEntityGregTechProducer extends BaseGTProducerTileEntity<IEnergy
 						continue;
 				}
 				
-				long ampsUsed = t.injectEnergyUnits( (byte)it.getKey().getOpposite().ordinal(), voltage, ampsLeft );
+				long ampsUsed = t.injectEnergyUnits( (byte)it.getKey().getOpposite().ordinal(), voltage, maxAmperage );
 				ampsLeft -= ampsUsed;
 				
 				usedEU += (ampsUsed * voltage);
