@@ -4,6 +4,7 @@ import com.google.common.base.Throwables;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
+import cpw.mods.fml.common.event.FMLInterModComms;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
@@ -93,6 +94,8 @@ public final class PowerConverterCore {
         GameRegistry.registerBlock(converterBlockCommon, ItemBlockPowerConverterCommon.class, "converter.common");
         GameRegistry.registerTileEntity(TileEntityEnergyBridge.class, "powerConverterEnergyBridge");
         GameRegistry.registerTileEntity(TileEntityCharger.class, "powerConverterUniversalCharger");
+
+        FMLInterModComms.sendMessage("Waila", "register", "powercrystals.powerconverters.integration.waila.WailaCompat.onWailaRegister");
     }
 
     @SuppressWarnings("UnusedParameters")

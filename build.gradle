@@ -18,6 +18,14 @@ buildscript {
 
 repositories {
 	maven {
+		name "Mobius Repo"
+		url "http://mobiusstrip.eu/maven/"
+	}
+	maven { // the repo from which to get NEI and stuff 
+		name 'CB Repo'
+		url "http://chickenbones.net/maven/"
+	}
+	maven {
 		name = "ic2"
 		url = "http://maven.ic2.player.to/"
 	}
@@ -25,7 +33,6 @@ repositories {
 		name = "calclavia"
 		url = "http://calclavia.com/maven/"
 	}
-
     ivy {
         url "http://www.mod-buildcraft.com/releases/BuildCraft/"
         layout 'pattern', {
@@ -56,6 +63,7 @@ dependencies {
 	compile "com.mod-buildcraft:buildcraft:${config.buildcraft_version}:dev"
 	compile "com.gregoriust.gregtech:gregtech_${config.minecraft_version}:${config.gregtech_version}:dev"
 	compile "dev.calclavia.resonantengine:resonant-engine:${config.resonantengine_version}:dev"
+	compile "mcp.mobius.waila:Waila:${config.waila_version}:dev"
 }
 
 minecraft {
