@@ -44,7 +44,7 @@ import java.util.HashSet;
 import java.util.Properties;
 import java.util.Set;
 
-@Mod(modid = PowerConverterCore.modId, name = PowerConverterCore.modName, dependencies = "after:BuildCraft|Energy;after:factorization;after:IC2;after:Railcraft;after:ThermalExpansion;after:gregtech")
+@Mod(modid = PowerConverterCore.modId, name = PowerConverterCore.modName, dependencies = "after:BuildCraft|Energy;after:factorization;after:IC2;after:Railcraft;after:ThermalExpansion;after:gregtech;after:MFFS")
 public final class PowerConverterCore {
     public static final String modId = "PowerConverters";
     public static final String modName = "Power Converters";
