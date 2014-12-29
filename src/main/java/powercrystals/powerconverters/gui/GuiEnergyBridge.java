@@ -74,7 +74,16 @@ public class GuiEnergyBridge extends ExposedGuiContainer {
                 }
                 fontRendererObj.drawString(name, 49, 6 + 12 * (i + 1), -1);
                 fontRendererObj.drawString(data.isConsumer ? StatCollector.translateToLocal("powerconverters.in") : StatCollector.translateToLocal("powerconverters.out"), 92, 6 + 12 * (i + 1), -1);
-                fontRendererObj.drawString(getOutputRateString(data), 119, 6 + 12 * (i + 1), -1);
+
+				String rate;		
+					
+				if(data.isConnected)
+					rate = data.powerSystem.getRateString(data);
+               	else
+               		rate = StatCollector.translateToLocal("powerconverters.nolink");
+               		
+				fontRendererObj.drawString(rate, 119, 6 + 12 * (i + 1), -1);
+               	
             } else {
                 fontRendererObj.drawString(StatCollector.translateToLocal("powerconverters.none"), 49, 6 + 12 * (i + 1), -1);
             }
@@ -115,13 +124,4 @@ public class GuiEnergyBridge extends ExposedGuiContainer {
         }
     }
 
-    private String getOutputRateString(BridgeSideData data) {
-        if (!data.isConnected) return StatCollector.translateToLocal("powerconverters.nolink");
-        double rate = data.outputRate;
-        if (rate > 1000) {
-            double rateThousand = (rate / 1000.0);
-            return String.format("%.1f %s%s", rateThousand, "k", data.powerSystem.getUnit());
-        }
-        return rate + " " + data.powerSystem.getUnit();
-    }
 }

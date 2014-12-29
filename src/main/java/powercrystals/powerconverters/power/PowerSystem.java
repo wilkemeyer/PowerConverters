@@ -2,6 +2,7 @@ package powercrystals.powerconverters.power;
 
 import net.minecraft.item.ItemBlock;
 import net.minecraftforge.common.config.Configuration;
+import powercrystals.powerconverters.common.BridgeSideData;
 import powercrystals.powerconverters.power.base.BlockPowerConverter;
 import powercrystals.powerconverters.power.base.TileEntityBridgeComponent;
 
@@ -42,4 +43,28 @@ public abstract class PowerSystem {
     public String[] getVoltageNames() {
         return voltageNames;
     }
+
+
+	/**
+	 * Formats the Rate String for Bridge GUI
+	 *
+	 * @note will be only called if isConnected
+	 *
+	 */
+	public String getRateString(BridgeSideData data) {
+		double rate = data.outputRate;
+		
+		if(rate > 1000000) {	// mega
+			double rateMillion = (rate / 1000000);
+			return String.format("%.1f %s%s", rateMillion, "m", this.getUnit());
+			
+		} else if (rate > 1000) {	// kilo
+			double rateThousand = (rate / 1000.0);
+			return String.format("%.1f %s%s", rateThousand, "k", this.getUnit());
+			
+		}
+		
+		return rate + " " + this.getUnit();
+	}
+
 }

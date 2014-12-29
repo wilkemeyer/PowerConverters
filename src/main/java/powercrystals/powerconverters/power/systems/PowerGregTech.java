@@ -4,6 +4,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 import powercrystals.powerconverters.common.TileEntityCharger;
+import powercrystals.powerconverters.common.BridgeSideData;
 import powercrystals.powerconverters.power.PowerSystem;
 import powercrystals.powerconverters.power.systems.gt.BlockGregTech;
 import powercrystals.powerconverters.power.systems.gt.ItemBlockGregTech;
@@ -91,4 +92,13 @@ public class PowerGregTech extends PowerSystem {
         c.getCategory(CATEGORY_FACTORIZATION).get("internalEnergyPerInput").set(_internalEnergyPerInput);
         c.getCategory(CATEGORY_FACTORIZATION).get("internalEnergyPerOutput").set(_internalEnergyPerOutput);
     }
+
+    @Override
+	public String getRateString(BridgeSideData data) {
+		long EUt, AMP;
+		EUt	= VOLTAGE_VALUES[data.voltageNameIndex];
+		AMP	= (long)Math.ceil(data.outputRate / (double)EUt);
+		
+		return AMP + " A";
+	}
 }
