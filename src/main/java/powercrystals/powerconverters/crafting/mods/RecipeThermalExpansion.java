@@ -3,6 +3,7 @@ package powercrystals.powerconverters.crafting.mods;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.common.config.Configuration;
 import powercrystals.powerconverters.PowerConverterCore;
 import powercrystals.powerconverters.crafting.RecipeProvider;
@@ -20,15 +21,12 @@ public class RecipeThermalExpansion extends RecipeProvider {
 
     @Override
     public void registerRecipes() {
-        ItemStack copperGear = new ItemStack(GameRegistry.findItem("ThermalFoundation", "material"), 1, 128);
-        ItemStack tinGear = new ItemStack(GameRegistry.findItem("ThermalFoundation", "material"), 1, 129);
         ItemStack receptionCoil = new ItemStack(GameRegistry.findItem("ThermalExpansion", "material"), 1, 1);
         ItemStack transmissionCoil = new ItemStack(GameRegistry.findItem("ThermalExpansion", "material"), 1, 2);
         ItemStack basicFrame = new ItemStack(GameRegistry.findItem("ThermalExpansion", "Frame"), 1, 0);
         ItemStack steamDynamo = new ItemStack(GameRegistry.findItem("ThermalExpansion", "Dynamo"), 1, 0);
         ItemStack energyCell = new ItemStack(GameRegistry.findItem("ThermalExpansion", "Cell"), 1, 1);
         ItemStack multiMeter = new ItemStack(GameRegistry.findItem("ThermalExpansion", "meter"), 1, 0);
-        ItemStack silverGear = new ItemStack(GameRegistry.findItem("ThermalFoundation", "material"), 1, 130);
         ItemStack strongbox = new ItemStack(GameRegistry.findItem("ThermalExpansion", "Strongbox"), 1, 1);
         ItemStack energisticInfuser = new ItemStack(GameRegistry.findItem("ThermalExpansion", "Machine"), 1, 10);
         ItemStack conductanceCoil = new ItemStack(GameRegistry.findItem("ThermalExpansion", "material"), 1, 3);
@@ -38,53 +36,54 @@ public class RecipeThermalExpansion extends RecipeProvider {
         PowerSystem rf = PowerSystemManager.getInstance().getPowerSystemByName(PowerRedstoneFlux.id);
         if(rf != null) {
             Block converterBlock = rf.block;
-            GameRegistry.addRecipe(new ItemStack(converterBlock, 1, 0),
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(converterBlock, 1, 0), true, new Object[]{
                     "CRC",
                     "DFD",
                     "TAT",
-                    'C', copperGear,
+                    'C', "gearCopper",
                     'R', receptionCoil,
                     'D', steamDynamo,
                     'F', basicFrame,
-                    'T', tinGear,
-                    'A', transmissionCoil);
+                    'T', "gearTin",
+                    'A', transmissionCoil
+			}));
         }
 
         if (enableRecipes) {
-            GameRegistry.addRecipe(new ItemStack(PowerConverterCore.converterBlockCommon, 1, 0),
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(PowerConverterCore.converterBlockCommon, 1, 0), true, new Object[]{
                     "CMT",
                     "REA",
                     "TFC",
-                    'C', copperGear,
+                    'C', "gearCopper",
                     'M', multiMeter,
-                    'T', tinGear,
+                    'T', "gearTin",
                     'R', receptionCoil,
                     'E', energyCell,
                     'A', transmissionCoil,
                     'F', basicFrame
-            );
-            GameRegistry.addRecipe(new ItemStack(PowerConverterCore.converterBlockCommon, 1, 2),
+            }));
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(PowerConverterCore.converterBlockCommon, 1, 2), true, new Object[]{
                     "GSG",
                     "SES",
                     "GRG",
-                    'G', silverGear,
+                    'G', "gearSilver",
                     'S', strongbox,
                     'E', energisticInfuser,
                     'R', receptionCoil
-            );
+            }));
             PowerSystem steam = PowerSystemManager.getInstance().getPowerSystemByName(PowerSteam.id);
             if (steam != null) {
-                GameRegistry.addRecipe(new ItemStack(steam.block, 1, 0),
+                GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(steam.block, 1, 0), true, new Object[]{
                         "CNT",
                         "PAP",
                         "CFT",
-                        'C', copperGear,
+                        'C', "gearCopper",
                         'N', conductanceCoil,
-                        'T', tinGear,
+                        'T', "gearTin",
                         'P', servo,
                         'A', tank,
                         'F', basicFrame
-                );
+                }));
             }
         }
     }

@@ -4,6 +4,8 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.oredict.OreDictionary;
+import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.common.config.Configuration;
 import powercrystals.powerconverters.PowerConverterCore;
 import powercrystals.powerconverters.crafting.RecipeProvider;
@@ -33,16 +35,16 @@ public class RecipeBuildCraft extends RecipeProvider {
             Block engine = GameRegistry.findBlock("BuildCraft|Energy", "engineBlock");
             Block pump = GameRegistry.findBlock("BuildCraft|Factory", "pumpBlock");
 
-            ItemStack gear = new ItemStack(GameRegistry.findItem("BuildCraft|Core", "goldGearItem"), 1, 0);
-
             if (enableRecipes) {
                 if(redstoneBlock.getItem() == null
                         || cable == null
                         || conduit == null
                         || engine == null
-                        || chest == null) {
+                        || chest == null
+                        || OreDictionary.getOres("gearGold").size() == 0) {
                     PowerConverterCore.instance.logger.error("Buildcraft recipe is missing items, not adding Power Converters converter recipes.");
                 }
+                
                 GameRegistry.addRecipe(new ItemStack(PowerConverterCore.converterBlockCommon, 1, 0),
                         "PPP",
                         "PBP",
@@ -50,15 +52,15 @@ public class RecipeBuildCraft extends RecipeProvider {
                         'B', redstoneBlock,
                         'P', conduit
                 );
-                GameRegistry.addRecipe(new ItemStack(PowerConverterCore.converterBlockCommon, 1, 2),
+                GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(PowerConverterCore.converterBlockCommon, 1, 2), true, new Object[] {
                         "TGT",
                         "#S#",
                         "T#T",
                         'T', cable,
                         'S', chest,
                         '#', engine,
-                        'G', gear
-                );
+                        'G', "gearGold"
+                }));
                 PowerSystem steam = PowerSystemManager.getInstance().getPowerSystemByName(PowerSteam.id);
                 if (steam != null) {
                     GameRegistry.addRecipe(new ItemStack(steam.block, 1, 0),
@@ -76,19 +78,18 @@ public class RecipeBuildCraft extends RecipeProvider {
             if(rf != null) {
                 Block converterBlock = rf.block;
                 if(cable == null
-                        || struct == null
-                        || gear.getItem() == null) {
+                        || struct == null) {
                     PowerConverterCore.instance.logger.error("Buildcraft recipe is missing items, not adding Power Converters recipe.");
                     return;
                 }
-                GameRegistry.addRecipe(new ItemStack(converterBlock, 1, 0),
+                GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(converterBlock, 1, 0), true, new Object[] {
                         "GSG",
                         "SES",
                         "GSG",
                         'G', cable,
                         'S', struct,
-                        'E', gear
-                );
+                        'E', "gearGold"
+                }));
             }
         } catch (Throwable t) {
             t.printStackTrace(System.err);
