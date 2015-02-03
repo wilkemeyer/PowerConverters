@@ -1,0 +1,66 @@
+powerconverters.inputlimited=ENTRADA LIMITADA
+powerconverters.outputlimited=SAÍDA LIMITADA
+
+powerconverters.in=ENTRADA
+powerconverters.out=SAÍDA
+powerconverters.none=<NENHUM>
+powerconverters.nolink=SEM CONEXÃO
+powerconverters.percentfull=completo
+
+powerconverters.up=ACIMA
+powerconverters.down=ABAIXO
+powerconverters.south=SUL
+powerconverters.north=NORTE
+powerconverters.west=OESTE
+powerconverters.east=LESTE
+
+powerconverters.common.bridge.name=Ponte de Energia 
+powerconverters.common.charger.name=Carregador Universal 
+
+powerconverters.bc.consumer.name=Consumidor de MJ
+powerconverters.bc.producer.name=Produtor de MJ
+
+powerconverters.steam.consumer.name=Consumidor de Vapor
+powerconverters.steam.producer.name=Produtor de Vapor
+
+powerconverters.factorization.consumer.name=Consumidor de Fatoração
+powerconverters.factorization.producer.name=Produtor de Fatoração
+
+powerconverters.te.consumer.name=Consumidor de RF
+powerconverters.te.producer.name=Produtor de RF
+
+powerconverters.ic2.lv.consumer.name=Consumidor de EU LV
+powerconverters.ic2.mv.consumer.name=Consumidor de EU MV
+powerconverters.ic2.hv.consumer.name=Consumidor de EU HV
+powerconverters.ic2.ev.consumer.name=Consumidor de EU EV
+powerconverters.ic2.uv.consumer.name=Consumidor de EU UV
+
+powerconverters.ic2.lv.producer.name=Produtor de EU LV
+powerconverters.ic2.mv.producer.name=Produtor de EU MV
+powerconverters.ic2.hv.producer.name=Produtor de EU HV
+powerconverters.ic2.ev.producer.name=Produtor de EU EV
+powerconverters.ic2.uv.producer.name=Produtor de EU UV
+
+powerconverters.gt.ulv.consumer.name=Consumidor de GT ULV
+powerconverters.gt.lv.consumer.name=Consumidor de GT LV
+powerconverters.gt.mv.consumer.name=Consumidor de GT MV
+powerconverters.gt.hv.consumer.name=Consumidor de GT HV
+powerconverters.gt.ev.consumer.name=Consumidor de GT EV
+powerconverters.gt.iv.consumer.name=Consumidor de GT IV
+powerconverters.gt.luv.consumer.name=Consumidor de GT LuV
+powerconverters.gt.zpm.consumer.name=Consumidor de GT ZPM
+powerconverters.gt.uv.consumer.name=Consumidor de GT UV
+
+powerconverters.gt.ulv.producer.name=Produtor de GT ULV
+powerconverters.gt.lv.producer.name=Produtor de GT LV
+powerconverters.gt.mv.producer.name=Produtor de GT MV
+powerconverters.gt.hv.producer.name=Produtor de GT HV
+powerconverters.gt.ev.producer.name=Produtor de GT EV
+powerconverters.gt.iv.producer.name=Produtor de GT IV
+powerconverters.gt.luv.producer.name=Produtor de GT LuV
+powerconverters.gt.zpm.producer.name=Produtor de GT ZPM
+powerconverters.gt.uv.producer.name=Produtor de GT UV
+powerconverters.gt.producer.amperageChanged=Amperagem de Saída Alterada para %1$s Ampère
+
+powerconverters.mffs.producer.name=Produtor de MFFS Fortron
+powerconverters.mffs.consumer.name=Consumidor de MFFS Fortron
