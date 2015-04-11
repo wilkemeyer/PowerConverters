@@ -21,7 +21,6 @@ import powercrystals.powerconverters.common.TileEntityCharger;
 import powercrystals.powerconverters.common.TileEntityEnergyBridge;
 import powercrystals.powerconverters.crafting.RecipeProvider;
 import powercrystals.powerconverters.crafting.mods.RecipeMFFS;
-import powercrystals.powerconverters.crafting.mods.RecipeGregTech;
 import powercrystals.powerconverters.crafting.mods.RecipeBuildCraft;
 import powercrystals.powerconverters.crafting.mods.RecipeEnderIO;
 import powercrystals.powerconverters.crafting.mods.RecipeFactorization;
@@ -35,7 +34,6 @@ import powercrystals.powerconverters.power.systems.PowerFactorization;
 import powercrystals.powerconverters.power.systems.PowerIndustrialcraft;
 import powercrystals.powerconverters.power.systems.PowerRedstoneFlux;
 import powercrystals.powerconverters.power.systems.PowerSteam;
-import powercrystals.powerconverters.power.systems.PowerGregTech;
 import powercrystals.powerconverters.power.systems.PowerFortron;
 
 import java.io.File;
@@ -166,10 +164,7 @@ public final class PowerConverterCore {
             }
         }
         if(Loader.isModLoaded("gregtech")){
-			enabledRecipes.add(new RecipeGregTech());
-			if(manager.getPowerSystemByName(PowerGregTech.id) == null) {
-				manager.registerPowerSystem(new PowerGregTech());
-			}
+			//enabledRecipes.add(new RecipeGregTech());
         }
         if(Loader.isModLoaded("MFFS")){
         	enabledRecipes.add(new RecipeMFFS());
