@@ -24,6 +24,7 @@ import powercrystals.powerconverters.crafting.mods.RecipeMFFS;
 import powercrystals.powerconverters.crafting.mods.RecipeBuildCraft;
 import powercrystals.powerconverters.crafting.mods.RecipeEnderIO;
 import powercrystals.powerconverters.crafting.mods.RecipeFactorization;
+import powercrystals.powerconverters.crafting.mods.RecipeForestry;
 import powercrystals.powerconverters.crafting.mods.RecipeIndustrialCraft;
 import powercrystals.powerconverters.crafting.mods.RecipeRailcraft;
 import powercrystals.powerconverters.crafting.mods.RecipeThermalExpansion;
@@ -156,6 +157,12 @@ public final class PowerConverterCore {
         }
         if(Loader.isModLoaded("Railcraft")) {
             enabledRecipes.add(new RecipeRailcraft());
+        }
+        if(Loader.isModLoaded("Forestry")) {
+            enabledRecipes.add(new RecipeForestry());
+            if(manager.getPowerSystemByName(PowerRedstoneFlux.id) == null) {
+                manager.registerPowerSystem(new PowerRedstoneFlux());
+            }
         }
         if(Loader.isModLoaded("ThermalExpansion")) {
             enabledRecipes.add(new RecipeThermalExpansion());
