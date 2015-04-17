@@ -21,7 +21,7 @@ powerconverters.bc.consumer.name=MJ Consumer
 powerconverters.bc.producer.name=MJ Producer
 
 powerconverters.steam.consumer.name=Steam Consumer
-powerconverters.steam.producer.name=Steam Producer
+powerconverters.steam.producer.name=Steam Producer (%s)
 
 powerconverters.factorization.consumer.name=Factorization Consumer
 powerconverters.factorization.producer.name=Factorization Producer

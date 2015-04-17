@@ -19,15 +19,21 @@ import powercrystals.powerconverters.power.systems.PowerSteam;
 
 @Optional.Interface(modid = ModIDReference.BUILDCRAFT, iface = InterfaceReference.BuildCraft.IPipeConnection)
 public class TileEntitySteamProducer extends TileEntityEnergyProducer<IFluidHandler> implements IFluidHandler, IPipeConnection {
+    PowerSteam powerSteam;
+    PowerSteam.SteamType steamType;
 
-    public TileEntitySteamProducer() {
+    public TileEntitySteamProducer(int steamId) {
         super(PowerSystemManager.getInstance().getPowerSystemByName(PowerSteam.id), 0, IFluidHandler.class);
+        PowerSteam powerSteam = (PowerSteam) PowerSystemManager.getInstance().getPowerSystemByName(PowerSteam.id);
+        steamType = powerSteam.getSteamType(steamId);
     }
 
     @Override
     public double produceEnergy(double energy) {
-        PowerSteam powerSteam = (PowerSteam) PowerSystemManager.getInstance().getPowerSystemByName(PowerSteam.id);
-        energy = energy / powerSteam.getInternalEnergyPerOutput();
+        if (powerSteam.getInternalEnergyPerOutput(blockMetadata) == 0) {
+            return 0;
+        }
+        energy = energy / powerSteam.getInternalEnergyPerOutput(0);
         for (int i = 0; i < 6; i++) {
             BlockPosition bp = new BlockPosition(this);
             bp.orientation = ForgeDirection.getOrientation(i);
@@ -36,17 +42,17 @@ public class TileEntitySteamProducer extends TileEntityEnergyProducer<IFluidHand
 
             if (te instanceof IFluidHandler) {
                 final int steam = (int) Math.min(energy, powerSteam.getThrottleProducer());
-                FluidStack stack = FluidRegistry.getFluidStack("steam", steam);
-                if (stack == null)
-                    FluidRegistry.getFluidStack("Steam", steam);
-                energy -= ((IFluidHandler) te).fill(bp.orientation.getOpposite(), stack, true);
+                FluidStack stack = FluidRegistry.getFluidStack(steamType.name, steam);
+                if (stack != null) {
+                    energy -= ((IFluidHandler) te).fill(bp.orientation.getOpposite(), stack, true);
+                }
             }
 
             if (energy <= 0)
                 return 0;
         }
 
-        return energy * powerSteam.getInternalEnergyPerOutput();
+        return energy * powerSteam.getInternalEnergyPerOutput(0);
     }
 
     @Override

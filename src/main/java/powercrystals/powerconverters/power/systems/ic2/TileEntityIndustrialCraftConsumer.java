@@ -66,7 +66,7 @@ public class TileEntityIndustrialCraftConsumer extends TileEntityEnergyConsumer<
 
     @Override
     public double getDemandedEnergy() {
-        return getTotalEnergyDemand() / getPowerSystem().getInternalEnergyPerInput();
+        return getTotalEnergyDemand() / getPowerSystem().getInternalEnergyPerInput(0);
     }
 
     @Override
@@ -76,8 +76,8 @@ public class TileEntityIndustrialCraftConsumer extends TileEntityEnergyConsumer<
 
     @Override
     public double injectEnergy(ForgeDirection directionFrom, double amount, double voltage) {
-        double pcuNotStored = storeEnergy(amount * getPowerSystem().getInternalEnergyPerInput(), false);
-        double euNotStored = pcuNotStored / getPowerSystem().getInternalEnergyPerInput();
+        double pcuNotStored = storeEnergy(amount * getPowerSystem().getInternalEnergyPerInput(0), false);
+        double euNotStored = pcuNotStored / getPowerSystem().getInternalEnergyPerInput(0);
 
         double euThisInjection = (amount - euNotStored);
 

@@ -1,14 +1,12 @@
 package powercrystals.powerconverters.power.systems.fortron;
 
 import net.minecraftforge.common.util.ForgeDirection;
-import powercrystals.powerconverters.common.TileEntityEnergyBridge;
 import powercrystals.powerconverters.power.PowerSystemManager;
 import powercrystals.powerconverters.power.base.TileEntityEnergyConsumer;
 import powercrystals.powerconverters.power.systems.PowerFortron;
 
 import resonant.api.mffs.fortron.IFortronStorage;
 
-import java.util.Map;
 import java.util.Map.Entry;
 import java.lang.Math;
 
@@ -28,7 +26,7 @@ public class TileEntityFortronConsumer extends TileEntityEnergyConsumer<IFortron
         }
         
         //
-        double perInput = getPowerSystem().getInternalEnergyPerInput();
+        double perInput = getPowerSystem().getInternalEnergyPerInput(0);
 		int demand = getTotalEnergyDemand();
 		
 		if( (demand / perInput) < 1.0 ) {

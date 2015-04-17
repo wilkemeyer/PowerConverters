@@ -23,7 +23,7 @@ public class TileEntityFactorizationProducer extends TileEntityEnergyProducer<IC
 
     @Override
     public double produceEnergy(double energy) {
-        double CG = energy / getPowerSystem().getInternalEnergyPerOutput();
+        double CG = energy / getPowerSystem().getInternalEnergyPerOutput(0);
         for (Entry<ForgeDirection, IChargeConductor> output : this.getTiles().entrySet()) {
             IChargeConductor o = output.getValue();
             if (o != null) {
@@ -37,7 +37,7 @@ public class TileEntityFactorizationProducer extends TileEntityEnergyProducer<IC
                 }
             }
         }
-        return CG * getPowerSystem().getInternalEnergyPerOutput();
+        return CG * getPowerSystem().getInternalEnergyPerOutput(0);
     }
 
     @Override

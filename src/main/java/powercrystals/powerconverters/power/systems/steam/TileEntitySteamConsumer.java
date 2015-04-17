@@ -20,24 +20,38 @@ import powercrystals.powerconverters.power.systems.PowerSteam;
 public class TileEntitySteamConsumer extends TileEntityEnergyConsumer<IFluidHandler> implements IFluidHandler, IPipeConnection {
     private FluidTank _steamTank;
     private int _mBLastTick;
+    PowerSteam powerSteam;
 
     public TileEntitySteamConsumer() {
         super(PowerSystemManager.getInstance().getPowerSystemByName(PowerSteam.id), 0, IFluidHandler.class);
         _steamTank = new FluidTank(FluidContainerRegistry.BUCKET_VOLUME);
+        powerSteam = (PowerSteam) PowerSystemManager.getInstance().getPowerSystemByName(PowerSteam.id);
     }
 
     @Override
     public void updateEntity() {
         super.updateEntity();
 
-        if (_steamTank.getFluidAmount() > 0) {
-            PowerSteam steam = (PowerSteam) PowerSystemManager.getInstance().getPowerSystemByName(PowerSteam.id);
-            int amount = Math.min(_steamTank.getFluidAmount(), steam.getThrottleConsumer());
-            float energy = amount * steam.getInternalEnergyPerInput();
-            energy = (int) storeEnergy(energy, false);
-            int toDrain = (int) (amount - (energy / steam.getInternalEnergyPerInput()));
-            _steamTank.drain(toDrain, true);
-            _mBLastTick = toDrain;
+        if(_steamTank.getFluid() != null && _steamTank.getFluid().getFluid() != null &&
+                _steamTank.getFluid().getFluid().getName() != null) {
+            String fluidName = _steamTank.getFluid().getFluid().getName();
+            PowerSteam.SteamType steamType = powerSteam.getSteamType(fluidName);
+            if (steamType != null && _steamTank.getFluidAmount() > 0) {
+                int amount = Math.min(_steamTank.getFluidAmount(), powerSteam.getThrottleConsumer());
+                float energy = amount * steamType.energyPerInput;
+                energy = (int) storeEnergy(energy, false);
+                int toDrain = 0;
+                try {
+                    toDrain = (int) (amount - (energy / powerSteam.getInternalEnergyPerInput(this.blockMetadata)));
+                }
+                catch (ArithmeticException e) {
+                    toDrain = 0;
+                }
+                _steamTank.drain(toDrain, true);
+                _mBLastTick = toDrain;
+            } else {
+                _mBLastTick = 0;
+            }
         } else {
             _mBLastTick = 0;
         }

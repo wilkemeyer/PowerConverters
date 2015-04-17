@@ -154,9 +154,14 @@ public final class PowerConverterCore {
             if(manager.getPowerSystemByName(PowerSteam.id) == null) {
                 manager.registerPowerSystem(new PowerSteam());
             }
+            ((PowerSteam)manager.getPowerSystemByName(PowerSteam.id)).addSteamType("ic2steam", 500, 500);
         }
         if(Loader.isModLoaded("Railcraft")) {
             enabledRecipes.add(new RecipeRailcraft());
+            if(manager.getPowerSystemByName(PowerSteam.id) == null) {
+                manager.registerPowerSystem(new PowerSteam());
+            }
+            ((PowerSteam)manager.getPowerSystemByName(PowerSteam.id)).addSteamType("steam", 500, 500);
         }
         if(Loader.isModLoaded("Forestry")) {
             enabledRecipes.add(new RecipeForestry());

@@ -25,7 +25,7 @@ public class TileEntityRFProducer extends TileEntityEnergyProducer<IEnergyConnec
 
     @Override
     public double produceEnergy(double energy) {
-    	final double tmpEnergyPerOutput = getPowerSystem().getInternalEnergyPerOutput();
+    	final double tmpEnergyPerOutput = getPowerSystem().getInternalEnergyPerOutput(0);
         final double energyToUse = energy / tmpEnergyPerOutput;
 
         if (energyToUse > 0) {
@@ -72,7 +72,7 @@ public class TileEntityRFProducer extends TileEntityEnergyProducer<IEnergyConnec
         TileEntityEnergyBridge bridge = getFirstBridge();
         if (bridge == null)
             return 0;
-        return (int) (bridge.getEnergyStored() / getPowerSystem().getInternalEnergyPerInput());
+        return (int) (bridge.getEnergyStored() / getPowerSystem().getInternalEnergyPerInput(0));
     }
 
     @Override
@@ -80,6 +80,6 @@ public class TileEntityRFProducer extends TileEntityEnergyProducer<IEnergyConnec
         TileEntityEnergyBridge bridge = getFirstBridge();
         if (bridge == null)
             return 0;
-        return (int) (bridge.getEnergyStoredMax() / getPowerSystem().getInternalEnergyPerInput());
+        return (int) (bridge.getEnergyStoredMax() / getPowerSystem().getInternalEnergyPerInput(0));
     }
 }

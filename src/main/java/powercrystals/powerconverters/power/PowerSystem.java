@@ -28,11 +28,11 @@ public abstract class PowerSystem {
     public abstract void loadConfig(Configuration c);
     public abstract void saveConfig(Configuration c);
 
-    public float getInternalEnergyPerInput() {
+    public float getInternalEnergyPerInput(int meta) {
         return _internalEnergyPerInput;
     }
 
-    public float getInternalEnergyPerOutput() {
+    public float getInternalEnergyPerOutput(int meta) {
         return _internalEnergyPerOutput;
     }
 
