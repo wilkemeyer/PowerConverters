@@ -141,8 +141,8 @@ task ('curseGeneral') << {
         else apiKey = 0
         releaseType = curseForgeReleaseType
         changelog = new File('Changelog.md').getText('utf-8').split('\n-{3,8}|\n\n')[2]
-        displayName = String.format('VeinMiner %s [MC%s; build %s]', config.mod_version, config.compatible_versions, buildNumber)
-        additionalArtifact deobfJar, apiJar
+        displayName = String.format('PowerConverters %s [MC%s; build %s]', config.mod_version, config.compatible_versions, buildNumber)
+        additionalArtifact deobfJar
 
         for (String newVersion : config.compatible_versions.split(",")) {
             addGameVersion newVersion
@@ -151,28 +151,30 @@ task ('curseGeneral') << {
 }
 
 task setCurseAlpha << {
-    print('Set alpha')
+    print('Set alpha\n')
     curseForgeReleaseType = 'alpha'
 }
 task setCurseBeta << {
-    print('Set beta')
+    print('Set beta\n')
     curseForgeReleaseType = 'beta'
 }
 
 task setCurseRelease << {
-    print('Set release')
+    print('Set release\n')
     curseForgeReleaseType = 'release'
 }
 
-task curseAlpha(dependsOn: 'curseGeneral') {
-    curseGeneral.dependsOn setCurseAlpha
+task curseAlpha << {
+    setCurseAlpha.execute()
+    curseGeneral.execute()
 }
 
-task curseBeta(dependsOn: 'curseGeneral') {
-    curseGeneral.dependsOn setCurseBeta
+task curseBeta << {
+    setCurseBeta.execute()
+    curseGeneral.execute()
 }
 
-task curseRelease(dependsOn: 'curseGeneral') {
-    curseGeneral.dependsOn setCurseRelease
-
+task curseRelease << {
+    setCurseRelease.execute()
+    curseGeneral.execute()
 }
