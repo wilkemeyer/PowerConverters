@@ -144,6 +144,10 @@ task setCurseAlpha << {
     print('Set alpha')
     curseForgeReleaseType = 'alpha'
 }
+task setCurseBeta << {
+    print('Set alpha')
+    curseForgeReleaseType = 'beta'
+}
 
 task setCurseRelease << {
     print('Set release')
@@ -152,6 +156,10 @@ task setCurseRelease << {
 
 task curseAlpha(dependsOn: 'curseGeneral') {
     curseGeneral.dependsOn setCurseAlpha
+}
+
+task curseBeta(dependsOn: 'curseGeneral') {
+    curseGeneral.dependsOn setCurseBeta
 }
 
 task curseRelease(dependsOn: 'curseGeneral') {
