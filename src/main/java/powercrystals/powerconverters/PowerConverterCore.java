@@ -13,6 +13,7 @@ import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import org.apache.logging.log4j.Logger;
 import powercrystals.powerconverters.common.BlockPowerConverterCommon;
@@ -126,7 +127,12 @@ public final class PowerConverterCore {
         enabledRecipes = new HashSet<RecipeProvider>();
 
         enabledRecipes.add(new RecipeVanilla());
-        manager.registerPowerSystem(new PowerSteam());
+        if(FluidRegistry.isFluidRegistered("steam")) {
+            if(manager.getPowerSystemByName(PowerSteam.id) == null) {
+                manager.registerPowerSystem(new PowerSteam());
+            }
+            ((PowerSteam) manager.getPowerSystemByName(PowerSteam.id)).addSteamType("steam", "Steam", 500, 500);
+        }
 
         if(Loader.isModLoaded("BuildCraft|Energy")) {
             enabledRecipes.add(new RecipeBuildCraft());
@@ -154,14 +160,14 @@ public final class PowerConverterCore {
             if(manager.getPowerSystemByName(PowerSteam.id) == null) {
                 manager.registerPowerSystem(new PowerSteam());
             }
-            ((PowerSteam)manager.getPowerSystemByName(PowerSteam.id)).addSteamType("ic2steam", 500, 500);
+            ((PowerSteam)manager.getPowerSystemByName(PowerSteam.id)).addSteamType("ic2steam", "IC2 Steam", 500, 500);
+            ((PowerSteam)manager.getPowerSystemByName(PowerSteam.id)).addSteamType("ic2superheatedsteam", "IC2 Superheated Steam", 500, 500);
         }
         if(Loader.isModLoaded("Railcraft")) {
             enabledRecipes.add(new RecipeRailcraft());
             if(manager.getPowerSystemByName(PowerSteam.id) == null) {
                 manager.registerPowerSystem(new PowerSteam());
             }
-            ((PowerSteam)manager.getPowerSystemByName(PowerSteam.id)).addSteamType("steam", 500, 500);
         }
         if(Loader.isModLoaded("Forestry")) {
             enabledRecipes.add(new RecipeForestry());

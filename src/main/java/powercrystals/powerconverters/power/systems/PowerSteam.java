@@ -39,8 +39,6 @@ public class PowerSteam extends PowerSystem {
         }
     }
 
-    public static final float DEFAULT_ENERGY_PER_INPUT = 500;
-    public static final float DEFAULT_ENERGY_PER_OUTPUT = 500;
     public static final String CATEGORY_STEAM = POWERSYSTEM_CATEGORY + ".steam";
 
     private static final int THROTTLE_CONSUMER_DEFAULT = 1000;
@@ -50,8 +48,6 @@ public class PowerSteam extends PowerSystem {
 
     public PowerSteam() {
         name = "Steam";
-        _internalEnergyPerInput = DEFAULT_ENERGY_PER_INPUT;
-        _internalEnergyPerOutput = DEFAULT_ENERGY_PER_OUTPUT;
         _unit = "mB/t";
 
         block = new BlockSteam();
@@ -60,9 +56,9 @@ public class PowerSteam extends PowerSystem {
         producer = TileEntitySteamProducer.class;
     }
 
-    public void addSteamType(String name, float input, float output) {
+    public void addSteamType(String name, String displayName, float input, float output) {
         if(!steamTypes.containsKey(name)) {
-            steamTypes.put(name, new SteamType(name, name, input, output));
+            steamTypes.put(name, new SteamType(name, displayName, input, output));
         }
     }
 
@@ -70,20 +66,20 @@ public class PowerSteam extends PowerSystem {
         return steamTypes.get(name);
     }
     public SteamType getSteamType(int index) {
-        Object[] steamNames = steamTypes.keySet().toArray();
+        String[] steamNames = (String[]) steamTypes.keySet().toArray();
         Arrays.sort(steamNames);
         return steamTypes.get(steamNames[index]);
     }
 
     @Override
     public float getInternalEnergyPerInput(int meta) {
-        SteamType type = steamTypes.get(meta);
+        SteamType type = getSteamType(meta);
         return type == null ? 0 : type.energyPerOutput;
     }
 
     @Override
     public float getInternalEnergyPerOutput(int meta) {
-        SteamType type = steamTypes.get(meta);
+        SteamType type = getSteamType(meta);
         return type == null ? 0 : type.energyPerOutput;
     }
 

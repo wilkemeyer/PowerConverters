@@ -39,7 +39,7 @@ public class ItemBlockSteam extends ItemBlock {
         }
         else {
             PowerSteam.SteamType steamType = powerSteam.getSteamType(itemStack.getItemDamage() - 1);
-            return StatCollector.translateToLocalFormatted(itemStack.getUnlocalizedName() + ".name", steamType.name);
+            return StatCollector.translateToLocalFormatted(itemStack.getUnlocalizedName() + ".name", steamType.displayName);
         }
     }
 
