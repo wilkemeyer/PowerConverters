@@ -2,7 +2,10 @@ package powercrystals.powerconverters.power.systems;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.common.util.Constants;
 import powercrystals.powerconverters.power.PowerSystem;
 import powercrystals.powerconverters.power.systems.steam.BlockSteam;
 import powercrystals.powerconverters.power.systems.steam.ItemBlockSteam;
@@ -21,6 +24,7 @@ public class PowerSteam extends PowerSystem {
     public static String id = "STEAM";
 
     private HashMap<String, SteamType> steamTypes = new HashMap<String, SteamType>();
+    private HashMap<String, SteamType> serverSteamTypes = new HashMap<String, SteamType>();
     public class SteamType {
         public String name;
         public String displayName;
@@ -56,6 +60,38 @@ public class PowerSteam extends PowerSystem {
         producer = TileEntitySteamProducer.class;
     }
 
+    @Override
+    public void readEnergyValues(NBTTagCompound nbt) {
+        NBTTagList types = nbt.getTagList("steamTypes", Constants.NBT.TAG_COMPOUND);
+        for(int i = 0; i < types.tagCount(); i++) {
+            NBTTagCompound type = types.getCompoundTagAt(i);
+            SteamType newSteam = new SteamType(
+                    type.getString("name"),
+                    type.getString("display"),
+                    type.getFloat("Input"),
+                    type.getFloat("Output")
+            );
+            serverSteamTypes.put(newSteam.name, newSteam);
+        }
+    }
+
+    @Override
+    public NBTTagCompound writeEnergyValues() {
+        NBTTagCompound nbt = new NBTTagCompound();
+        NBTTagList types = new NBTTagList();
+        for(SteamType type : steamTypes.values()) {
+            NBTTagCompound data = new NBTTagCompound();
+            data.setString("name", type.name);
+            data.setString("display", type.displayName);
+            data.setFloat("Input", type.energyPerInput);
+            data.setFloat("Output", type.energyPerOutput);
+            types.appendTag(data);
+        }
+        nbt.setTag("steamTypes", types);
+
+        return nbt;
+    }
+
     public void addSteamType(String name, String displayName, float input, float output) {
         if(!steamTypes.containsKey(name)) {
             steamTypes.put(name, new SteamType(name, displayName, input, output));
@@ -63,12 +99,12 @@ public class PowerSteam extends PowerSystem {
     }
 
     public SteamType getSteamType(String name) {
-        return steamTypes.get(name);
+        return serverSteamTypes.get(name);
     }
     public SteamType getSteamType(int index) {
-        String[] steamNames = (String[]) steamTypes.keySet().toArray();
+        String[] steamNames = serverSteamTypes.keySet().toArray(new String[serverSteamTypes.size()]);
         Arrays.sort(steamNames);
-        return steamTypes.get(steamNames[index]);
+        return serverSteamTypes.get(steamNames[index]);
     }
 
     @Override

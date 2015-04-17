@@ -1,6 +1,10 @@
 package powercrystals.powerconverters.power;
 
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.NBTTagString;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.common.util.Constants;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,6 +20,7 @@ public class PowerSystemManager {
     private Map<String, PowerSystem> powerSystems = new HashMap<String, PowerSystem>();
 
     private List<String> systemIds = new ArrayList<String>();
+    private List<String> serverSystemIds = new ArrayList<String>();
 
     public static PowerSystemManager getInstance() {
         if(instance == null) {
@@ -24,6 +29,37 @@ public class PowerSystemManager {
         return instance;
     }
 
+    public void setServerSystemIds() {
+        serverSystemIds = systemIds;
+    }
+    public void setServerSystemIds(ArrayList<String> ids) {
+        serverSystemIds = ids;
+    }
+
+    public void readPowerData(NBTTagCompound nbt) {
+        NBTTagList ids = nbt.getTagList("systemIds", Constants.NBT.TAG_STRING);
+        for(int i = 0; i < ids.tagCount(); i++) {
+            serverSystemIds.add(ids.getStringTagAt(i));
+        }
+        for(PowerSystem powerSystem : powerSystems.values()) {
+            NBTTagCompound powerSystemNBT = nbt.getCompoundTag(powerSystem.getId());
+            powerSystem.readEnergyValues(powerSystemNBT);
+        }
+    }
+
+    public NBTTagCompound writePowerData() {
+        NBTTagCompound nbt = new NBTTagCompound();
+        NBTTagList ids = new NBTTagList();
+        for(String systemId : systemIds) {
+            ids.appendTag(new NBTTagString(systemId));
+        }
+        nbt.setTag("systemIds", ids);
+        for(PowerSystem powerSystem : powerSystems.values()) {
+            nbt.setTag(powerSystem.getId(), powerSystem.writeEnergyValues());
+        }
+
+        return nbt;
+    }
 
     public void registerPowerSystem(PowerSystem powerSystem) {
         registerPowerSystem(powerSystem.getId(), powerSystem);
@@ -39,11 +75,11 @@ public class PowerSystemManager {
     }
 
     public int getPowerSystemId(String name) {
-        return systemIds.lastIndexOf(name);
+        return serverSystemIds.lastIndexOf(name);
     }
 
     public PowerSystem getPowerSystemById(int id) {
-        String name = systemIds.get(id);
+        String name = serverSystemIds.get(id);
         return getPowerSystemByName(name);
     }
 

@@ -1,16 +1,23 @@
 package powercrystals.powerconverters;
 
 import com.google.common.base.Throwables;
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.gameevent.PlayerEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
+import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.relauncher.Side;
 import net.minecraft.block.Block;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -31,6 +38,8 @@ import powercrystals.powerconverters.crafting.mods.RecipeRailcraft;
 import powercrystals.powerconverters.crafting.mods.RecipeThermalExpansion;
 import powercrystals.powerconverters.crafting.mods.RecipeVanilla;
 import powercrystals.powerconverters.gui.PCGUIHandler;
+import powercrystals.powerconverters.mods.reference.ModIDReference;
+import powercrystals.powerconverters.network.PacketClientSync;
 import powercrystals.powerconverters.power.PowerSystemManager;
 import powercrystals.powerconverters.power.systems.PowerFactorization;
 import powercrystals.powerconverters.power.systems.PowerIndustrialcraft;
@@ -76,6 +85,8 @@ public final class PowerConverterCore {
 
     private Set<RecipeProvider> enabledRecipes;
 
+    public SimpleNetworkWrapper networkWrapper;
+
     public Logger logger;
 
     @SuppressWarnings("UnusedDeclaration")
@@ -83,6 +94,11 @@ public final class PowerConverterCore {
     public void preInit(FMLPreInitializationEvent evt) {
         logger = evt.getModLog();
         evt.getModMetadata().version = PowerConverterCore.version;
+
+        FMLCommonHandler.instance().bus().register(this);
+
+        networkWrapper = NetworkRegistry.INSTANCE.newSimpleChannel("powerconverters");
+        networkWrapper.registerMessage(PacketClientSync.Handler.class, PacketClientSync.class, 0, Side.CLIENT);
 
         registerPowerSystems();
 
@@ -191,6 +207,19 @@ public final class PowerConverterCore {
         	}
         }
         
+    }
+
+    @SuppressWarnings("unused")
+    @SubscribeEvent
+    public void clientConnected(PlayerEvent.PlayerLoggedInEvent event) {
+        if(event.player == null || event.player.worldObj == null ||
+                event.player.worldObj.isRemote || !(event.player instanceof EntityPlayerMP)) {
+            return;
+        }
+        NBTTagCompound energyNBT = PowerSystemManager.getInstance().writePowerData();
+        PacketClientSync packetClientSync = new PacketClientSync(energyNBT);
+        networkWrapper.sendTo(packetClientSync, (EntityPlayerMP) event.player);
+        logger.debug("Sending sync packet to player %s", event.player.toString());
     }
 
     public static Object tryOreDict(String name, ItemStack itemStack) {

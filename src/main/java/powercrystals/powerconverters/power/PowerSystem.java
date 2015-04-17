@@ -1,6 +1,7 @@
 package powercrystals.powerconverters.power;
 
 import net.minecraft.item.ItemBlock;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.config.Configuration;
 import powercrystals.powerconverters.common.BridgeSideData;
 import powercrystals.powerconverters.power.base.BlockPowerConverter;
@@ -10,6 +11,8 @@ public abstract class PowerSystem {
     protected String name;
     protected float _internalEnergyPerInput;
     protected float _internalEnergyPerOutput;
+    protected float serverInternalEnergyPerInput;
+    protected float serverInternalEnergyPerOutput;
     protected String _unit;
     protected String[] voltageNames;
     protected int[] voltageValues;
@@ -27,6 +30,18 @@ public abstract class PowerSystem {
     public abstract void registerCommonRecipes();
     public abstract void loadConfig(Configuration c);
     public abstract void saveConfig(Configuration c);
+
+    public void readEnergyValues(NBTTagCompound nbt) {
+        serverInternalEnergyPerInput = nbt.getFloat("Input");
+        serverInternalEnergyPerOutput = nbt.getFloat("Output");
+    }
+
+    public NBTTagCompound writeEnergyValues() {
+        NBTTagCompound nbt = new NBTTagCompound();
+        nbt.setFloat("Input", _internalEnergyPerInput);
+        nbt.setFloat("Output", _internalEnergyPerOutput);
+        return nbt;
+    }
 
     public float getInternalEnergyPerInput(int meta) {
         return _internalEnergyPerInput;
