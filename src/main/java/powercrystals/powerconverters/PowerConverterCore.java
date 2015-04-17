@@ -197,9 +197,6 @@ public final class PowerConverterCore {
                 manager.registerPowerSystem(new PowerRedstoneFlux());
             }
         }
-        if(Loader.isModLoaded("gregtech")){
-			//enabledRecipes.add(new RecipeGregTech());
-        }
         if(Loader.isModLoaded("MFFS")){
         	enabledRecipes.add(new RecipeMFFS());
         	if(manager.getPowerSystemByName(PowerFortron.id) == null) {

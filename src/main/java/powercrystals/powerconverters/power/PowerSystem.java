@@ -63,7 +63,7 @@ public abstract class PowerSystem {
 	/**
 	 * Formats the Rate String for Bridge GUI
 	 *
-	 * @note will be only called if isConnected
+	 * Will be only called if isConnected
 	 *
 	 */
 	public String getRateString(BridgeSideData data) {
