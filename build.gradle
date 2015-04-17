@@ -141,7 +141,7 @@ task ('curseGeneral') << {
         else apiKey = 0
         releaseType = curseForgeReleaseType
         changelog = new File('Changelog.md').getText('utf-8').split('\n-{3,8}|\n\n')[2]
-        displayName = String.format('PowerConverters %s [MC%s; build %s]', config.mod_version, config.compatible_versions, buildNumber)
+        displayName = String.format('PowerConverters %s [build %s]', config.mod_version, config.compatible_versions, buildNumber)
         additionalArtifact deobfJar
 
         for (String newVersion : config.compatible_versions.split(",")) {
