@@ -26,6 +26,16 @@ repositories {
 		url = "http://calclavia.com/maven/"
 	}
 
+    maven{
+        name "Waila Mobius Repo"
+        url "http://mobiusstrip.eu/maven"
+    }
+
+    maven{
+        name "CB Maven FS"
+        url "http://chickenbones.net/maven/"
+    }
+
     ivy {
         url "http://www.mod-buildcraft.com/releases/BuildCraft/"
         layout 'pattern', {
@@ -145,7 +155,7 @@ task setCurseAlpha << {
     curseForgeReleaseType = 'alpha'
 }
 task setCurseBeta << {
-    print('Set alpha')
+    print('Set beta')
     curseForgeReleaseType = 'beta'
 }
 
