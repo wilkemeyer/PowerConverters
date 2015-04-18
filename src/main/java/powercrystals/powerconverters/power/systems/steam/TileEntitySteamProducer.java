@@ -20,20 +20,20 @@ import powercrystals.powerconverters.power.systems.PowerSteam;
 @Optional.Interface(modid = ModIDReference.BUILDCRAFT, iface = InterfaceReference.BuildCraft.IPipeConnection)
 public class TileEntitySteamProducer extends TileEntityEnergyProducer<IFluidHandler> implements IFluidHandler, IPipeConnection {
     PowerSteam powerSteam;
-    PowerSteam.SteamType steamType;
+    int steamId;
 
     public TileEntitySteamProducer(int steamId) {
         super(PowerSystemManager.getInstance().getPowerSystemByName(PowerSteam.id), 0, IFluidHandler.class);
-        PowerSteam powerSteam = (PowerSteam) PowerSystemManager.getInstance().getPowerSystemByName(PowerSteam.id);
-        steamType = powerSteam.getSteamType(steamId);
+        powerSteam = (PowerSteam) PowerSystemManager.getInstance().getPowerSystemByName(PowerSteam.id);
+        this.steamId = steamId;
     }
 
     @Override
     public double produceEnergy(double energy) {
-        if (powerSteam.getInternalEnergyPerOutput(blockMetadata) == 0) {
-            return 0;
+        if (steamId < 0 || powerSteam.getInternalEnergyPerOutput(steamId + 1) == 0) {
+            return energy;
         }
-        energy = energy / powerSteam.getInternalEnergyPerOutput(0);
+        energy = energy / powerSteam.getInternalEnergyPerOutput(steamId + 1);
         for (int i = 0; i < 6; i++) {
             BlockPosition bp = new BlockPosition(this);
             bp.orientation = ForgeDirection.getOrientation(i);
@@ -42,6 +42,7 @@ public class TileEntitySteamProducer extends TileEntityEnergyProducer<IFluidHand
 
             if (te instanceof IFluidHandler) {
                 final int steam = (int) Math.min(energy, powerSteam.getThrottleProducer());
+                PowerSteam.SteamType steamType = powerSteam.getSteamType(steamId);
                 FluidStack stack = FluidRegistry.getFluidStack(steamType.name, steam);
                 if (stack != null) {
                     energy -= ((IFluidHandler) te).fill(bp.orientation.getOpposite(), stack, true);
@@ -52,7 +53,7 @@ public class TileEntitySteamProducer extends TileEntityEnergyProducer<IFluidHand
                 return 0;
         }
 
-        return energy * powerSteam.getInternalEnergyPerOutput(0);
+        return energy * powerSteam.getInternalEnergyPerOutput(steamId + 1);
     }
 
     @Override

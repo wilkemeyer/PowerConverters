@@ -37,9 +37,7 @@ public class BlockSteam extends BlockPowerConverter {
     public TileEntity createNewTileEntity(World world, int metadata) {
         PowerSteam steam = (PowerSteam) PowerSystemManager.getInstance().getPowerSystemByName(PowerSteam.id);
         if (metadata == 0) return new TileEntitySteamConsumer();
-        else if (metadata < 1 + steam.getSteamTypeCount()) return new TileEntitySteamProducer(metadata - 1);
-
-        return null;
+        else return new TileEntitySteamProducer(metadata - 1);
     }
 
     @Override

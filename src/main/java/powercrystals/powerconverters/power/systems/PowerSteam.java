@@ -101,10 +101,11 @@ public class PowerSteam extends PowerSystem {
     public SteamType getSteamType(String name) {
         return serverSteamTypes.get(name);
     }
+
     public SteamType getSteamType(int index) {
         String[] steamNames = serverSteamTypes.keySet().toArray(new String[serverSteamTypes.size()]);
         Arrays.sort(steamNames);
-        return serverSteamTypes.get(steamNames[index]);
+        return index < steamNames.length ? serverSteamTypes.get(steamNames[index]) : null;
     }
 
     @Override
@@ -115,7 +116,10 @@ public class PowerSteam extends PowerSystem {
 
     @Override
     public float getInternalEnergyPerOutput(int meta) {
-        SteamType type = getSteamType(meta);
+        if(meta < 0) return 0;
+        if(meta == 0) meta++;
+
+        SteamType type = getSteamType(meta - 1);
         return type == null ? 0 : type.energyPerOutput;
     }
 
