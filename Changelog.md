@@ -1,6 +1,11 @@
 Changelog
 =========
 
+3.1.1
+-----
+Fixes:
+* Steam consumers and producers actually work.
+
 3.1.0
 ------
 Changes:
