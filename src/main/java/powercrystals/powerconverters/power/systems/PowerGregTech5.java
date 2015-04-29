@@ -3,18 +3,17 @@ package powercrystals.powerconverters.power.systems;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
-import powercrystals.powerconverters.common.TileEntityCharger;
 import powercrystals.powerconverters.common.BridgeSideData;
 import powercrystals.powerconverters.power.PowerSystem;
-import powercrystals.powerconverters.power.systems.gt.BlockGregTech;
-import powercrystals.powerconverters.power.systems.gt.ItemBlockGregTech;
-import powercrystals.powerconverters.power.systems.gt.TileEntityGregTechConsumer;
-import powercrystals.powerconverters.power.systems.gt.TileEntityGregTechProducer;
+import powercrystals.powerconverters.power.systems.gt5.BlockGregTech;
+import powercrystals.powerconverters.power.systems.gt5.ItemBlockGregTech;
+import powercrystals.powerconverters.power.systems.gt5.TileEntityGregTechConsumer;
+import powercrystals.powerconverters.power.systems.gt5.TileEntityGregTechProducer;
 
 /**
  * GregTech support. Adds producer and consumer.
  */
-public class PowerGregTech extends PowerSystem {
+public class PowerGregTech5 extends PowerSystem {
     public static final String id = "GT";
 
     public static final float DEFAULT_ENERGY_PER_INPUT = 4000;
@@ -24,7 +23,7 @@ public class PowerGregTech extends PowerSystem {
     public static final String[] VOLTAGE_NAMES = new String[]{"ULV", "LV", "MV", "HV", "EV", "IV", "LuV", "ZPMV", "UV"};
     public static final int[] VOLTAGE_VALUES = new int[]{8, 32, 128, 512, 2048, 8192, 32768, 131072, 524288};
 
-    public PowerGregTech() {
+    public PowerGregTech5() {
         name = "GregTech";
         _internalEnergyPerInput = DEFAULT_ENERGY_PER_INPUT;
         _internalEnergyPerOutput = DEFAULT_ENERGY_PER_OUTPUT;

@@ -29,7 +29,7 @@ import powercrystals.powerconverters.common.TileEntityCharger;
 import powercrystals.powerconverters.common.TileEntityEnergyBridge;
 import powercrystals.powerconverters.crafting.RecipeProvider;
 import powercrystals.powerconverters.crafting.mods.RecipeMFFS;
-import powercrystals.powerconverters.crafting.mods.RecipeGregTech;
+import powercrystals.powerconverters.crafting.mods.RecipeGregTech5;
 import powercrystals.powerconverters.crafting.mods.RecipeBuildCraft;
 import powercrystals.powerconverters.crafting.mods.RecipeEnderIO;
 import powercrystals.powerconverters.crafting.mods.RecipeFactorization;
@@ -39,14 +39,13 @@ import powercrystals.powerconverters.crafting.mods.RecipeRailcraft;
 import powercrystals.powerconverters.crafting.mods.RecipeThermalExpansion;
 import powercrystals.powerconverters.crafting.mods.RecipeVanilla;
 import powercrystals.powerconverters.gui.PCGUIHandler;
-import powercrystals.powerconverters.mods.reference.ModIDReference;
 import powercrystals.powerconverters.network.PacketClientSync;
 import powercrystals.powerconverters.power.PowerSystemManager;
 import powercrystals.powerconverters.power.systems.PowerFactorization;
 import powercrystals.powerconverters.power.systems.PowerIndustrialcraft;
 import powercrystals.powerconverters.power.systems.PowerRedstoneFlux;
 import powercrystals.powerconverters.power.systems.PowerSteam;
-import powercrystals.powerconverters.power.systems.PowerGregTech;
+import powercrystals.powerconverters.power.systems.PowerGregTech5;
 import powercrystals.powerconverters.power.systems.PowerFortron;
 
 import java.io.File;
@@ -200,9 +199,9 @@ public final class PowerConverterCore {
             }
         }
         if(Loader.isModLoaded("gregtech")){
-			enabledRecipes.add(new RecipeGregTech());
-			if(manager.getPowerSystemByName(PowerGregTech.id) == null) {
-				manager.registerPowerSystem(new PowerGregTech());
+			enabledRecipes.add(new RecipeGregTech5());
+			if(manager.getPowerSystemByName(PowerGregTech5.id) == null) {
+				manager.registerPowerSystem(new PowerGregTech5());
 			}
         }
         if(Loader.isModLoaded("MFFS")){

@@ -1,20 +1,14 @@
-package powercrystals.powerconverters.power.systems.gt;
+package powercrystals.powerconverters.power.systems.gt5;
 
 import gregtech.api.interfaces.tileentity.IEnergyConnected;
 import gregtech.api.metatileentity.BaseTileEntity;
-import gregtech.api.metatileentity.MetaPipeEntity;
 import net.minecraft.block.Block;
-import net.minecraft.world.IBlockAccess;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.ForgeDirection;
 import powercrystals.powerconverters.position.BlockPosition;
 import powercrystals.powerconverters.power.PowerSystemManager;
-import powercrystals.powerconverters.power.base.TileEntityEnergyConsumer;
-import powercrystals.powerconverters.power.systems.PowerGregTech;
-
-import java.util.Map.Entry;
+import powercrystals.powerconverters.power.systems.PowerGregTech5;
 
 
 public class TileEntityGregTechConsumer extends BaseGTConsumerTileEntity<IEnergyConnected> implements IEnergyConnected {
@@ -32,7 +26,7 @@ public class TileEntityGregTechConsumer extends BaseGTConsumerTileEntity<IEnergy
     }
 
     public TileEntityGregTechConsumer(int voltageIndex) {
-        super(PowerSystemManager.getInstance().getPowerSystemByName(PowerGregTech.id), voltageIndex, IEnergyConnected.class);
+        super(PowerSystemManager.getInstance().getPowerSystemByName(PowerGregTech5.id), voltageIndex, IEnergyConnected.class);
 		
 		setVoltageByIndex(voltageIndex);        
 		setColorization((byte)-1);

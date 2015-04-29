@@ -1,4 +1,4 @@
-package powercrystals.powerconverters.power.systems.gt;
+package powercrystals.powerconverters.power.systems.gt5;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -9,7 +9,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
-import powercrystals.powerconverters.power.systems.PowerGregTech;
+import powercrystals.powerconverters.power.systems.PowerGregTech5;
 
 import java.util.List;
 
@@ -29,7 +29,7 @@ public class ItemBlockGregTech extends ItemBlock {
     @Override
     public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4) {
         //noinspection unchecked
-        par3List.add(EnumChatFormatting.BLUE + (par1ItemStack.getItemDamage() % 2 == 0 ? "Max EU in: " : "Max EU out: ") + PowerGregTech.VOLTAGE_VALUES[par1ItemStack.getItemDamage()/2]);
+        par3List.add(EnumChatFormatting.BLUE + (par1ItemStack.getItemDamage() % 2 == 0 ? "Max EU in: " : "Max EU out: ") + PowerGregTech5.VOLTAGE_VALUES[par1ItemStack.getItemDamage()/2]);
     }
 
     @Override

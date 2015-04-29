@@ -1,20 +1,14 @@
-package powercrystals.powerconverters.power.systems.gt;
+package powercrystals.powerconverters.power.systems.gt5;
 
 import gregtech.api.metatileentity.BaseTileEntity;
 import gregtech.api.interfaces.tileentity.IEnergyConnected;
-import gregtech.api.interfaces.tileentity.IHasWorldObjectAndCoords;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.ForgeDirection;
-import powercrystals.powerconverters.common.TileEntityEnergyBridge;
 import powercrystals.powerconverters.position.BlockPosition;
 import powercrystals.powerconverters.power.PowerSystemManager;
-import powercrystals.powerconverters.power.systems.PowerGregTech;
-import powercrystals.powerconverters.power.base.TileEntityEnergyProducer;
+import powercrystals.powerconverters.power.systems.PowerGregTech5;
 
-import java.util.Map;
 import java.util.Map.Entry;
 
 /**
@@ -43,7 +37,7 @@ public class TileEntityGregTechProducer extends BaseGTProducerTileEntity<IEnergy
     }
 
     public TileEntityGregTechProducer(int voltageIndex) {
-        super(PowerSystemManager.getInstance().getPowerSystemByName(PowerGregTech.id), voltageIndex, IEnergyConnected.class);
+        super(PowerSystemManager.getInstance().getPowerSystemByName(PowerGregTech5.id), voltageIndex, IEnergyConnected.class);
         
         setVoltageByIndex(voltageIndex);
         setMaxAmperage(1);

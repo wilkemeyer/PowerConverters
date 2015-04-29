@@ -6,23 +6,22 @@ import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.oredict.ShapedOreRecipe;
-import powercrystals.powerconverters.PowerConverterCore;
 import powercrystals.powerconverters.crafting.RecipeProvider;
 import powercrystals.powerconverters.power.PowerSystem;
 import powercrystals.powerconverters.power.PowerSystemManager;
-import powercrystals.powerconverters.power.systems.PowerGregTech;
+import powercrystals.powerconverters.power.systems.PowerGregTech5;
 
 /**
  * Add recipes for GregTech
  */
-public class RecipeGregTech extends RecipeProvider {
+public class RecipeGregTech5 extends RecipeProvider {
     private boolean enableRecipes = true;
     public static final String RECIPE_GREGTECH_CATEGORY = RECIPE_CATEGORY + ".gt";
 
     @Override
     public void registerRecipes() {
 
-        PowerSystem gt = PowerSystemManager.getInstance().getPowerSystemByName(PowerGregTech.id);
+        PowerSystem gt = PowerSystemManager.getInstance().getPowerSystemByName(PowerGregTech5.id);
         if(gt != null) {
         	Block converterBlock = gt.block;
         	GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(converterBlock, 1, 0), true, new Object[]{ // ULV

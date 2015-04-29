@@ -1,4 +1,4 @@
-package powercrystals.powerconverters.power.systems.gt;
+package powercrystals.powerconverters.power.systems.gt5;
 
 import gregtech.api.GregTech_API;
 import static gregtech.api.enums.GT_Values.GT;

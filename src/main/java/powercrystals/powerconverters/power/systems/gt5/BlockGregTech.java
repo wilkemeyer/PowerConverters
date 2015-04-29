@@ -1,4 +1,4 @@
-package powercrystals.powerconverters.power.systems.gt;
+package powercrystals.powerconverters.power.systems.gt5;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -7,12 +7,10 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraft.util.StatCollector;
 import net.minecraft.util.ChatComponentText;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import powercrystals.powerconverters.PowerConverterCore;
 import powercrystals.powerconverters.gui.PCCreativeTab;
 import powercrystals.powerconverters.power.base.BlockPowerConverter;
-import powercrystals.powerconverters.power.systems.gt.TileEntityGregTechProducer;
 
 public class BlockGregTech extends BlockPowerConverter {
     public BlockGregTech() {
