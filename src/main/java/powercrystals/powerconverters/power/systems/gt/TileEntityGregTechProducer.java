@@ -133,7 +133,7 @@ public class TileEntityGregTechProducer extends BaseGTProducerTileEntity<IEnergy
 
     @Override
     public double produceEnergy(double energy) {
-    	double EU = energy / getPowerSystem().getInternalEnergyPerOutput();
+    	double EU = energy / getPowerSystem().getInternalEnergyPerOutput(0);
 		long lEU = (long)EU;
 		long usedEU = 0;
 				
@@ -161,7 +161,7 @@ public class TileEntityGregTechProducer extends BaseGTProducerTileEntity<IEnergy
 			
 		}    	   	
 
-        return energy - ( usedEU * getPowerSystem().getInternalEnergyPerOutput() );
+        return energy - ( usedEU * getPowerSystem().getInternalEnergyPerOutput(0) );
     }
 
     /** GregTech API Part **/

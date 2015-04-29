@@ -121,7 +121,7 @@ public class TileEntityGregTechConsumer extends BaseGTConsumerTileEntity<IEnergy
     /** GregTech API Part **/
     @Override
     public long injectEnergyUnits(byte aSide, long aVoltage, long aAmperage) {
-    	double dInternalFactor = getPowerSystem().getInternalEnergyPerInput();
+    	double dInternalFactor = getPowerSystem().getInternalEnergyPerInput(0);
     	double dEU = (double)aVoltage;
     	double dAmperage = (double)aAmperage;
 		long usedAmps = 0;
