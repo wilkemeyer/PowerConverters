@@ -1,6 +1,11 @@
 Changelog
 =========
 
+3.2.0
+-----
+Changes:
+* Re-add gregtech back in for Gregtech 5 port.
+
 3.1.1
 -----
 Fixes:
