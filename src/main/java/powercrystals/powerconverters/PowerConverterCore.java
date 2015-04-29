@@ -5,6 +5,7 @@ import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
+import cpw.mods.fml.common.ModContainer;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
@@ -199,10 +200,15 @@ public final class PowerConverterCore {
             }
         }
         if(Loader.isModLoaded("gregtech")){
-			enabledRecipes.add(new RecipeGregTech5());
-			if(manager.getPowerSystemByName(PowerGregTech5.id) == null) {
-				manager.registerPowerSystem(new PowerGregTech5());
-			}
+            ModContainer modContainer = Loader.instance().getIndexedModList().get("gregtech");
+            // "MC1710" = GT5 reboot.
+            // "GT6-MC1710" = GT6
+            if("MC1710".equals(modContainer.getVersion())) {
+                enabledRecipes.add(new RecipeGregTech5());
+                if (manager.getPowerSystemByName(PowerGregTech5.id) == null) {
+                    manager.registerPowerSystem(new PowerGregTech5());
+                }
+            }
         }
         if(Loader.isModLoaded("MFFS")){
         	enabledRecipes.add(new RecipeMFFS());
