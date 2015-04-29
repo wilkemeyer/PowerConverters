@@ -75,10 +75,11 @@ minecraft {
 }
 
 String buildNumber = "unknown"
+version = "${config.minecraft_version}_${config.mod_version}"
 if(System.getenv("BUILD_NUMBER") != null) {
     buildNumber = System.getenv("BUILD_NUMBER")
+    version = "${config.minecraft_version}_${config.mod_version}-jenkins.${buildNumber}"
 }
-version = "${config.minecraft_version}_${config.mod_version}.${buildNumber}"
 
 processResources
 {
