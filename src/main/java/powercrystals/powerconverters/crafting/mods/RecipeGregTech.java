@@ -1,9 +1,16 @@
 package powercrystals.powerconverters.crafting.mods;
 
-//import gregtech.api.enums.ItemList;
+import cpw.mods.fml.common.registry.GameRegistry;
+import gregtech.api.enums.ItemList;
+import net.minecraft.block.Block;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
-//import powercrystals.powerconverters.PowerConverterCore;
+import net.minecraftforge.oredict.ShapedOreRecipe;
+import powercrystals.powerconverters.PowerConverterCore;
 import powercrystals.powerconverters.crafting.RecipeProvider;
+import powercrystals.powerconverters.power.PowerSystem;
+import powercrystals.powerconverters.power.PowerSystemManager;
+import powercrystals.powerconverters.power.systems.PowerGregTech;
 
 /**
  * Add recipes for GregTech
@@ -15,9 +22,9 @@ public class RecipeGregTech extends RecipeProvider {
     @Override
     public void registerRecipes() {
 
-        /*PowerSystem gt = PowerSystemManager.getInstance().getPowerSystemByName(PowerGregTech.id);
+        PowerSystem gt = PowerSystemManager.getInstance().getPowerSystemByName(PowerGregTech.id);
         if(gt != null) {
-        	/*Block converterBlock = gt.block;
+        	Block converterBlock = gt.block;
         	GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(converterBlock, 1, 0), true, new Object[]{ // ULV
         		"CPC",
         		"PBP",
@@ -95,7 +102,7 @@ public class RecipeGregTech extends RecipeProvider {
         	
 
         
-        }*/
+        }
     }
 
     @Override
