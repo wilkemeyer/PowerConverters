@@ -5,6 +5,7 @@ import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
+import cpw.mods.fml.common.ModContainer;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
@@ -29,6 +30,7 @@ import powercrystals.powerconverters.common.TileEntityCharger;
 import powercrystals.powerconverters.common.TileEntityEnergyBridge;
 import powercrystals.powerconverters.crafting.RecipeProvider;
 import powercrystals.powerconverters.crafting.mods.RecipeMFFS;
+import powercrystals.powerconverters.crafting.mods.RecipeGregTech5;
 import powercrystals.powerconverters.crafting.mods.RecipeBuildCraft;
 import powercrystals.powerconverters.crafting.mods.RecipeEnderIO;
 import powercrystals.powerconverters.crafting.mods.RecipeFactorization;
@@ -38,13 +40,13 @@ import powercrystals.powerconverters.crafting.mods.RecipeRailcraft;
 import powercrystals.powerconverters.crafting.mods.RecipeThermalExpansion;
 import powercrystals.powerconverters.crafting.mods.RecipeVanilla;
 import powercrystals.powerconverters.gui.PCGUIHandler;
-import powercrystals.powerconverters.mods.reference.ModIDReference;
 import powercrystals.powerconverters.network.PacketClientSync;
 import powercrystals.powerconverters.power.PowerSystemManager;
 import powercrystals.powerconverters.power.systems.PowerFactorization;
 import powercrystals.powerconverters.power.systems.PowerIndustrialcraft;
 import powercrystals.powerconverters.power.systems.PowerRedstoneFlux;
 import powercrystals.powerconverters.power.systems.PowerSteam;
+import powercrystals.powerconverters.power.systems.PowerGregTech5;
 import powercrystals.powerconverters.power.systems.PowerFortron;
 
 import java.io.File;
@@ -195,6 +197,17 @@ public final class PowerConverterCore {
             enabledRecipes.add(new RecipeThermalExpansion());
             if(manager.getPowerSystemByName(PowerRedstoneFlux.id) == null) {
                 manager.registerPowerSystem(new PowerRedstoneFlux());
+            }
+        }
+        if(Loader.isModLoaded("gregtech")){
+            ModContainer modContainer = Loader.instance().getIndexedModList().get("gregtech");
+            // "MC1710" = GT5 reboot.
+            // "GT6-MC1710" = GT6
+            if("MC1710".equals(modContainer.getVersion())) {
+                enabledRecipes.add(new RecipeGregTech5());
+                if (manager.getPowerSystemByName(PowerGregTech5.id) == null) {
+                    manager.registerPowerSystem(new PowerGregTech5());
+                }
             }
         }
         if(Loader.isModLoaded("MFFS")){
