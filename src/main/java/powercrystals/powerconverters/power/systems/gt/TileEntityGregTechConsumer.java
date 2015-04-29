@@ -56,7 +56,7 @@ public class TileEntityGregTechConsumer extends BaseGTConsumerTileEntity<IEnergy
            		_euLastTick = 0;
            	}
            	
-           	if(needsBlockUpdate == true) {
+           	if(needsBlockUpdate) {
 				
            		// GT's TE caches which surrounding TE's are present
 				// so this is required, otherwise a Consumer placed next to
@@ -124,7 +124,7 @@ public class TileEntityGregTechConsumer extends BaseGTConsumerTileEntity<IEnergy
     	double dInternalFactor = getPowerSystem().getInternalEnergyPerInput(0);
     	double dEU = (double)aVoltage;
     	double dAmperage = (double)aAmperage;
-		long usedAmps = 0;
+		long usedAmps;
 
 		if(aVoltage > maxSafeVoltage){
 			onOvervoltage();

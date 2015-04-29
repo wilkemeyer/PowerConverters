@@ -84,7 +84,7 @@ public class TileEntityGregTechProducer extends BaseGTProducerTileEntity<IEnergy
         super.updateEntity();
         
         if(!worldObj.isRemote){
-           	if(needsBlockUpdate == true) {
+           	if(needsBlockUpdate) {
 				
            		// GT's TE caches which surrounding TE's are present
 				for (ForgeDirection d : ForgeDirection.VALID_DIRECTIONS) {
