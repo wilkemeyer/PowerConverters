@@ -33,7 +33,8 @@ public class TileEntitySteamConsumer extends TileEntityEnergyConsumer<IFluidHand
     public void updateEntity() {
         super.updateEntity();
 
-        if(_steamTank.getFluid() != null && _steamTank.getFluid().getFluid() != null &&
+        boolean powered = getWorldObj().getStrongestIndirectPower(xCoord, yCoord, zCoord) > 0;
+        if(!powered && _steamTank.getFluid() != null && _steamTank.getFluid().getFluid() != null &&
                 _steamTank.getFluid().getFluid().getName() != null) {
             String fluidName = _steamTank.getFluid().getFluid().getName();
             PowerSteam.SteamType steamType = powerSteam.getSteamType(fluidName);

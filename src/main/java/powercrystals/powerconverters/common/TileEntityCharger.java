@@ -39,13 +39,16 @@ public class TileEntityCharger extends TileEntityEnergyProducer<IInventory> {
     public double produceEnergy(double energy) {
         if (energy == 0)
             return 0;
-
         int energyRemaining = (int) energy;
-        if (_player != null)
-            energyRemaining = chargeInventory(_player.inventory, energyRemaining);
 
-        for (IInventory inv : getTiles().values())
-            energyRemaining = chargeInventory(inv, energyRemaining);
+        boolean powered = getWorldObj().getBlockPowerInput(xCoord, yCoord, zCoord) > 0;
+        if(!powered) {
+            if (_player != null)
+                energyRemaining = chargeInventory(_player.inventory, energyRemaining);
+
+            for (IInventory inv : getTiles().values())
+                energyRemaining = chargeInventory(inv, energyRemaining);
+        }
 
         return energyRemaining;
     }

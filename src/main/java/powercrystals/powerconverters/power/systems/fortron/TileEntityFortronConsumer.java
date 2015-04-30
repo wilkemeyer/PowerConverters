@@ -24,7 +24,11 @@ public class TileEntityFortronConsumer extends TileEntityEnergyConsumer<IFortron
         if(worldObj.isRemote) {
         	return;
         }
-        
+        boolean powered = getWorldObj().getBlockPowerInput(xCoord, yCoord, zCoord) > 0;
+        if(powered) {
+            return;
+        }
+
         //
         double perInput = getPowerSystem().getInternalEnergyPerInput(0);
 		int demand = getTotalEnergyDemand();
@@ -38,7 +42,7 @@ public class TileEntityFortronConsumer extends TileEntityEnergyConsumer<IFortron
 		int fortronReceived;
 		
 		for (Entry<ForgeDirection, IFortronStorage> it : this.getTiles().entrySet()) {		
-			IFortronStorage fs = (IFortronStorage)it.getValue();
+			IFortronStorage fs = it.getValue();
 			
 			fortronReceived = fs.requestFortron(totalFortronDemand, true);
 					

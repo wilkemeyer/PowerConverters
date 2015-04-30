@@ -91,18 +91,24 @@ public class TileEntityIndustrialCraftProducer extends TileEntityEnergyProducer<
     @Override
     public double getOfferedEnergy() {
         double eu = 0D;
-        for (TileEntityEnergyBridge bridge : getBridges().values())
-            eu += bridge.getEnergyStored();
+        boolean powered = getWorldObj().getBlockPowerInput(xCoord, yCoord, zCoord) > 0;
+        if(!powered) {
+            for (TileEntityEnergyBridge bridge : getBridges().values())
+                eu += bridge.getEnergyStored();
+        }
         return Math.min(maxSendEnergy, eu / getPowerSystem().getInternalEnergyPerOutput(0));
     }
 
     @Override
     public void drawEnergy(double amount) {
         double drawn = 0D;
-        for (Map.Entry<ForgeDirection, TileEntityEnergyBridge> bridge : getBridges().entrySet()) {
-            drawn += bridge.getValue().useEnergy(amount * getPowerSystem().getInternalEnergyPerOutput(0), false) / getPowerSystem().getInternalEnergyPerOutput(0);
-            if (drawn >= amount)
-                break;
+        boolean powered = getWorldObj().getBlockPowerInput(xCoord, yCoord, zCoord) > 0;
+        if(!powered) {
+            for (Map.Entry<ForgeDirection, TileEntityEnergyBridge> bridge : getBridges().entrySet()) {
+                drawn += bridge.getValue().useEnergy(amount * getPowerSystem().getInternalEnergyPerOutput(0), false) / getPowerSystem().getInternalEnergyPerOutput(0);
+                if (drawn >= amount)
+                    break;
+            }
         }
         lastSentEnergy = drawn;
     }

@@ -30,7 +30,8 @@ public class TileEntitySteamProducer extends TileEntityEnergyProducer<IFluidHand
 
     @Override
     public double produceEnergy(double energy) {
-        if (steamId < 0 || powerSteam.getInternalEnergyPerOutput(steamId + 1) == 0) {
+        boolean powered = getWorldObj().getStrongestIndirectPower(xCoord, yCoord, zCoord) > 0;
+        if (powered || steamId < 0 || powerSteam.getInternalEnergyPerOutput(steamId + 1) == 0) {
             return energy;
         }
         energy = energy / powerSteam.getInternalEnergyPerOutput(steamId + 1);

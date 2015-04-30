@@ -24,15 +24,18 @@ public class TileEntityFactorizationProducer extends TileEntityEnergyProducer<IC
     @Override
     public double produceEnergy(double energy) {
         double CG = energy / getPowerSystem().getInternalEnergyPerOutput(0);
-        for (Entry<ForgeDirection, IChargeConductor> output : this.getTiles().entrySet()) {
-            IChargeConductor o = output.getValue();
-            if (o != null) {
-                if (o.getCharge().getValue() < _maxCG) {
-                    int store = (int) Math.min(_maxCG - o.getCharge().getValue(), CG);
-                    o.getCharge().addValue(store);
-                    CG -= store;
-                    if (CG <= 0) {
-                        break;
+        boolean powered = getWorldObj().getBlockPowerInput(xCoord, yCoord, zCoord) > 0;
+        if(!powered) {
+            for (Entry<ForgeDirection, IChargeConductor> output : this.getTiles().entrySet()) {
+                IChargeConductor o = output.getValue();
+                if (o != null) {
+                    if (o.getCharge().getValue() < _maxCG) {
+                        int store = (int) Math.min(_maxCG - o.getCharge().getValue(), CG);
+                        o.getCharge().addValue(store);
+                        CG -= store;
+                        if (CG <= 0) {
+                            break;
+                        }
                     }
                 }
             }

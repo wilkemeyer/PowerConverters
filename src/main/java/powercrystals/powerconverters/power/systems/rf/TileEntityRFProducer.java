@@ -27,8 +27,9 @@ public class TileEntityRFProducer extends TileEntityEnergyProducer<IEnergyConnec
     public double produceEnergy(double energy) {
     	final double tmpEnergyPerOutput = getPowerSystem().getInternalEnergyPerOutput(0);
         final double energyToUse = energy / tmpEnergyPerOutput;
+        boolean powered = getWorldObj().getBlockPowerInput(xCoord, yCoord, zCoord) > 0;
 
-        if (energyToUse > 0) {
+        if (!powered && energyToUse > 0) {
             List<BlockPosition> positions = new BlockPosition(xCoord, yCoord, zCoord).getAdjacent(true);
             
             for (BlockPosition p : positions) {

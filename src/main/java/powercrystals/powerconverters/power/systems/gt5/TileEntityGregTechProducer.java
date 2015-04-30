@@ -127,11 +127,12 @@ public class TileEntityGregTechProducer extends BaseGTProducerTileEntity<IEnergy
 
     @Override
     public double produceEnergy(double energy) {
+        boolean powered = getWorldObj().getBlockPowerInput(xCoord, yCoord, zCoord) > 0;
     	double EU = energy / getPowerSystem().getInternalEnergyPerOutput(0);
 		long lEU = (long)EU;
 		long usedEU = 0;
 				
-		if(lEU >= voltage) { // enough energy avail. to output at least 1A
+		if(!powered && lEU >= voltage) { // enough energy avail. to output at least 1A
 			long ampsLeft = lEU / voltage; 
 			
 			for (Entry<ForgeDirection, IEnergyConnected> it : this.getTiles().entrySet()) {
