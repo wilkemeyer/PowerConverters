@@ -8,6 +8,7 @@ Fixes:
 Changes:
 * Re-add gregtech back in for Gregtech 5 port.
 * Energy bridge '% chg' tooltip shows the type of steam stored.
+* Producers and consumers will not transfer any energy when provided with a redstone signal.
 
 3.1.1
 -----
