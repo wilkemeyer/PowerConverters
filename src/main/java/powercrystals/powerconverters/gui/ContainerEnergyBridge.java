@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ContainerEnergyBridge extends Container {
-    private static enum _sideData {
+    private enum _sideData {
         VOLTAGE_INDEX,
         IS_CONSUMER,
         IS_PRODUCER,
@@ -34,7 +34,7 @@ public class ContainerEnergyBridge extends Container {
 
     private static final int _flagOffset = 1000;
 
-    private static enum _otherData {
+    private enum _otherData {
         INPUT_LIMITED(1000),
         /*
          * Ints are broken up into shorts (see ICrafting)
