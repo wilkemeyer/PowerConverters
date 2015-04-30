@@ -64,6 +64,7 @@ public class PowerSteam extends PowerSystem {
 
     @Override
     public void readEnergyValues(NBTTagCompound nbt) {
+        serverSteamTypes.clear();
         serverSteamTypeNames.clear();
         NBTTagList types = nbt.getTagList("steamTypes", Constants.NBT.TAG_COMPOUND);
         for(int i = 0; i < types.tagCount(); i++) {
