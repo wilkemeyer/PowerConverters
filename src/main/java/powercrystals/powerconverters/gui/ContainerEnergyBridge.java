@@ -7,6 +7,7 @@ import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.util.ForgeDirection;
+import powercrystals.powerconverters.PowerConverterCore;
 import powercrystals.powerconverters.common.BridgeSideData;
 import powercrystals.powerconverters.common.TileEntityEnergyBridge;
 import powercrystals.powerconverters.power.PowerSystemManager;
@@ -91,7 +92,12 @@ public class ContainerEnergyBridge extends Container {
                     sideData.isProducer = (value != 0);
                     break;
                 case POWER_SYSTEM_ID:
-                    sideData.powerSystem = PowerSystemManager.getInstance().getPowerSystemById(value);
+                    try {
+                        sideData.powerSystem = PowerSystemManager.getInstance().getPowerSystemById(value);
+                    }
+                    catch (ArrayIndexOutOfBoundsException e) {
+                        PowerConverterCore.instance.logger.warn("Got invalid PowerSystem ID: %d", value);
+                    }
                     break;
                 case IS_CONNECTED:
                     sideData.isConnected = (value != 0);

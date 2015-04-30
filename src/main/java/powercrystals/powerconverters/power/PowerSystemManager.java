@@ -37,6 +37,8 @@ public class PowerSystemManager {
     }
 
     public void readPowerData(NBTTagCompound nbt) {
+        // Ensure system ids don't double up when reading. (i.e. multiple connects)
+        serverSystemIds.clear();
         NBTTagList ids = nbt.getTagList("systemIds", Constants.NBT.TAG_STRING);
         for(int i = 0; i < ids.tagCount(); i++) {
             serverSystemIds.add(ids.getStringTagAt(i));

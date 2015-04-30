@@ -9,6 +9,7 @@ import cpw.mods.fml.common.ModContainer;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
@@ -217,6 +218,15 @@ public final class PowerConverterCore {
         	}
         }
         
+    }
+
+    @SuppressWarnings("unused")
+    @EventHandler
+    public void serverStarted(FMLServerStartingEvent event) {
+        if(event.getSide().isServer()) {
+            logger.debug("Server: initialising powersystem data.");
+            PowerSystemManager.getInstance().setServerSystemIds();
+        }
     }
 
     @SuppressWarnings("unused")
