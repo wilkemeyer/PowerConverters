@@ -14,6 +14,7 @@ import powercrystals.powerconverters.power.systems.steam.TileEntitySteamProducer
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
@@ -78,7 +79,7 @@ public class PowerSteam extends PowerSystem {
             serverSteamTypes.put(newSteam.name, newSteam);
             serverSteamTypeNames.add(newSteam.name);
         }
-        serverSteamTypeNames.sort(String.CASE_INSENSITIVE_ORDER);
+        Collections.sort(serverSteamTypeNames, String.CASE_INSENSITIVE_ORDER);
     }
 
     @Override
@@ -113,8 +114,6 @@ public class PowerSteam extends PowerSystem {
     }
 
     public int getSteamSubtype(SteamType steamType) {
-        List<String> steamNames = Arrays.asList(serverSteamTypes.keySet().toArray(new String[serverSteamTypes.size()]));
-        steamNames.sort(String.CASE_INSENSITIVE_ORDER);
         return serverSteamTypeNames.indexOf(steamType.name);
     }
 
