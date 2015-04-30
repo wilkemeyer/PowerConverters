@@ -7,6 +7,7 @@ Fixes:
 * Fix crashes on opening GUI in SMP.
 Changes:
 * Re-add gregtech back in for Gregtech 5 port.
+* Energy bridge '% chg' tooltip shows the type of steam stored.
 
 3.1.1
 -----
