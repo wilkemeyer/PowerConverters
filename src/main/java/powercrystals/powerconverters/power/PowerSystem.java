@@ -52,6 +52,11 @@ public abstract class PowerSystem {
     }
 
     public String getUnit() {
+        return getUnit(-1);
+    }
+
+    @SuppressWarnings("UnusedParameters")
+    public String getUnit(int subtype) {
         return _unit;
     }
 
@@ -71,15 +76,15 @@ public abstract class PowerSystem {
 		
 		if(rate > 1000000) {	// mega
 			double rateMillion = (rate / 1000000);
-			return String.format("%.1f %s%s", rateMillion, "m", this.getUnit());
+			return String.format("%.1f %s%s/t", rateMillion, "m", this.getUnit());
 			
 		} else if (rate > 1000) {	// kilo
 			double rateThousand = (rate / 1000.0);
-			return String.format("%.1f %s%s", rateThousand, "k", this.getUnit());
+			return String.format("%.1f %s%s/t", rateThousand, "k", this.getUnit());
 			
 		}
 		
-		return rate + " " + this.getUnit();
+		return rate + " " + this.getUnit() + "/t";
 	}
 
 }

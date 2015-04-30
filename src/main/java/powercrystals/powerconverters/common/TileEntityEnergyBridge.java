@@ -170,6 +170,7 @@ public class TileEntityEnergyBridge extends TileEntity implements INeighboorUpda
                 }
                 TileEntityBridgeComponent<?> c = (TileEntityBridgeComponent<?>) te;
                 d.powerSystem = c.getPowerSystem();
+                d.subtype = c.getSubtype();
                 d.isConnected = c.isConnected();
                 d.side = dir;
                 d.voltageNameIndex = c.getVoltageIndex();

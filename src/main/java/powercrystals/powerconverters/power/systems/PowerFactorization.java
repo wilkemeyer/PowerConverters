@@ -23,7 +23,7 @@ public class PowerFactorization extends PowerSystem {
         name = "Factorization";
         _internalEnergyPerInput = DEFAULT_ENERGY_PER_INPUT;
         _internalEnergyPerOutput = DEFAULT_ENERGY_PER_OUTPUT;
-        _unit = "CG/t";
+        _unit = "CG";
 
         block = new BlockFactorization();
         itemBlock = ItemBlockFactorization.class;

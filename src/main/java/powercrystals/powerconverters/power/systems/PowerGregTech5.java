@@ -27,7 +27,7 @@ public class PowerGregTech5 extends PowerSystem {
         name = "GregTech";
         _internalEnergyPerInput = DEFAULT_ENERGY_PER_INPUT;
         _internalEnergyPerOutput = DEFAULT_ENERGY_PER_OUTPUT;
-        _unit = "EU/t";
+        _unit = "EU";
         voltageNames = VOLTAGE_NAMES;
         voltageValues = VOLTAGE_VALUES;
 

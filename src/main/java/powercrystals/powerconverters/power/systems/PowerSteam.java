@@ -12,6 +12,7 @@ import powercrystals.powerconverters.power.systems.steam.ItemBlockSteam;
 import powercrystals.powerconverters.power.systems.steam.TileEntitySteamConsumer;
 import powercrystals.powerconverters.power.systems.steam.TileEntitySteamProducer;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -25,6 +26,7 @@ public class PowerSteam extends PowerSystem {
 
     private HashMap<String, SteamType> steamTypes = new HashMap<String, SteamType>();
     private HashMap<String, SteamType> serverSteamTypes = new HashMap<String, SteamType>();
+    private List<String> serverSteamTypeNames = new ArrayList<String>();
     public class SteamType {
         public String name;
         public String displayName;
@@ -52,7 +54,7 @@ public class PowerSteam extends PowerSystem {
 
     public PowerSteam() {
         name = "Steam";
-        _unit = "mB/t";
+        _unit = "mB";
 
         block = new BlockSteam();
         itemBlock = ItemBlockSteam.class;
@@ -62,6 +64,7 @@ public class PowerSteam extends PowerSystem {
 
     @Override
     public void readEnergyValues(NBTTagCompound nbt) {
+        serverSteamTypeNames.clear();
         NBTTagList types = nbt.getTagList("steamTypes", Constants.NBT.TAG_COMPOUND);
         for(int i = 0; i < types.tagCount(); i++) {
             NBTTagCompound type = types.getCompoundTagAt(i);
@@ -72,7 +75,9 @@ public class PowerSteam extends PowerSystem {
                     type.getFloat("Output")
             );
             serverSteamTypes.put(newSteam.name, newSteam);
+            serverSteamTypeNames.add(newSteam.name);
         }
+        serverSteamTypeNames.sort(String.CASE_INSENSITIVE_ORDER);
     }
 
     @Override
@@ -103,9 +108,13 @@ public class PowerSteam extends PowerSystem {
     }
 
     public SteamType getSteamType(int index) {
-        String[] steamNames = serverSteamTypes.keySet().toArray(new String[serverSteamTypes.size()]);
-        Arrays.sort(steamNames);
-        return index < steamNames.length ? serverSteamTypes.get(steamNames[index]) : null;
+        return index < serverSteamTypeNames.size() ? serverSteamTypes.get(serverSteamTypeNames.get(index)) : null;
+    }
+
+    public int getSteamSubtype(SteamType steamType) {
+        List<String> steamNames = Arrays.asList(serverSteamTypes.keySet().toArray(new String[serverSteamTypes.size()]));
+        steamNames.sort(String.CASE_INSENSITIVE_ORDER);
+        return serverSteamTypeNames.indexOf(steamType.name);
     }
 
     @Override
@@ -121,6 +130,15 @@ public class PowerSteam extends PowerSystem {
 
         SteamType type = getSteamType(meta - 1);
         return type == null ? 0 : type.energyPerOutput;
+    }
+
+    public String getUnit(int subtype) {
+        if(subtype == -1) {
+            return super.getUnit(subtype);
+        }
+        else {
+            return String.format("%s (%s)", super.getUnit(subtype), getSteamType(subtype).displayName);
+        }
     }
 
     public int getSteamTypeCount() {
@@ -140,11 +158,10 @@ public class PowerSteam extends PowerSystem {
 
     @Override
     public void registerCommonRecipes() {
-        Set<String> steamNames = steamTypes.keySet();
-        for(int i = 0; i < steamNames.size(); i++) {
+        for(int i = 0; i < serverSteamTypeNames.size(); i++) {
             GameRegistry.addShapelessRecipe(new ItemStack(block, 1, i), new ItemStack(block, 1, i + 1));
         }
-        GameRegistry.addShapelessRecipe(new ItemStack(block, 1, steamNames.size()), new ItemStack(block, 1, 0));
+        GameRegistry.addShapelessRecipe(new ItemStack(block, 1, serverSteamTypeNames.size()), new ItemStack(block, 1, 0));
     }
 
     @Override

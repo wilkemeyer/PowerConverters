@@ -87,6 +87,12 @@ public class TileEntitySteamProducer extends TileEntityEnergyProducer<IFluidHand
     }
 
     @Override
+    public int getSubtype() {
+        PowerSteam.SteamType type = powerSteam.getSteamType(steamId);
+        return powerSteam.getSteamSubtype(type);
+    }
+
+    @Override
     @Optional.Method(modid = ModIDReference.BUILDCRAFT)
     public ConnectOverride overridePipeConnection(IPipeTile.PipeType pipeType, ForgeDirection direction) {
         if (pipeType == IPipeTile.PipeType.FLUID)

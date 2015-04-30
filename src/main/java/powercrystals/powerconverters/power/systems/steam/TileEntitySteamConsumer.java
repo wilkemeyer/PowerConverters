@@ -21,6 +21,7 @@ public class TileEntitySteamConsumer extends TileEntityEnergyConsumer<IFluidHand
     private FluidTank _steamTank;
     private int _mBLastTick;
     PowerSteam powerSteam;
+    private int lastSubtype = -1;
 
     public TileEntitySteamConsumer() {
         super(PowerSystemManager.getInstance().getPowerSystemByName(PowerSteam.id), 0, IFluidHandler.class);
@@ -37,10 +38,11 @@ public class TileEntitySteamConsumer extends TileEntityEnergyConsumer<IFluidHand
             String fluidName = _steamTank.getFluid().getFluid().getName();
             PowerSteam.SteamType steamType = powerSteam.getSteamType(fluidName);
             if (steamType != null && _steamTank.getFluidAmount() > 0) {
+                lastSubtype = powerSteam.getSteamSubtype(steamType);
                 int amount = Math.min(_steamTank.getFluidAmount(), powerSteam.getThrottleConsumer());
                 float energy = amount * steamType.energyPerInput;
                 energy = (int) storeEnergy(energy, false);
-                int toDrain = 0;
+                int toDrain;
                 try {
                     toDrain = (int) (amount - (energy / powerSteam.getInternalEnergyPerInput(this.blockMetadata)));
                 }
@@ -97,6 +99,11 @@ public class TileEntitySteamConsumer extends TileEntityEnergyConsumer<IFluidHand
     @Override
     public double getInputRate() {
         return _mBLastTick;
+    }
+
+    @Override
+    public int getSubtype() {
+        return lastSubtype;
     }
 
     @Override
