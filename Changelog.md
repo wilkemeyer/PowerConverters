@@ -3,6 +3,8 @@ Changelog
 
 3.2.0
 -----
+Fixes:
+* Fix crashes on opening GUI in SMP.
 Changes:
 * Re-add gregtech back in for Gregtech 5 port.
 
