@@ -21,7 +21,7 @@ powerconverters.bc.consumer.name=Потребитель MJ
 powerconverters.bc.producer.name=Производитель MJ
 
 powerconverters.steam.consumer.name=Потребитель пара
-powerconverters.steam.producer.name=Производитель пара
+powerconverters.steam.producer.name=Производитель пара (%s)
 
 powerconverters.factorization.consumer.name=Потребитель энергии Factorization
 powerconverters.factorization.producer.name=Производитель энергии Factorization
@@ -41,3 +41,26 @@ powerconverters.ic2.hv.producer.name=Производитель EU ВН
 powerconverters.ic2.ev.producer.name=Производитель EU СВН
 powerconverters.ic2.uv.producer.name=Производитель EU УН
 
+powerconverters.gt.ulv.consumer.name=Потребитель GT ОНН
+powerconverters.gt.lv.consumer.name=Потребитель GT НН
+powerconverters.gt.mv.consumer.name=Потребитель GT СН
+powerconverters.gt.hv.consumer.name=Потребитель GT ВН
+powerconverters.gt.ev.consumer.name=Потребитель GT СВН
+powerconverters.gt.iv.consumer.name=Потребитель GT IV
+powerconverters.gt.luv.consumer.name=Потребитель GT LuV
+powerconverters.gt.zpm.consumer.name=Потребитель GT ZPM
+powerconverters.gt.uv.consumer.name=Потребитель GT УН
+
+powerconverters.gt.ulv.producer.name=Производитель GT ОНН
+powerconverters.gt.lv.producer.name=Производитель GT НН
+powerconverters.gt.mv.producer.name=Производитель GT СН
+powerconverters.gt.hv.producer.name=Производитель GT ВН
+powerconverters.gt.ev.producer.name=Производитель GT СВН
+powerconverters.gt.iv.producer.name=Производитель GT IV
+powerconverters.gt.luv.producer.name=Производитель GT LuV
+powerconverters.gt.zpm.producer.name=Производитель GT ZPM
+powerconverters.gt.uv.producer.name=Производитель GT УН
+powerconverters.gt.producer.amperageChanged=Выходная сила тока изменена на %1$s ампер
+
+powerconverters.mffs.producer.name=Производитель фортрона MFFS
+powerconverters.mffs.consumer.name=Потребитель фортрона MFFS
