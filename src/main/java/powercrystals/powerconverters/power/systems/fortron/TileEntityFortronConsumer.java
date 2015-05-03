@@ -24,7 +24,7 @@ public class TileEntityFortronConsumer extends TileEntityEnergyConsumer<IFortron
         if(worldObj.isRemote) {
         	return;
         }
-        boolean powered = getWorldObj().getBlockPowerInput(xCoord, yCoord, zCoord) > 0;
+        boolean powered = getWorldObj().getStrongestIndirectPower(xCoord, yCoord, zCoord) > 0;
         if(powered) {
             return;
         }

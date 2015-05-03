@@ -127,7 +127,7 @@ public class TileEntityGregTechProducer extends BaseGTProducerTileEntity<IEnergy
 
     @Override
     public double produceEnergy(double energy) {
-        boolean powered = getWorldObj().getBlockPowerInput(xCoord, yCoord, zCoord) > 0;
+        boolean powered = getWorldObj().getStrongestIndirectPower(xCoord, yCoord, zCoord) > 0;
     	double EU = energy / getPowerSystem().getInternalEnergyPerOutput(0);
 		long lEU = (long)EU;
 		long usedEU = 0;

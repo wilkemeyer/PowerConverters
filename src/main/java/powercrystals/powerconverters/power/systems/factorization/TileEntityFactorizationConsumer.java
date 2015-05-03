@@ -28,7 +28,7 @@ public class TileEntityFactorizationConsumer extends TileEntityEnergyConsumer<IC
             return;
         }
 
-        boolean powered = getWorldObj().getBlockPowerInput(xCoord, yCoord, zCoord) > 0;
+        boolean powered = getWorldObj().getStrongestIndirectPower(xCoord, yCoord, zCoord) > 0;
         if(!powered) {
             if (this._charge.getValue() < _maxCG) {
                 this._charge.update();

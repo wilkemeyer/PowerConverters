@@ -33,7 +33,7 @@ public class TileEntityRFConsumer extends TileEntityEnergyConsumer<IEnergyConnec
 
     @Override
     public int receiveEnergy(ForgeDirection from, int maxReceive, boolean simulate) {
-        boolean powered = getWorldObj().getBlockPowerInput(xCoord, yCoord, zCoord) > 0;
+        boolean powered = getWorldObj().getStrongestIndirectPower(xCoord, yCoord, zCoord) > 0;
         int received = 0;
         if(!powered) {
             TileEntityEnergyBridge bridge = getFirstBridge();

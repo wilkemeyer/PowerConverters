@@ -20,7 +20,7 @@ public class TileEntityFortronProducer extends TileEntityEnergyProducer<IFortron
     @Override
     public double produceEnergy(double energy) {
         final double energyToUse = energy / getPowerSystem().getInternalEnergyPerOutput(0);
-        boolean powered = getWorldObj().getBlockPowerInput(xCoord, yCoord, zCoord) > 0;
+        boolean powered = getWorldObj().getStrongestIndirectPower(xCoord, yCoord, zCoord) > 0;
 
         if (!powered && energyToUse > 0) {
         	for (Entry<ForgeDirection, IFortronStorage> it : this.getTiles().entrySet()) {

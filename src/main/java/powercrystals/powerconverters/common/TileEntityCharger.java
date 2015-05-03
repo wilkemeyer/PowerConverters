@@ -41,7 +41,7 @@ public class TileEntityCharger extends TileEntityEnergyProducer<IInventory> {
             return 0;
         int energyRemaining = (int) energy;
 
-        boolean powered = getWorldObj().getBlockPowerInput(xCoord, yCoord, zCoord) > 0;
+        boolean powered = getWorldObj().getStrongestIndirectPower(xCoord, yCoord, zCoord) > 0;
         if(!powered) {
             if (_player != null)
                 energyRemaining = chargeInventory(_player.inventory, energyRemaining);

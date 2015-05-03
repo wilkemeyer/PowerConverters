@@ -24,7 +24,7 @@ public class TileEntityFactorizationProducer extends TileEntityEnergyProducer<IC
     @Override
     public double produceEnergy(double energy) {
         double CG = energy / getPowerSystem().getInternalEnergyPerOutput(0);
-        boolean powered = getWorldObj().getBlockPowerInput(xCoord, yCoord, zCoord) > 0;
+        boolean powered = getWorldObj().getStrongestIndirectPower(xCoord, yCoord, zCoord) > 0;
         if(!powered) {
             for (Entry<ForgeDirection, IChargeConductor> output : this.getTiles().entrySet()) {
                 IChargeConductor o = output.getValue();

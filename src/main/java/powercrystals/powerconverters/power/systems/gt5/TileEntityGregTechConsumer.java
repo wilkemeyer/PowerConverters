@@ -119,7 +119,7 @@ public class TileEntityGregTechConsumer extends BaseGTConsumerTileEntity<IEnergy
     	double dEU = (double)aVoltage;
     	double dAmperage = (double)aAmperage;
 		long usedAmps;
-		boolean powered = getWorldObj().getBlockPowerInput(xCoord, yCoord, zCoord) > 0;
+		boolean powered = getWorldObj().getStrongestIndirectPower(xCoord, yCoord, zCoord) > 0;
 		if(powered) {
 			return 0;
 		}
