@@ -4,7 +4,9 @@ Changelog
 3.2.1
 -----
 Changes:
-*
+* Change how redstone detection works. Hopefully it makes it work better.
+Fixes:
+* Fix IC2 consumers not working.
 
 3.2.0
 -----
