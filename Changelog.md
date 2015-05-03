@@ -1,6 +1,11 @@
 Changelog
 =========
 
+3.2.2
+-----
+Changes:
+*
+
 3.2.1
 -----
 Changes:
