@@ -3,8 +3,11 @@ Changelog
 
 3.2.2
 -----
-Changes:
-*
+Fixes:
+* Fix ratios for RF, ic2steam and ic2superheated steam.
+* Fix display of steam amount.
+
+To use new ratios, please delete the powerconverters/common.cfg config file.
 
 3.2.1
 -----
