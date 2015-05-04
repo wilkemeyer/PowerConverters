@@ -179,8 +179,8 @@ public final class PowerConverterCore {
             if(manager.getPowerSystemByName(PowerSteam.id) == null) {
                 manager.registerPowerSystem(new PowerSteam());
             }
-            ((PowerSteam)manager.getPowerSystemByName(PowerSteam.id)).addSteamType("ic2steam", "IC2 Steam", 500, 500);
-            ((PowerSteam)manager.getPowerSystemByName(PowerSteam.id)).addSteamType("ic2superheatedsteam", "IC2 Superheated Steam", 500, 500);
+            ((PowerSteam)manager.getPowerSystemByName(PowerSteam.id)).addSteamType("ic2steam", "IC2 Steam", 4000, 4000);
+            ((PowerSteam)manager.getPowerSystemByName(PowerSteam.id)).addSteamType("ic2superheatedsteam", "IC2 Superheated Steam", 8000, 8000);
         }
         if(Loader.isModLoaded("Railcraft")) {
             enabledRecipes.add(new RecipeRailcraft());
