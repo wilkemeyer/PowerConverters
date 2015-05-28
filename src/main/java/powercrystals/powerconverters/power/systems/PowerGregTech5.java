@@ -1,12 +1,16 @@
 package powercrystals.powerconverters.power.systems;
 
 import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 import powercrystals.powerconverters.common.BridgeSideData;
 import powercrystals.powerconverters.power.PowerSystem;
-import powercrystals.powerconverters.power.systems.gt5.BlockGregTech;
-import powercrystals.powerconverters.power.systems.gt5.ItemBlockGregTech;
+import powercrystals.powerconverters.power.base.BlockPowerConverter;
+import powercrystals.powerconverters.power.systems.gt5.BlockGregTechConsumer;
+import powercrystals.powerconverters.power.systems.gt5.BlockGregTechProducer;
+import powercrystals.powerconverters.power.systems.gt5.ItemBlockGregTechConsumer;
+import powercrystals.powerconverters.power.systems.gt5.ItemBlockGregTechProducer;
 import powercrystals.powerconverters.power.systems.gt5.TileEntityGregTechConsumer;
 import powercrystals.powerconverters.power.systems.gt5.TileEntityGregTechProducer;
 
@@ -23,6 +27,9 @@ public class PowerGregTech5 extends PowerSystem {
     public static final String[] VOLTAGE_NAMES = new String[]{"ULV", "LV", "MV", "HV", "EV", "IV", "LuV", "ZPMV", "UV"};
     public static final int[] VOLTAGE_VALUES = new int[]{8, 32, 128, 512, 2048, 8192, 32768, 131072, 524288};
 
+    public BlockPowerConverter blockProducer, blockConsumer;
+    public Class<? extends ItemBlock> itemBlockProducer, itemBlockConsumer;
+
     public PowerGregTech5() {
         name = "GregTech";
         _internalEnergyPerInput = DEFAULT_ENERGY_PER_INPUT;
@@ -31,8 +38,13 @@ public class PowerGregTech5 extends PowerSystem {
         voltageNames = VOLTAGE_NAMES;
         voltageValues = VOLTAGE_VALUES;
 
-        block = new BlockGregTech();
-        itemBlock = ItemBlockGregTech.class;
+        blockConsumer = new BlockGregTechConsumer();
+        blockProducer = new BlockGregTechProducer();
+        itemBlockConsumer = ItemBlockGregTechConsumer.class;
+        itemBlockProducer = ItemBlockGregTechProducer.class;
+        block = blockConsumer;
+        itemBlock = itemBlockConsumer;
+
         consumer = TileEntityGregTechConsumer.class;
         producer = TileEntityGregTechProducer.class;
 
@@ -44,7 +56,8 @@ public class PowerGregTech5 extends PowerSystem {
     }
 
     public void registerBlocks() {
-        GameRegistry.registerBlock(block, itemBlock, "converter.gt");
+        GameRegistry.registerBlock(blockConsumer, itemBlockConsumer, "converter.gt.consumer");
+        GameRegistry.registerBlock(blockProducer, itemBlockProducer, "converter.gt.producer");
         GameRegistry.registerTileEntity(consumer, "powerConverterGTConsumer");
         GameRegistry.registerTileEntity(producer, "powerConverterGTProducer");
     }
@@ -52,32 +65,32 @@ public class PowerGregTech5 extends PowerSystem {
     @Override
     public void registerCommonRecipes() {
 		// ULV
-        GameRegistry.addShapelessRecipe(new ItemStack(block, 1, 1), new ItemStack(block, 1, 0)); 
-        GameRegistry.addShapelessRecipe(new ItemStack(block, 1, 0), new ItemStack(block, 1, 1)); 
+        GameRegistry.addShapelessRecipe(new ItemStack(blockConsumer, 1, 0), new ItemStack(blockProducer, 1, 0));
+        GameRegistry.addShapelessRecipe(new ItemStack(blockProducer, 1, 0), new ItemStack(blockConsumer, 1, 0));
         // LV
-        GameRegistry.addShapelessRecipe(new ItemStack(block, 1, 3), new ItemStack(block, 1, 2));
-        GameRegistry.addShapelessRecipe(new ItemStack(block, 1, 2), new ItemStack(block, 1, 3));
+        GameRegistry.addShapelessRecipe(new ItemStack(blockConsumer, 1, 1), new ItemStack(blockProducer, 1, 1));
+        GameRegistry.addShapelessRecipe(new ItemStack(blockProducer, 1, 1), new ItemStack(blockConsumer, 1, 1));
         // MV
-        GameRegistry.addShapelessRecipe(new ItemStack(block, 1, 5), new ItemStack(block, 1, 4));
-        GameRegistry.addShapelessRecipe(new ItemStack(block, 1, 4), new ItemStack(block, 1, 5));
+        GameRegistry.addShapelessRecipe(new ItemStack(blockConsumer, 1, 2), new ItemStack(blockProducer, 1, 2));
+        GameRegistry.addShapelessRecipe(new ItemStack(blockProducer, 1, 2), new ItemStack(blockConsumer, 1, 2));
         // HV
-        GameRegistry.addShapelessRecipe(new ItemStack(block, 1, 7), new ItemStack(block, 1, 6));
-        GameRegistry.addShapelessRecipe(new ItemStack(block, 1, 6), new ItemStack(block, 1, 7));
+        GameRegistry.addShapelessRecipe(new ItemStack(blockConsumer, 1, 3), new ItemStack(blockProducer, 1, 3));
+        GameRegistry.addShapelessRecipe(new ItemStack(blockProducer, 1, 3), new ItemStack(blockConsumer, 1, 3));
         // EV
-        GameRegistry.addShapelessRecipe(new ItemStack(block, 1, 9), new ItemStack(block, 1, 8));
-        GameRegistry.addShapelessRecipe(new ItemStack(block, 1, 8), new ItemStack(block, 1, 9));
-		// IV
-        GameRegistry.addShapelessRecipe(new ItemStack(block, 1, 11), new ItemStack(block, 1, 10));
-        GameRegistry.addShapelessRecipe(new ItemStack(block, 1, 10), new ItemStack(block, 1, 11));
-		// LuV
-        GameRegistry.addShapelessRecipe(new ItemStack(block, 1, 13), new ItemStack(block, 1, 12));
-        GameRegistry.addShapelessRecipe(new ItemStack(block, 1, 12), new ItemStack(block, 1, 13));
+        GameRegistry.addShapelessRecipe(new ItemStack(blockConsumer, 1, 4), new ItemStack(blockProducer, 1, 4));
+        GameRegistry.addShapelessRecipe(new ItemStack(blockProducer, 1, 4), new ItemStack(blockConsumer, 1, 4));
+        // IV
+        GameRegistry.addShapelessRecipe(new ItemStack(blockConsumer, 1, 5), new ItemStack(blockProducer, 1, 5));
+        GameRegistry.addShapelessRecipe(new ItemStack(blockProducer, 1, 5), new ItemStack(blockConsumer, 1, 5));
+        // LuV
+        GameRegistry.addShapelessRecipe(new ItemStack(blockConsumer, 1, 6), new ItemStack(blockProducer, 1, 6));
+        GameRegistry.addShapelessRecipe(new ItemStack(blockProducer, 1, 6), new ItemStack(blockConsumer, 1, 6));
         // ZPM
-        GameRegistry.addShapelessRecipe(new ItemStack(block, 1, 15), new ItemStack(block, 1, 14));
-        GameRegistry.addShapelessRecipe(new ItemStack(block, 1, 14), new ItemStack(block, 1, 15));
+        GameRegistry.addShapelessRecipe(new ItemStack(blockConsumer, 1, 7), new ItemStack(blockProducer, 1, 7));
+        GameRegistry.addShapelessRecipe(new ItemStack(blockProducer, 1, 7), new ItemStack(blockConsumer, 1, 7));
         // UV
-        GameRegistry.addShapelessRecipe(new ItemStack(block, 1, 17), new ItemStack(block, 1, 16));
-        GameRegistry.addShapelessRecipe(new ItemStack(block, 1, 16), new ItemStack(block, 1, 17));        
+        GameRegistry.addShapelessRecipe(new ItemStack(blockConsumer, 1, 8), new ItemStack(blockProducer, 1, 8));
+        GameRegistry.addShapelessRecipe(new ItemStack(blockProducer, 1, 8), new ItemStack(blockConsumer, 1, 8));
     }
 
     @Override
