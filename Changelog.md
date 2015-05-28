@@ -1,6 +1,11 @@
 Changelog
 =========
 
+3.3.0
+-----
+Changes:
+* Split gregtech producers and consumers into 2 block IDs. THIS WILL GET RID OFF ALL GREGTECH PRODUCERS AND CONSUMERS
+
 3.2.2
 -----
 Fixes:
