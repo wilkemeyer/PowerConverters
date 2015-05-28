@@ -22,6 +22,10 @@ public class TileEntitySteamProducer extends TileEntityEnergyProducer<IFluidHand
     PowerSteam powerSteam;
     int steamId;
 
+    public TileEntitySteamProducer() {
+        this(0);
+    }
+
     public TileEntitySteamProducer(int steamId) {
         super(PowerSystemManager.getInstance().getPowerSystemByName(PowerSteam.id), 0, IFluidHandler.class);
         powerSteam = (PowerSteam) PowerSystemManager.getInstance().getPowerSystemByName(PowerSteam.id);
@@ -90,7 +94,7 @@ public class TileEntitySteamProducer extends TileEntityEnergyProducer<IFluidHand
     @Override
     public int getSubtype() {
         PowerSteam.SteamType type = powerSteam.getSteamType(steamId);
-        return powerSteam.getSteamSubtype(type);
+        return type != null ? powerSteam.getSteamSubtype(type) : -1;
     }
 
     @Override
