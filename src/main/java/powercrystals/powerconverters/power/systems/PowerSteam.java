@@ -158,10 +158,10 @@ public class PowerSteam extends PowerSystem {
 
     @Override
     public void registerCommonRecipes() {
-        for(int i = 0; i < serverSteamTypeNames.size(); i++) {
+        for(int i = 0; i < steamTypes.size(); i++) {
             GameRegistry.addShapelessRecipe(new ItemStack(block, 1, i), new ItemStack(block, 1, i + 1));
         }
-        GameRegistry.addShapelessRecipe(new ItemStack(block, 1, serverSteamTypeNames.size()), new ItemStack(block, 1, 0));
+        GameRegistry.addShapelessRecipe(new ItemStack(block, 1, steamTypes.size()), new ItemStack(block, 1, 0));
     }
 
     @Override
