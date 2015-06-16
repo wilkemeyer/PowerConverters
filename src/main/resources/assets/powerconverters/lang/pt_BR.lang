@@ -48,7 +48,7 @@ powerconverters.gt.hv.consumer.name=Consumidor de GT HV
 powerconverters.gt.ev.consumer.name=Consumidor de GT EV
 powerconverters.gt.iv.consumer.name=Consumidor de GT IV
 powerconverters.gt.luv.consumer.name=Consumidor de GT LuV
-powerconverters.gt.zpm.consumer.name=Consumidor de GT ZPM
+powerconverters.gt.zpmv.consumer.name=Consumidor de GT ZPM
 powerconverters.gt.uv.consumer.name=Consumidor de GT UV
 
 powerconverters.gt.ulv.producer.name=Produtor de GT ULV
@@ -58,7 +58,7 @@ powerconverters.gt.hv.producer.name=Produtor de GT HV
 powerconverters.gt.ev.producer.name=Produtor de GT EV
 powerconverters.gt.iv.producer.name=Produtor de GT IV
 powerconverters.gt.luv.producer.name=Produtor de GT LuV
-powerconverters.gt.zpm.producer.name=Produtor de GT ZPM
+powerconverters.gt.zpmv.producer.name=Produtor de GT ZPM
 powerconverters.gt.uv.producer.name=Produtor de GT UV
 powerconverters.gt.producer.amperageChanged=Amperagem de Saída Alterada para %1$s Ampère
 

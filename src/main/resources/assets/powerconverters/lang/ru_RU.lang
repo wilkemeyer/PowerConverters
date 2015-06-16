@@ -48,7 +48,7 @@ powerconverters.gt.hv.consumer.name=Потребитель GT ВН
 powerconverters.gt.ev.consumer.name=Потребитель GT СВН
 powerconverters.gt.iv.consumer.name=Потребитель GT IV
 powerconverters.gt.luv.consumer.name=Потребитель GT LuV
-powerconverters.gt.zpm.consumer.name=Потребитель GT ZPM
+powerconverters.gt.zpmv.consumer.name=Потребитель GT ZPM
 powerconverters.gt.uv.consumer.name=Потребитель GT УН
 
 powerconverters.gt.ulv.producer.name=Производитель GT ОНН
@@ -58,7 +58,7 @@ powerconverters.gt.hv.producer.name=Производитель GT ВН
 powerconverters.gt.ev.producer.name=Производитель GT СВН
 powerconverters.gt.iv.producer.name=Производитель GT IV
 powerconverters.gt.luv.producer.name=Производитель GT LuV
-powerconverters.gt.zpm.producer.name=Производитель GT ZPM
+powerconverters.gt.zpmv.producer.name=Производитель GT ZPM
 powerconverters.gt.uv.producer.name=Производитель GT УН
 powerconverters.gt.producer.amperageChanged=Выходная сила тока изменена на %1$s ампер
 

@@ -29,7 +29,7 @@ public class ItemBlockGregTechConsumer extends ItemBlock {
     @Override
     public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4) {
         //noinspection unchecked
-        par3List.add(EnumChatFormatting.BLUE + (par1ItemStack.getItemDamage() % 2 == 0 ? "Max EU in: " : "Max EU out: ") + PowerGregTech5.VOLTAGE_VALUES[par1ItemStack.getItemDamage()/2]);
+        par3List.add(EnumChatFormatting.BLUE + "Max EU in: " + PowerGregTech5.VOLTAGE_VALUES[par1ItemStack.getItemDamage()]);
     }
 
     @Override
