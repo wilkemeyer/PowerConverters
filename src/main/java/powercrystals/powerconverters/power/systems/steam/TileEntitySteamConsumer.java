@@ -67,8 +67,24 @@ public class TileEntitySteamConsumer extends TileEntityEnergyConsumer<IFluidHand
 
     @Override
     public int fill(ForgeDirection from, FluidStack resource, boolean doFill) {
-        if (resource.getFluid().getName().equalsIgnoreCase("steam"))
-            return _steamTank.fill(resource, doFill);
+        if(resource == null || resource.getFluid() == null ) {
+            return 0;
+        }
+
+        if(_steamTank.getFluid() == null) {
+            // Tank is empty try to set type and fill it up.
+            PowerSteam.SteamType type = powerSteam.getSteamType(resource.getFluid().getName());
+            if(type != null) {
+                _steamTank.setFluid(resource);
+                return _steamTank.fill(resource, doFill);
+            }
+        }
+        else {
+            // Tank has fluid in in. Try to fill it up.
+            if(_steamTank.getFluid().getFluid().getName().equals(resource.getFluid().getName())) {
+                return _steamTank.fill(resource, doFill);
+            }
+        }
         return 0;
     }
 
