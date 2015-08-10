@@ -31,9 +31,16 @@ public class PowerSystemManager {
 
     public void setServerSystemIds() {
         serverSystemIds = systemIds;
+        for(PowerSystem powerSystem : powerSystems.values()) {
+            powerSystem.readEnergyValues(powerSystem.writeEnergyValues());
+        }
     }
+
     public void setServerSystemIds(ArrayList<String> ids) {
         serverSystemIds = ids;
+        for(PowerSystem powerSystem : powerSystems.values()) {
+            powerSystem.readEnergyValues(powerSystem.writeEnergyValues());
+        }
     }
 
     public void readPowerData(NBTTagCompound nbt) {
