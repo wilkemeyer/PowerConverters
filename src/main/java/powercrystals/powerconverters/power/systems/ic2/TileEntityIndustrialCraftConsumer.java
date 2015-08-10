@@ -35,7 +35,7 @@ public class TileEntityIndustrialCraftConsumer extends TileEntityEnergyConsumer<
             _isAddedToEnergyNet = true;
         }
 
-        if (worldObj.getWorldTime() - _lastTickInjected > 2) {
+        if (worldObj.getTotalWorldTime() - _lastTickInjected > 2) {
             _euLastTick = 0;
         }
     }
@@ -92,11 +92,11 @@ public class TileEntityIndustrialCraftConsumer extends TileEntityEnergyConsumer<
 
         double euThisInjection = (amount - euNotStored);
 
-        if (_lastTickInjected == worldObj.getWorldTime()) {
+        if (_lastTickInjected == worldObj.getTotalWorldTime()) {
             _euLastTick += euThisInjection;
         } else {
             _euLastTick = euThisInjection;
-            _lastTickInjected = worldObj.getWorldTime();
+            _lastTickInjected = worldObj.getTotalWorldTime();
         }
 
         return euNotStored;

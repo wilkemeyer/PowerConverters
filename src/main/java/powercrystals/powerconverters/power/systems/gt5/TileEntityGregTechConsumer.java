@@ -46,7 +46,7 @@ public class TileEntityGregTechConsumer extends BaseGTConsumerTileEntity<IEnergy
         
         if(!worldObj.isRemote){
         
-        	if (worldObj.getWorldTime() - _lastTickInjected > 2) {
+        	if (worldObj.getTotalWorldTime() - _lastTickInjected > 2) {
            		_euLastTick = 0;
            	}
            	
@@ -168,11 +168,11 @@ public class TileEntityGregTechConsumer extends BaseGTConsumerTileEntity<IEnergy
 	    
 	    
 	    // Update Stat Counters
-	    if (_lastTickInjected == worldObj.getWorldTime()) {
+	    if (_lastTickInjected == worldObj.getTotalWorldTime()) {
 	    	_euLastTick += dEU * usedAmps;
 	    } else {
 	    	_euLastTick = dEU * usedAmps;
-	    	_lastTickInjected = worldObj.getWorldTime();
+	    	_lastTickInjected = worldObj.getTotalWorldTime();
 	    }
 
 	    
