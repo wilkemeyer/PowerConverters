@@ -42,16 +42,21 @@ public class TileEntitySteamConsumer extends TileEntityEnergyConsumer<IFluidHand
                 lastSubtype = powerSteam.getSteamSubtype(steamType);
                 int amount = Math.min(_steamTank.getFluidAmount(), powerSteam.getThrottleConsumer());
                 float energy = amount * steamType.energyPerInput;
-                energy = (int) storeEnergy(energy, false);
-                int toDrain;
-                try {
-                    toDrain = (int) (amount - (energy / powerSteam.getInternalEnergyPerInput(this.blockMetadata)));
+                float energyLeft = (int) storeEnergy(energy, false);
+                float energyUsed = energy - energyLeft;
+                if(energyUsed > 0) {
+                    int toDrain;
+                    try {
+                        toDrain = (int) ((energyUsed / powerSteam.getInternalEnergyPerInput(this.blockMetadata)));
+                    } catch (ArithmeticException e) {
+                        toDrain = 0;
+                    }
+                    _steamTank.drain(toDrain, true);
+                    _mBLastTick = toDrain - _steamTank.getFluidAmount();
                 }
-                catch (ArithmeticException e) {
-                    toDrain = 0;
+                else {
+                    _mBLastTick = 0;
                 }
-                _steamTank.drain(toDrain, true);
-                _mBLastTick = toDrain;
             } else {
                 _mBLastTick = 0;
             }
@@ -75,7 +80,6 @@ public class TileEntitySteamConsumer extends TileEntityEnergyConsumer<IFluidHand
             // Tank is empty try to set type and fill it up.
             PowerSteam.SteamType type = powerSteam.getSteamType(resource.getFluid().getName());
             if(type != null) {
-                _steamTank.setFluid(resource);
                 return _steamTank.fill(resource, doFill);
             }
         }
