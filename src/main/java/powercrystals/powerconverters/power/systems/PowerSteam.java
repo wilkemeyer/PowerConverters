@@ -110,7 +110,7 @@ public class PowerSteam extends PowerSystem {
     }
 
     public SteamType getSteamType(int index) {
-        return index < serverSteamTypeNames.size() ? serverSteamTypes.get(serverSteamTypeNames.get(index)) : null;
+        return 0 <= index && index < serverSteamTypeNames.size() ? serverSteamTypes.get(serverSteamTypeNames.get(index)) : null;
     }
 
     public int getSteamSubtype(SteamType steamType) {
