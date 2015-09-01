@@ -32,7 +32,7 @@ public class RecipeGregTech5 extends RecipeProvider {
         		'P', "plateLead",
         		'B', ItemList.Battery_Buffer_1by1_ULV.get(1).copy()
         	}));
-        	GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(converterBlock, 1, 2), true, new Object[]{ // LV
+        	GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(converterBlock, 1, 1), true, new Object[]{ // LV
         		"CPC",
         		"PBP",
         		"CPC",
@@ -40,7 +40,7 @@ public class RecipeGregTech5 extends RecipeProvider {
         		'P', "plateTin",
         		'B', ItemList.Battery_Buffer_1by1_LV.get(1).copy()
         	}));
-        	GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(converterBlock, 1, 4), true, new Object[]{ // MV
+        	GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(converterBlock, 1, 2), true, new Object[]{ // MV
         		"CPC",
         		"PBP",
         		"CPC",
@@ -48,7 +48,7 @@ public class RecipeGregTech5 extends RecipeProvider {
         		'P', "plateCopper",
         		'B', ItemList.Battery_Buffer_1by1_MV.get(1).copy()
         	}));
-        	GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(converterBlock, 1, 6), true, new Object[]{ // HV
+        	GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(converterBlock, 1, 3), true, new Object[]{ // HV
         		"CPC",
         		"PBP",
         		"CPC",
@@ -56,7 +56,7 @@ public class RecipeGregTech5 extends RecipeProvider {
         		'P', "plateGold",
         		'B', ItemList.Battery_Buffer_1by1_HV.get(1).copy()
         	}));
-        	GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(converterBlock, 1, 8), true, new Object[]{ // EV
+        	GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(converterBlock, 1, 4), true, new Object[]{ // EV
         		"CPC",
         		"PBP",
         		"CPC",
@@ -64,7 +64,7 @@ public class RecipeGregTech5 extends RecipeProvider {
         		'P', "plateAluminium",
         		'B', ItemList.Battery_Buffer_1by1_EV.get(1).copy()
         	}));
-        	GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(converterBlock, 1, 10), true, new Object[]{ // IV
+        	GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(converterBlock, 1, 5), true, new Object[]{ // IV
         		"CPC",
         		"PBP",
         		"CPC",
@@ -72,7 +72,7 @@ public class RecipeGregTech5 extends RecipeProvider {
         		'P', "plateSteel",
         		'B', ItemList.Battery_Buffer_1by1_IV.get(1).copy()
         	}));
-        	GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(converterBlock, 1, 12), true, new Object[]{ // LuV
+        	GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(converterBlock, 1, 6), true, new Object[]{ // LuV
         		"CPC",
         		"PBP",
         		"CPC",
@@ -80,7 +80,7 @@ public class RecipeGregTech5 extends RecipeProvider {
         		'P', "plateTungsten",
         		'B', ItemList.Battery_Buffer_1by1_LuV.get(1).copy()
         	}));
-        	GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(converterBlock, 1, 14), true, new Object[]{ // ZPM
+        	GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(converterBlock, 1, 7), true, new Object[]{ // ZPM
         		"CPC",
         		"PBP",
         		"CPC",
@@ -88,7 +88,7 @@ public class RecipeGregTech5 extends RecipeProvider {
         		'P', "plateOsmium",
         		'B', ItemList.Battery_Buffer_1by1_ZPM.get(1).copy()
         	}));
-        	GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(converterBlock, 1, 16), true, new Object[]{ // UV
+        	GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(converterBlock, 1, 8), true, new Object[]{ // UV
         		"CPC",
         		"PBP",
         		"CPC",
