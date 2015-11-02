@@ -25,7 +25,7 @@ public class PowerRedstoneFlux extends PowerSystem {
         name = "RedstoneFlux";
         _internalEnergyPerInput = DEFAULT_ENERGY_PER_INPUT;
         _internalEnergyPerOutput = DEFAULT_ENERGY_PER_OUTPUT;
-        _unit = "RF/t";
+        _unit = "RF";
 
         block = new BlockRF();
         itemBlock = ItemBlockRF.class;

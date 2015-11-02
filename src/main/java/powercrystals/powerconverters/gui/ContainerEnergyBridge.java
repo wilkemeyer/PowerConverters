@@ -7,19 +7,22 @@ import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.util.ForgeDirection;
+import powercrystals.powerconverters.PowerConverterCore;
 import powercrystals.powerconverters.common.BridgeSideData;
 import powercrystals.powerconverters.common.TileEntityEnergyBridge;
+import powercrystals.powerconverters.power.PowerSystem;
 import powercrystals.powerconverters.power.PowerSystemManager;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class ContainerEnergyBridge extends Container {
-    private static enum _sideData {
+    private enum _sideData {
         VOLTAGE_INDEX,
         IS_CONSUMER,
         IS_PRODUCER,
         POWER_SYSTEM_ID,
+        POWER_SUBTYPE,
         IS_CONNECTED,
 
         /*
@@ -33,7 +36,7 @@ public class ContainerEnergyBridge extends Container {
 
     private static final int _flagOffset = 1000;
 
-    private static enum _otherData {
+    private enum _otherData {
         INPUT_LIMITED(1000),
         /*
          * Ints are broken up into shorts (see ICrafting)
@@ -91,7 +94,15 @@ public class ContainerEnergyBridge extends Container {
                     sideData.isProducer = (value != 0);
                     break;
                 case POWER_SYSTEM_ID:
-                    sideData.powerSystem = PowerSystemManager.getInstance().getPowerSystemById(value);
+                    try {
+                        sideData.powerSystem = PowerSystemManager.getInstance().getPowerSystemById(value);
+                    }
+                    catch (ArrayIndexOutOfBoundsException e) {
+                        PowerConverterCore.instance.logger.warn("Got invalid PowerSystem ID: %d", value);
+                    }
+                    break;
+                case POWER_SUBTYPE:
+                    sideData.subtype = value;
                     break;
                 case IS_CONNECTED:
                     sideData.isConnected = (value != 0);
@@ -151,6 +162,7 @@ public class ContainerEnergyBridge extends Container {
                 crafter.sendProgressBarUpdate(this, sideVal + _sideData.IS_PRODUCER.ordinal(), data.isProducer ? 1 : 0);
                 if (data.powerSystem != null) {
                     crafter.sendProgressBarUpdate(this, sideVal + _sideData.POWER_SYSTEM_ID.ordinal(), PowerSystemManager.getInstance().getPowerSystemId(data.powerSystem.getId()));
+                    crafter.sendProgressBarUpdate(this, sideVal + _sideData.POWER_SUBTYPE.ordinal(), data.subtype);
                 }
                 crafter.sendProgressBarUpdate(this, sideVal + _sideData.IS_CONNECTED.ordinal(), data.isConnected ? 1 : 0);
                 crafter.sendProgressBarUpdate(this, sideVal + _sideData.OUTPUT_RATE_HIGH.ordinal(), (short) (((int) data.outputRate) >> 16));

@@ -1,20 +1,14 @@
-package powercrystals.powerconverters.power.systems.gt;
+package powercrystals.powerconverters.power.systems.gt5;
 
 import gregtech.api.metatileentity.BaseTileEntity;
 import gregtech.api.interfaces.tileentity.IEnergyConnected;
-import gregtech.api.interfaces.tileentity.IHasWorldObjectAndCoords;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.ForgeDirection;
-import powercrystals.powerconverters.common.TileEntityEnergyBridge;
 import powercrystals.powerconverters.position.BlockPosition;
 import powercrystals.powerconverters.power.PowerSystemManager;
-import powercrystals.powerconverters.power.systems.PowerGregTech;
-import powercrystals.powerconverters.power.base.TileEntityEnergyProducer;
+import powercrystals.powerconverters.power.systems.PowerGregTech5;
 
-import java.util.Map;
 import java.util.Map.Entry;
 
 /**
@@ -43,7 +37,7 @@ public class TileEntityGregTechProducer extends BaseGTProducerTileEntity<IEnergy
     }
 
     public TileEntityGregTechProducer(int voltageIndex) {
-        super(PowerSystemManager.getInstance().getPowerSystemByName(PowerGregTech.id), voltageIndex, IEnergyConnected.class);
+        super(PowerSystemManager.getInstance().getPowerSystemByName(PowerGregTech5.id), voltageIndex, IEnergyConnected.class);
         
         setVoltageByIndex(voltageIndex);
         setMaxAmperage(1);
@@ -61,13 +55,30 @@ public class TileEntityGregTechProducer extends BaseGTProducerTileEntity<IEnergy
     private void setMaxAmperage(long amp) {
     	maxAmperage = amp;
     }   
+    
+    /** 
+     * Incrases the maxAmperage by one Step overflow will be catched (>8 == 1)
+     * 
+     * @return long the new maxAmperage
+     */
+    public long incMaxAmperage(){
+		long tmp = (maxAmperage + 1);
+		
+		if(tmp > 8)
+			tmp = 1;
+		
+		maxAmperage = tmp;
+		
+		return maxAmperage;				    	
+    }
+
 
     @Override
     public void updateEntity() {
         super.updateEntity();
         
         if(!worldObj.isRemote){
-           	if(needsBlockUpdate == true) {
+           	if(needsBlockUpdate) {
 				
            		// GT's TE caches which surrounding TE's are present
 				for (ForgeDirection d : ForgeDirection.VALID_DIRECTIONS) {
@@ -116,26 +127,17 @@ public class TileEntityGregTechProducer extends BaseGTProducerTileEntity<IEnergy
 
     @Override
     public double produceEnergy(double energy) {
-    	double EU = energy / getPowerSystem().getInternalEnergyPerOutput();
+        boolean powered = getWorldObj().getStrongestIndirectPower(xCoord, yCoord, zCoord) > 0;
+    	double EU = energy / getPowerSystem().getInternalEnergyPerOutput(0);
 		long lEU = (long)EU;
 		long usedEU = 0;
 				
-		if(lEU >= voltage) { // enough energy avail. to output at least 1A
-			long outAmpsMax;
-			
-			// Determnine how much energy we can send
-			if(lEU < (voltage * maxAmperage) ) {
-				outAmpsMax = (long)lEU / voltage;
-			} else {
-				outAmpsMax = maxAmperage;
-			}
-			
-
-			long ampsLeft = outAmpsMax;
+		if(!powered && lEU >= voltage) { // enough energy avail. to output at least 1A
+			long ampsLeft = lEU / voltage; 
 			
 			for (Entry<ForgeDirection, IEnergyConnected> it : this.getTiles().entrySet()) {
 			
-				if(ampsLeft <= 0)
+				if(ampsLeft < maxAmperage)
 					break;
 			
 				IEnergyConnected t = it.getValue();
@@ -146,7 +148,7 @@ public class TileEntityGregTechProducer extends BaseGTProducerTileEntity<IEnergy
 						continue;
 				}
 				
-				long ampsUsed = t.injectEnergyUnits( (byte)it.getKey().getOpposite().ordinal(), voltage, ampsLeft );
+				long ampsUsed = t.injectEnergyUnits( (byte)it.getKey().getOpposite().ordinal(), voltage, maxAmperage );
 				ampsLeft -= ampsUsed;
 				
 				usedEU += (ampsUsed * voltage);
@@ -154,7 +156,7 @@ public class TileEntityGregTechProducer extends BaseGTProducerTileEntity<IEnergy
 			
 		}    	   	
 
-        return energy - ( usedEU * getPowerSystem().getInternalEnergyPerOutput() );
+        return energy - ( usedEU * getPowerSystem().getInternalEnergyPerOutput(0) );
     }
 
     /** GregTech API Part **/

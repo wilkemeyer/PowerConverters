@@ -1,6 +1,8 @@
-package powercrystals.powerconverters.power.systems.gt;
+package powercrystals.powerconverters.power.systems.gt5;
 
 import gregtech.api.GregTech_API;
+import static gregtech.api.enums.GT_Values.GT;
+import static gregtech.api.enums.GT_Values.NW;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 import gregtech.api.interfaces.tileentity.IHasWorldObjectAndCoords;
 import gregtech.api.net.GT_Packet_Block_Event;
@@ -17,7 +19,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.IFluidHandler;
 
 import powercrystals.powerconverters.power.PowerSystem;
-import powercrystals.powerconverters.power.base.TileEntityEnergyProducer;
+import powercrystals.powerconverters.power.base.TileEntityEnergyConsumer;
 
 /**
  ** NOTE:
@@ -36,7 +38,7 @@ import powercrystals.powerconverters.power.base.TileEntityEnergyProducer;
  * 
  * Basically everything a TileEntity should have.
  */
-public abstract class BaseGTProducerTileEntity<T> extends TileEntityEnergyProducer<T> implements IHasWorldObjectAndCoords {
+public abstract class BaseGTConsumerTileEntity<T> extends TileEntityEnergyConsumer<T> implements IHasWorldObjectAndCoords {
 	/**
 	 * If this TileEntity checks for the Chunk to be loaded before returning World based values.
 	 * The AdvPump hacks this to false to ensure everything runs properly even when far Chunks are not actively loaded.
@@ -57,7 +59,7 @@ public abstract class BaseGTProducerTileEntity<T> extends TileEntityEnergyProduc
 	private final TileEntity[] mBufferedTileEntities = new TileEntity[6];
 	
 
-    public BaseGTProducerTileEntity(PowerSystem powerSystem, int voltageNameIndex, Class<T> adjacentClass) {
+    public BaseGTConsumerTileEntity(PowerSystem powerSystem, int voltageNameIndex, Class<T> adjacentClass) {
 	   super(powerSystem, voltageNameIndex, adjacentClass);
     }
    
@@ -82,7 +84,7 @@ public abstract class BaseGTProducerTileEntity<T> extends TileEntityEnergyProduc
     @Override public final boolean isServerSide() {return !worldObj.isRemote;}
 	@Override public final boolean isClientSide() {return  worldObj.isRemote;}
 	@Override public final boolean openGUI(EntityPlayer aPlayer) {return openGUI(aPlayer, 0);}
-	@Override public final boolean openGUI(EntityPlayer aPlayer, int aID) {if (aPlayer == null) return false; aPlayer.openGui(GregTech_API.gregtech, aID, worldObj, xCoord, yCoord, zCoord); return true;}
+	@Override public final boolean openGUI(EntityPlayer aPlayer, int aID) {if (aPlayer == null) return false; aPlayer.openGui(GT, aID, worldObj, xCoord, yCoord, zCoord); return true;}
     @Override public final int getRandomNumber(int aRange) {return worldObj.rand.nextInt(aRange);}
 	@Override public final BiomeGenBase getBiome(int aX, int aZ) {return worldObj.getBiomeGenForCoords(aX, aZ);}
 	@Override public final BiomeGenBase getBiome() {return getBiome(xCoord, zCoord);}
@@ -229,26 +231,15 @@ public abstract class BaseGTProducerTileEntity<T> extends TileEntityEnergyProduc
     
 	@Override
 	public final void sendBlockEvent(byte aID, byte aValue) {
-		GregTech_API.sNetworkHandler.sendPacketToAllPlayersInRange(worldObj, new GT_Packet_Block_Event(xCoord, (short)yCoord, zCoord, aID, aValue), xCoord, zCoord);
+		NW.sendPacketToAllPlayersInRange(worldObj, new GT_Packet_Block_Event(xCoord, (short)yCoord, zCoord, aID, aValue), xCoord, zCoord);
 	}
 	
 	private boolean crossedChunkBorder(int aX, int aZ) {
 		return aX >> 4 != xCoord >> 4 || aZ >> 4 != zCoord >> 4;
 	}
 
-	@Override
-	public void setLightValue(byte aLightValue) { 
-	}
+	@Override public void setLightValue(byte aLightValue) {};
+	@Override public boolean isInvalidTileEntity() { return true; }
+	@Override public long getTimer() { return 0; }
 
-    @Override
-    public boolean isInvalidTileEntity() {
-       return true;
-    }
-	
-	@Override
-	public long getTimer() { 
-		return 0; 
-	}
-	                        	
-	    
 }

@@ -122,7 +122,7 @@ public class TileEntityEnergyBridge extends TileEntity implements INeighboorUpda
                     }
                     PowerSystem producerPowerSystem= prod.getValue().getPowerSystem();
                     if(producerPowerSystem != null) {
-                        updateProducerInfo(prod.getKey(), (int) ((energyRemaining - energyNotProduced) / producerPowerSystem.getInternalEnergyPerOutput()));
+                        updateProducerInfo(prod.getKey(), (int) ((energyRemaining - energyNotProduced) / producerPowerSystem.getInternalEnergyPerOutput(prod.getValue().getSubtype() + 1)));
                     }
                     energyRemaining = energyNotProduced;
                 } else {
@@ -170,6 +170,7 @@ public class TileEntityEnergyBridge extends TileEntity implements INeighboorUpda
                 }
                 TileEntityBridgeComponent<?> c = (TileEntityBridgeComponent<?>) te;
                 d.powerSystem = c.getPowerSystem();
+                d.subtype = c.getSubtype();
                 d.isConnected = c.isConnected();
                 d.side = dir;
                 d.voltageNameIndex = c.getVoltageIndex();

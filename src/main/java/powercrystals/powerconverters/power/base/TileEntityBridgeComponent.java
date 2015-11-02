@@ -77,6 +77,10 @@ public class TileEntityBridgeComponent<T> extends TileEntity implements INeighbo
         return _voltageIndex;
     }
 
+    public int getSubtype() {
+        return -1;
+    }
+
     public TileEntityEnergyBridge getFirstBridge() {
         return _adjacentBridges.size() == 0 ? null : (TileEntityEnergyBridge) _adjacentBridges.values().toArray()[0];
     }

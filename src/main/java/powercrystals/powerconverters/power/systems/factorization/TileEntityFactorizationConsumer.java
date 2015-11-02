@@ -28,16 +28,19 @@ public class TileEntityFactorizationConsumer extends TileEntityEnergyConsumer<IC
             return;
         }
 
-        if (this._charge.getValue() < _maxCG) {
-            this._charge.update();
-        }
+        boolean powered = getWorldObj().getStrongestIndirectPower(xCoord, yCoord, zCoord) > 0;
+        if(!powered) {
+            if (this._charge.getValue() < _maxCG) {
+                this._charge.update();
+            }
 
-        if (this._charge.getValue() > 0) {
-            int used = _charge.tryTake(_charge.getValue());
-            _chargeLastTick = MathHelper.floor_float(used);
-            storeEnergy((used * getPowerSystem().getInternalEnergyPerInput()), false);
-        } else {
-            this._chargeLastTick = 0;
+            if (this._charge.getValue() > 0) {
+                int used = _charge.tryTake(_charge.getValue());
+                _chargeLastTick = MathHelper.floor_float(used);
+                storeEnergy((used * getPowerSystem().getInternalEnergyPerInput(0)), false);
+            } else {
+                this._chargeLastTick = 0;
+            }
         }
     }
 

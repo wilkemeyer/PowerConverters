@@ -10,5 +10,6 @@ public class BridgeSideData {
     public boolean isProducer;
     public boolean isConnected;
     public int voltageNameIndex;
+    public int subtype;
     public double outputRate;
 }

@@ -1,16 +1,12 @@
 package powercrystals.powerconverters.power.systems.fortron;
 
-import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
-import powercrystals.powerconverters.common.TileEntityEnergyBridge;
-import powercrystals.powerconverters.position.BlockPosition;
 import powercrystals.powerconverters.power.PowerSystemManager;
 import powercrystals.powerconverters.power.base.TileEntityEnergyProducer;
 import powercrystals.powerconverters.power.systems.PowerFortron;
 
 import resonant.api.mffs.fortron.IFortronStorage;
 
-import java.util.Map;
 import java.util.Map.Entry;
 
 
@@ -23,15 +19,16 @@ public class TileEntityFortronProducer extends TileEntityEnergyProducer<IFortron
 
     @Override
     public double produceEnergy(double energy) {
-        final double energyToUse = energy / getPowerSystem().getInternalEnergyPerOutput();
+        final double energyToUse = energy / getPowerSystem().getInternalEnergyPerOutput(0);
+        boolean powered = getWorldObj().getStrongestIndirectPower(xCoord, yCoord, zCoord) > 0;
 
-        if (energyToUse > 0) {
+        if (!powered && energyToUse > 0) {
         	for (Entry<ForgeDirection, IFortronStorage> it : this.getTiles().entrySet()) {
         		
-				IFortronStorage fs = (IFortronStorage)it.getValue();
+				IFortronStorage fs = it.getValue();
 				final double used = fs.provideFortron( (int)energyToUse, true );
         		
-        		energy -= (used * getPowerSystem().getInternalEnergyPerOutput() );
+        		energy -= (used * getPowerSystem().getInternalEnergyPerOutput(0) );
         		
         		if(energy <= 0)
         			break;

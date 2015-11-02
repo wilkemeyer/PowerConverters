@@ -1,12 +1,10 @@
 package powercrystals.powerconverters.crafting.mods;
 
 import cpw.mods.fml.common.registry.GameRegistry;
-import gregtech.api.enums.ItemList;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.oredict.ShapedOreRecipe;
-import powercrystals.powerconverters.PowerConverterCore;
 import powercrystals.powerconverters.crafting.RecipeProvider;
 import powercrystals.powerconverters.power.PowerSystem;
 import powercrystals.powerconverters.power.PowerSystemManager;

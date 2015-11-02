@@ -39,10 +39,8 @@ public class GuiEnergyBridge extends ExposedGuiContainer {
             for (ForgeDirection dir : ForgeDirection.VALID_DIRECTIONS) {
                 BridgeSideData data = _bridge.getDataForSide(dir);
                 if (data != null && data.powerSystem != null) {
-                    String unit = data.powerSystem.getUnit();
-                    if (unit.length() > 2)
-                        unit = unit.substring(0, unit.length() - 2);
-                    String toAdd = (_bridge.getEnergyStored() / data.powerSystem.getInternalEnergyPerOutput()) + " " + unit;
+                    String unit = data.powerSystem.getUnit(data.subtype);
+                    String toAdd = (_bridge.getEnergyStored() / data.powerSystem.getInternalEnergyPerOutput(data.subtype)) + " " + unit;
                     if (!tooltips.contains(toAdd))
                         tooltips.add(toAdd);
                 }
@@ -74,7 +72,16 @@ public class GuiEnergyBridge extends ExposedGuiContainer {
                 }
                 fontRendererObj.drawString(name, 49, 6 + 12 * (i + 1), -1);
                 fontRendererObj.drawString(data.isConsumer ? StatCollector.translateToLocal("powerconverters.in") : StatCollector.translateToLocal("powerconverters.out"), 92, 6 + 12 * (i + 1), -1);
-                fontRendererObj.drawString(getOutputRateString(data), 119, 6 + 12 * (i + 1), -1);
+
+				String rate;		
+					
+				if(data.isConnected)
+					rate = data.powerSystem.getRateString(data);
+               	else
+               		rate = StatCollector.translateToLocal("powerconverters.nolink");
+               		
+				fontRendererObj.drawString(rate, 119, 6 + 12 * (i + 1), -1);
+               	
             } else {
                 fontRendererObj.drawString(StatCollector.translateToLocal("powerconverters.none"), 49, 6 + 12 * (i + 1), -1);
             }
@@ -115,13 +122,4 @@ public class GuiEnergyBridge extends ExposedGuiContainer {
         }
     }
 
-    private String getOutputRateString(BridgeSideData data) {
-        if (!data.isConnected) return StatCollector.translateToLocal("powerconverters.nolink");
-        double rate = data.outputRate;
-        if (rate > 1000) {
-            double rateThousand = (rate / 1000.0);
-            return String.format("%.1f %s%s", rateThousand, "k", data.powerSystem.getUnit());
-        }
-        return rate + " " + data.powerSystem.getUnit();
-    }
 }

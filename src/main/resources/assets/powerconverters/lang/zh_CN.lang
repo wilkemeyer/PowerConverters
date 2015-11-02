@@ -48,7 +48,7 @@ powerconverters.gt.hv.consumer.name=GT-HV转入器
 powerconverters.gt.ev.consumer.name=GT-EV转入器
 powerconverters.gt.iv.consumer.name=GT-IV转入器
 powerconverters.gt.luv.consumer.name=GT-LuV转入器
-powerconverters.gt.zpm.consumer.name=GT-ZPM转入器
+powerconverters.gt.zpmv.consumer.name=GT-ZPM转入器
 powerconverters.gt.uv.consumer.name=GT-UV转入器
 
 powerconverters.gt.ulv.producer.name=GT-ULV输出器
@@ -58,5 +58,5 @@ powerconverters.gt.hv.producer.name=GT-HV输出器
 powerconverters.gt.ev.producer.name=GT-EV输出器
 powerconverters.gt.iv.producer.name=GT-IV输出器
 powerconverters.gt.luv.producer.name=GT-LuV输出器
-powerconverters.gt.zpm.producer.name=GT-ZPM输出器
+powerconverters.gt.zpmv.producer.name=GT-ZPM输出器
 powerconverters.gt.uv.producer.name=GT-UV输出器

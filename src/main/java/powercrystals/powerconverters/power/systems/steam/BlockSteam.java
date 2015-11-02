@@ -4,10 +4,15 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.IIcon;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import powercrystals.powerconverters.PowerConverterCore;
 import powercrystals.powerconverters.gui.PCCreativeTab;
+import powercrystals.powerconverters.power.PowerSystemManager;
 import powercrystals.powerconverters.power.base.BlockPowerConverter;
+import powercrystals.powerconverters.power.base.TileEntityBridgeComponent;
+import powercrystals.powerconverters.power.systems.PowerSteam;
 
 public class BlockSteam extends BlockPowerConverter {
     public BlockSteam() {
@@ -17,11 +22,22 @@ public class BlockSteam extends BlockPowerConverter {
     }
 
     @Override
-    public TileEntity createNewTileEntity(World world, int metadata) {
-        if (metadata == 0) return new TileEntitySteamConsumer();
-        else if (metadata == 1) return new TileEntitySteamProducer();
+    @SideOnly(Side.CLIENT)
+    public IIcon getIcon(IBlockAccess world, int x, int y, int z, int side) {
+        int offset = ((TileEntityBridgeComponent<?>) world.getTileEntity(x, y, z)).isSideConnectedClient(side) ? 1 : 0;
+        return _icons[(world.getBlockMetadata(x, y, z) == 0 ? 0 : 1) * 2 + offset];
+    }
 
-        return null;
+    @Override
+    public IIcon getIcon(int side, int metadata) {
+        return _icons[(metadata == 0 ? 0 : 1) * 2];
+    }
+
+    @Override
+    public TileEntity createNewTileEntity(World world, int metadata) {
+        PowerSteam steam = (PowerSteam) PowerSystemManager.getInstance().getPowerSystemByName(PowerSteam.id);
+        if (metadata == 0) return new TileEntitySteamConsumer();
+        else return new TileEntitySteamProducer(metadata - 1);
     }
 
     @Override

@@ -24,9 +24,9 @@ public class ChargeHandlerIndustrialCraft implements IChargeHandler {
         if (stack != null && stack.getItem() instanceof IElectricItem) {
             IElectricItem electricItem = (IElectricItem) stack.getItem();
             PowerIndustrialcraft ic2 = (PowerIndustrialcraft) getPowerSystem();
-            double eu = energyInput / ic2.getInternalEnergyPerOutput();
+            double eu = energyInput / ic2.getInternalEnergyPerOutput(0);
             eu -= ElectricItem.manager.charge(stack, eu, electricItem.getTier(stack), false, false);
-            return (int) (eu * ic2.getInternalEnergyPerOutput());
+            return (int) (eu * ic2.getInternalEnergyPerOutput(0));
         }
         return 0;
     }
@@ -36,9 +36,9 @@ public class ChargeHandlerIndustrialCraft implements IChargeHandler {
         if (stack != null && stack.getItem() instanceof IElectricItem) {
             IElectricItem electricItem = (IElectricItem) stack.getItem();
             PowerIndustrialcraft ic2 = (PowerIndustrialcraft) getPowerSystem();
-            double eu = energyRequest / ic2.getInternalEnergyPerOutput();
+            double eu = energyRequest / ic2.getInternalEnergyPerOutput(0);
             eu = ElectricItem.manager.discharge(stack, eu, electricItem.getTier(stack), false, false, false);
-            return (int) (eu * ic2.getInternalEnergyPerInput());
+            return (int) (eu * ic2.getInternalEnergyPerInput(0));
         }
         return 0;
     }

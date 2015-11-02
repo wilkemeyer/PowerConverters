@@ -20,24 +20,46 @@ import powercrystals.powerconverters.power.systems.PowerSteam;
 public class TileEntitySteamConsumer extends TileEntityEnergyConsumer<IFluidHandler> implements IFluidHandler, IPipeConnection {
     private FluidTank _steamTank;
     private int _mBLastTick;
+    PowerSteam powerSteam;
+    private int lastSubtype = -1;
 
     public TileEntitySteamConsumer() {
         super(PowerSystemManager.getInstance().getPowerSystemByName(PowerSteam.id), 0, IFluidHandler.class);
         _steamTank = new FluidTank(FluidContainerRegistry.BUCKET_VOLUME);
+        powerSteam = (PowerSteam) PowerSystemManager.getInstance().getPowerSystemByName(PowerSteam.id);
     }
 
     @Override
     public void updateEntity() {
         super.updateEntity();
 
-        if (_steamTank.getFluidAmount() > 0) {
-            PowerSteam steam = (PowerSteam) PowerSystemManager.getInstance().getPowerSystemByName(PowerSteam.id);
-            int amount = Math.min(_steamTank.getFluidAmount(), steam.getThrottleConsumer());
-            float energy = amount * steam.getInternalEnergyPerInput();
-            energy = (int) storeEnergy(energy, false);
-            int toDrain = (int) (amount - (energy / steam.getInternalEnergyPerInput()));
-            _steamTank.drain(toDrain, true);
-            _mBLastTick = toDrain;
+        boolean powered = getWorldObj().getStrongestIndirectPower(xCoord, yCoord, zCoord) > 0;
+        if(!powered && _steamTank.getFluid() != null && _steamTank.getFluid().getFluid() != null &&
+                _steamTank.getFluid().getFluid().getName() != null) {
+            String fluidName = _steamTank.getFluid().getFluid().getName();
+            PowerSteam.SteamType steamType = powerSteam.getSteamType(fluidName);
+            if (steamType != null && _steamTank.getFluidAmount() > 0) {
+                lastSubtype = powerSteam.getSteamSubtype(steamType);
+                int amount = Math.min(_steamTank.getFluidAmount(), powerSteam.getThrottleConsumer());
+                float energy = amount * steamType.energyPerInput;
+                float energyLeft = (int) storeEnergy(energy, false);
+                float energyUsed = energy - energyLeft;
+                if(energyUsed > 0) {
+                    int toDrain;
+                    try {
+                        toDrain = (int) ((energyUsed / powerSteam.getInternalEnergyPerInput(this.blockMetadata)));
+                    } catch (ArithmeticException e) {
+                        toDrain = 0;
+                    }
+                    _steamTank.drain(toDrain, true);
+                    _mBLastTick = toDrain - _steamTank.getFluidAmount();
+                }
+                else {
+                    _mBLastTick = 0;
+                }
+            } else {
+                _mBLastTick = 0;
+            }
         } else {
             _mBLastTick = 0;
         }
@@ -50,8 +72,23 @@ public class TileEntitySteamConsumer extends TileEntityEnergyConsumer<IFluidHand
 
     @Override
     public int fill(ForgeDirection from, FluidStack resource, boolean doFill) {
-        if (resource.getFluid().getName().equalsIgnoreCase("steam"))
-            return _steamTank.fill(resource, doFill);
+        if(resource == null || resource.getFluid() == null ) {
+            return 0;
+        }
+
+        if(_steamTank.getFluid() == null) {
+            // Tank is empty try to set type and fill it up.
+            PowerSteam.SteamType type = powerSteam.getSteamType(resource.getFluid().getName());
+            if(type != null) {
+                return _steamTank.fill(resource, doFill);
+            }
+        }
+        else {
+            // Tank has fluid in in. Try to fill it up.
+            if(_steamTank.getFluid().getFluid().getName().equals(resource.getFluid().getName())) {
+                return _steamTank.fill(resource, doFill);
+            }
+        }
         return 0;
     }
 
@@ -83,6 +120,11 @@ public class TileEntitySteamConsumer extends TileEntityEnergyConsumer<IFluidHand
     @Override
     public double getInputRate() {
         return _mBLastTick;
+    }
+
+    @Override
+    public int getSubtype() {
+        return lastSubtype;
     }
 
     @Override

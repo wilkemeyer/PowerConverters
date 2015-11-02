@@ -29,7 +29,7 @@ public class PowerFortron extends PowerSystem {
         name = "Fortron";
         _internalEnergyPerInput = DEFAULT_ENERGY_PER_INPUT;
         _internalEnergyPerOutput = DEFAULT_ENERGY_PER_OUTPUT;
-        _unit = "L/t";
+        _unit = "L";
 
         block = new BlockFortron();
         itemBlock = ItemBlockFortron.class;

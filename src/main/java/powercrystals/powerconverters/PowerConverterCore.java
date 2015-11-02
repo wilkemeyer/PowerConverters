@@ -1,18 +1,28 @@
 package powercrystals.powerconverters;
 
 import com.google.common.base.Throwables;
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
+import cpw.mods.fml.common.ModContainer;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.event.FMLServerStartingEvent;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.gameevent.PlayerEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
+import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.relauncher.Side;
 import net.minecraft.block.Block;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import org.apache.logging.log4j.Logger;
 import powercrystals.powerconverters.common.BlockPowerConverterCommon;
@@ -21,21 +31,23 @@ import powercrystals.powerconverters.common.TileEntityCharger;
 import powercrystals.powerconverters.common.TileEntityEnergyBridge;
 import powercrystals.powerconverters.crafting.RecipeProvider;
 import powercrystals.powerconverters.crafting.mods.RecipeMFFS;
-import powercrystals.powerconverters.crafting.mods.RecipeGregTech;
+import powercrystals.powerconverters.crafting.mods.RecipeGregTech5;
 import powercrystals.powerconverters.crafting.mods.RecipeBuildCraft;
 import powercrystals.powerconverters.crafting.mods.RecipeEnderIO;
 import powercrystals.powerconverters.crafting.mods.RecipeFactorization;
+import powercrystals.powerconverters.crafting.mods.RecipeForestry;
 import powercrystals.powerconverters.crafting.mods.RecipeIndustrialCraft;
 import powercrystals.powerconverters.crafting.mods.RecipeRailcraft;
 import powercrystals.powerconverters.crafting.mods.RecipeThermalExpansion;
 import powercrystals.powerconverters.crafting.mods.RecipeVanilla;
 import powercrystals.powerconverters.gui.PCGUIHandler;
+import powercrystals.powerconverters.network.PacketClientSync;
 import powercrystals.powerconverters.power.PowerSystemManager;
 import powercrystals.powerconverters.power.systems.PowerFactorization;
 import powercrystals.powerconverters.power.systems.PowerIndustrialcraft;
 import powercrystals.powerconverters.power.systems.PowerRedstoneFlux;
 import powercrystals.powerconverters.power.systems.PowerSteam;
-import powercrystals.powerconverters.power.systems.PowerGregTech;
+import powercrystals.powerconverters.power.systems.PowerGregTech5;
 import powercrystals.powerconverters.power.systems.PowerFortron;
 
 import java.io.File;
@@ -44,7 +56,7 @@ import java.util.HashSet;
 import java.util.Properties;
 import java.util.Set;
 
-@Mod(modid = PowerConverterCore.modId, name = PowerConverterCore.modName, dependencies = "after:BuildCraft|Energy;after:factorization;after:IC2;after:Railcraft;after:ThermalExpansion;after:gregtech")
+@Mod(modid = PowerConverterCore.modId, name = PowerConverterCore.modName, dependencies = "after:BuildCraft|Energy;after:factorization;after:IC2;after:Railcraft;after:ThermalExpansion;after:gregtech;after:MFFS")
 public final class PowerConverterCore {
     public static final String modId = "PowerConverters";
     public static final String modName = "Power Converters";
@@ -76,6 +88,8 @@ public final class PowerConverterCore {
 
     private Set<RecipeProvider> enabledRecipes;
 
+    public SimpleNetworkWrapper networkWrapper;
+
     public Logger logger;
 
     @SuppressWarnings("UnusedDeclaration")
@@ -83,6 +97,11 @@ public final class PowerConverterCore {
     public void preInit(FMLPreInitializationEvent evt) {
         logger = evt.getModLog();
         evt.getModMetadata().version = PowerConverterCore.version;
+
+        FMLCommonHandler.instance().bus().register(this);
+
+        networkWrapper = NetworkRegistry.INSTANCE.newSimpleChannel("powerconverters");
+        networkWrapper.registerMessage(PacketClientSync.Handler.class, PacketClientSync.class, 0, Side.CLIENT);
 
         registerPowerSystems();
 
@@ -127,7 +146,12 @@ public final class PowerConverterCore {
         enabledRecipes = new HashSet<RecipeProvider>();
 
         enabledRecipes.add(new RecipeVanilla());
-        manager.registerPowerSystem(new PowerSteam());
+        if(FluidRegistry.isFluidRegistered("steam")) {
+            if(manager.getPowerSystemByName(PowerSteam.id) == null) {
+                manager.registerPowerSystem(new PowerSteam());
+            }
+            ((PowerSteam) manager.getPowerSystemByName(PowerSteam.id)).addSteamType("steam", "Steam", 500, 500);
+        }
 
         if(Loader.isModLoaded("BuildCraft|Energy")) {
             enabledRecipes.add(new RecipeBuildCraft());
@@ -155,9 +179,20 @@ public final class PowerConverterCore {
             if(manager.getPowerSystemByName(PowerSteam.id) == null) {
                 manager.registerPowerSystem(new PowerSteam());
             }
+            ((PowerSteam)manager.getPowerSystemByName(PowerSteam.id)).addSteamType("ic2steam", "IC2 Steam", 4000, 4000);
+            ((PowerSteam)manager.getPowerSystemByName(PowerSteam.id)).addSteamType("ic2superheatedsteam", "IC2 Superheated Steam", 8000, 8000);
         }
         if(Loader.isModLoaded("Railcraft")) {
             enabledRecipes.add(new RecipeRailcraft());
+            if(manager.getPowerSystemByName(PowerSteam.id) == null) {
+                manager.registerPowerSystem(new PowerSteam());
+            }
+        }
+        if(Loader.isModLoaded("Forestry")) {
+            enabledRecipes.add(new RecipeForestry());
+            if(manager.getPowerSystemByName(PowerRedstoneFlux.id) == null) {
+                manager.registerPowerSystem(new PowerRedstoneFlux());
+            }
         }
         if(Loader.isModLoaded("ThermalExpansion")) {
             enabledRecipes.add(new RecipeThermalExpansion());
@@ -166,10 +201,15 @@ public final class PowerConverterCore {
             }
         }
         if(Loader.isModLoaded("gregtech")){
-			enabledRecipes.add(new RecipeGregTech());
-			if(manager.getPowerSystemByName(PowerGregTech.id) == null) {
-				manager.registerPowerSystem(new PowerGregTech());
-			}
+            ModContainer modContainer = Loader.instance().getIndexedModList().get("gregtech");
+            // "MC1710" = GT5 reboot.
+            // "GT6-MC1710" = GT6
+            if("MC1710".equals(modContainer.getVersion())) {
+                enabledRecipes.add(new RecipeGregTech5());
+                if (manager.getPowerSystemByName(PowerGregTech5.id) == null) {
+                    manager.registerPowerSystem(new PowerGregTech5());
+                }
+            }
         }
         if(Loader.isModLoaded("MFFS")){
         	enabledRecipes.add(new RecipeMFFS());
@@ -178,6 +218,28 @@ public final class PowerConverterCore {
         	}
         }
         
+    }
+
+    @SuppressWarnings("unused")
+    @EventHandler
+    public void serverStarted(FMLServerStartingEvent event) {
+        if(event.getSide().isServer()) {
+            logger.debug("Server: initialising powersystem data.");
+            PowerSystemManager.getInstance().setServerSystemIds();
+        }
+    }
+
+    @SuppressWarnings("unused")
+    @SubscribeEvent
+    public void clientConnected(PlayerEvent.PlayerLoggedInEvent event) {
+        if(event.player == null || event.player.worldObj == null ||
+                event.player.worldObj.isRemote || !(event.player instanceof EntityPlayerMP)) {
+            return;
+        }
+        NBTTagCompound energyNBT = PowerSystemManager.getInstance().writePowerData();
+        PacketClientSync packetClientSync = new PacketClientSync(energyNBT);
+        networkWrapper.sendTo(packetClientSync, (EntityPlayerMP) event.player);
+        logger.debug("Sending sync packet to player %s", event.player.toString());
     }
 
     public static Object tryOreDict(String name, ItemStack itemStack) {

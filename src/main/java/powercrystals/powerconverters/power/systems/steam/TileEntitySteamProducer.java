@@ -19,15 +19,26 @@ import powercrystals.powerconverters.power.systems.PowerSteam;
 
 @Optional.Interface(modid = ModIDReference.BUILDCRAFT, iface = InterfaceReference.BuildCraft.IPipeConnection)
 public class TileEntitySteamProducer extends TileEntityEnergyProducer<IFluidHandler> implements IFluidHandler, IPipeConnection {
+    PowerSteam powerSteam;
+    int steamId;
 
     public TileEntitySteamProducer() {
+        this(0);
+    }
+
+    public TileEntitySteamProducer(int steamId) {
         super(PowerSystemManager.getInstance().getPowerSystemByName(PowerSteam.id), 0, IFluidHandler.class);
+        powerSteam = (PowerSteam) PowerSystemManager.getInstance().getPowerSystemByName(PowerSteam.id);
+        this.steamId = steamId;
     }
 
     @Override
     public double produceEnergy(double energy) {
-        PowerSteam powerSteam = (PowerSteam) PowerSystemManager.getInstance().getPowerSystemByName(PowerSteam.id);
-        energy = energy / powerSteam.getInternalEnergyPerOutput();
+        boolean powered = getWorldObj().getStrongestIndirectPower(xCoord, yCoord, zCoord) > 0;
+        if (powered || steamId < 0 || powerSteam.getInternalEnergyPerOutput(steamId + 1) == 0) {
+            return energy;
+        }
+        energy = energy / powerSteam.getInternalEnergyPerOutput(steamId + 1);
         for (int i = 0; i < 6; i++) {
             BlockPosition bp = new BlockPosition(this);
             bp.orientation = ForgeDirection.getOrientation(i);
@@ -36,17 +47,18 @@ public class TileEntitySteamProducer extends TileEntityEnergyProducer<IFluidHand
 
             if (te instanceof IFluidHandler) {
                 final int steam = (int) Math.min(energy, powerSteam.getThrottleProducer());
-                FluidStack stack = FluidRegistry.getFluidStack("steam", steam);
-                if (stack == null)
-                    FluidRegistry.getFluidStack("Steam", steam);
-                energy -= ((IFluidHandler) te).fill(bp.orientation.getOpposite(), stack, true);
+                PowerSteam.SteamType steamType = powerSteam.getSteamType(steamId);
+                FluidStack stack = FluidRegistry.getFluidStack(steamType.name, steam);
+                if (stack != null) {
+                    energy -= ((IFluidHandler) te).fill(bp.orientation.getOpposite(), stack, true);
+                }
             }
 
             if (energy <= 0)
                 return 0;
         }
 
-        return energy * powerSteam.getInternalEnergyPerOutput();
+        return energy * powerSteam.getInternalEnergyPerOutput(steamId + 1);
     }
 
     @Override
@@ -77,6 +89,12 @@ public class TileEntitySteamProducer extends TileEntityEnergyProducer<IFluidHand
     @Override
     public FluidTankInfo[] getTankInfo(ForgeDirection from) {
         return new FluidTankInfo[0];
+    }
+
+    @Override
+    public int getSubtype() {
+        PowerSteam.SteamType type = powerSteam.getSteamType(steamId);
+        return type != null ? powerSteam.getSteamSubtype(type) : -1;
     }
 
     @Override
