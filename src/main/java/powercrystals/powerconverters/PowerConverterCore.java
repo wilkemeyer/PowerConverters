@@ -47,6 +47,7 @@ import powercrystals.powerconverters.power.systems.PowerIndustrialcraft;
 import powercrystals.powerconverters.power.systems.PowerRedstoneFlux;
 import powercrystals.powerconverters.power.systems.PowerSteam;
 import powercrystals.powerconverters.power.systems.PowerGregTech5;
+import powercrystals.powerconverters.integration.IntegrationLoader;
 
 import java.io.File;
 import java.io.InputStream;
@@ -54,7 +55,7 @@ import java.util.HashSet;
 import java.util.Properties;
 import java.util.Set;
 
-@Mod(modid = PowerConverterCore.modId, name = PowerConverterCore.modName, dependencies = "after:BuildCraft|Energy;after:factorization;after:IC2;after:Railcraft;after:ThermalExpansion;after:gregtech")
+@Mod(modid = PowerConverterCore.modId, name = PowerConverterCore.modName, dependencies = "after:BuildCraft|Energy;after:factorization;after:IC2;after:Railcraft;after:ThermalExpansion;after:gregtech;after:ComputerCraft")
 public final class PowerConverterCore {
     public static final String modId = "PowerConverters";
     public static final String modName = "Power Converters";
@@ -110,6 +111,8 @@ public final class PowerConverterCore {
         GameRegistry.registerBlock(converterBlockCommon, ItemBlockPowerConverterCommon.class, "converter.common");
         GameRegistry.registerTileEntity(TileEntityEnergyBridge.class, "powerConverterEnergyBridge");
         GameRegistry.registerTileEntity(TileEntityCharger.class, "powerConverterUniversalCharger");
+
+        IntegrationLoader.init(evt);
     }
 
     @SuppressWarnings("UnusedParameters")
@@ -251,7 +254,9 @@ public final class PowerConverterCore {
             provider.loadConfig(c);
         }
         PowerSystemManager.getInstance().loadConfigs(c);
-
+        
+		IntegrationLoader.loadConfig(c);
+		
         c.save();
     }
 }
